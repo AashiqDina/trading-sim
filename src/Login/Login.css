@@ -1,0 +1,158 @@
+.login-container {
+    position: relative;
+    top: 4rem;
+    width: 23rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: 1px solid #45a049;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .login-container.error {
+    animation-name: LoginError;
+    animation-duration: 0.2s;
+    animation-iteration-count: 3;
+  }
+  
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: Inter, sans-serif;
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    box-sizing: border-box;
+  }
+  
+  p {
+    text-align: center;
+    font-family: Inter, sans-serif;
+  }
+  
+  a {
+    color: #4e91d8;
+    text-decoration: none;
+    font-family: Inter, sans-serif;
+
+  }
+
+  .UsernameInputLogin{
+    border-radius: 10rem;
+    height: 2.5rem;
+    font-size: 0.9rem;
+    border: none;
+    outline: none;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .UsernameInputLogin:focus{
+    box-shadow: 0px 0px 30px 2px #3e91444c;
+  }
+
+  .PasswordInputLogin{
+    height: 2.5rem;
+    border-radius: 10rem;
+    font-size: 0.9rem;
+    border: none;
+    outline: none;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .PasswordInputLogin:focus{
+    box-shadow: 0px 0px 30px 2px #3e91444c;
+  }
+  
+  .SubmitButton{
+    border-radius: 2rem;
+    width: 12rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-family: Inter, sans-serif;
+    border: 1px #45a049 solid;
+    background-color: #45a04900;
+    padding: 0.5rem;
+    transition: all 0.5s ease-in-out;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+    color: white;
+  }
+
+  .SubmitButton:hover{
+    border: 1px #45a049 solid;
+    background-color: #45a0497f;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 5rem 1rem rgba(0, 0, 0, 0.599);
+    font-family: Inter, sans-serif;
+  }
+
+  .noAccount{
+    margin-bottom: 0.5rem;
+    font-family: Inter, sans-serif;
+  }
+
+  .noAccountRegister{
+    color: #45a049e4;
+    font-weight: 700;
+    font-family: Inter, sans-serif;
+  }
+
+  .ErrorType{
+    color: #bb1515;
+  }
+
+  .SrOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 400px) {
+    .login-container{
+      width: 20rem;
+    }
+  }
+
+  @keyframes LoginError {
+    0%{
+      border: 1px solid #bb1515;
+      transform: translateX(-5px);
+      
+    }
+    50%{
+      border: 1px solid #bb1515;
+      transform: translateX(10px);
+    }
+    100%{
+      border: 1px solid #bb1515;
+      transform: translateX(-5px);
+    }
+  }

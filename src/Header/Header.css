@@ -1,0 +1,233 @@
+
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    background-color: rgba(28, 26, 48, 0);
+    color: white;
+    padding: 0.5rem 1rem;
+    position: relative;
+    height: 100%;
+    margin-top: 1rem;
+  }
+
+  .Logo{
+    height: 1.5rem;
+  }
+  
+  .Header-logo {
+    gap: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    background: none;
+    border: none;
+    width: fit-content;
+  }
+  
+  .Header-logo a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .Header-user {
+    margin-right: 1rem;
+  }
+  
+  .UserIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .Header-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 36px;
+    height: 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+
+  .Header-menu:hover, .Header-logo:hover, .HeaderUsername:hover{
+    background: none;
+  }
+
+  .Header-menu:focus-visible, .Header-logo:focus, .Header-logo:focus-visible, .HeaderUsername:focus, .HeaderUsername:focus-visible{
+    background: none;
+    border: none;
+    /* outline: none; */
+    border-radius: 0.5rem;
+  }
+
+  
+  .Hamburger1, .Hamburger2, .Hamburger3 {
+    background-color: white;
+    height: 4px;
+    border-radius: 2px;
+    width: 100%;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .Hamburger1.Open{
+    transform: translateY(10px) rotate(45deg);
+    width: 70%;
+  }
+
+  .Hamburger2.Open{
+    opacity: 0;
+  }
+  
+  .Hamburger3.Open{
+    transform: translateY(-8px) translateX(11px) rotate(-45deg);
+    width: 70%;
+  }
+  
+  
+  .DropdownMenu {
+    position: absolute;
+    top: 3.5rem;
+    left: 0rem;
+    background-color: rgba(4, 9, 11, 0.86);
+    color: white;
+    border-radius: 0rem 2rem 2rem 0rem;
+    border-color: #ffffffa8;
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 1rem;
+    z-index: 1;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .DropdownMenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .DropdownMenu li {
+    padding: 0.9rem 1.7rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .DropdownMenu li:hover{
+    scale: 1.05;
+  }
+  
+  .DropdownMenu li a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+  }
+  
+  .DropdownMenu li a:hover {
+    color: #45d44ca9;
+
+  }
+
+  .DropdownMenu > ul > li > button{
+    background: none;
+    width: fit-content;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: 100;
+  }
+
+  .HeaderUsername{
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-family: Inter, sans-serif;;
+    font-weight: 500;
+    width: fit-content;
+    background: none;
+    border: none;
+    text-align: right;
+  }
+
+  @media (max-width: 600px) {
+    .HeaderUsername{
+      font-size: 1rem;
+    }
+     .Hamburger1, .Hamburger2, .Hamburger3 {
+      width: 75%;
+      height: 3px;
+     }
+     .Header-menu{
+      height: 20px;
+     }
+      .Header-menu.Open{
+      height: 23px;
+     }
+  }
+
+  .HeaderUsername:hover{
+    background: linear-gradient(90deg, #e2e2e2 25%, #45a049 50%, #e2e2e2 75%);
+    background-size: 200% 100%;
+    animation-name: shimmer;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .LineBreakers{
+    width: 12vw;
+    height: 2px;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.009);
+  }
+
+  .DropdownMenu > ul > li > .LogoutButton{
+    border-radius: 10rem;
+    padding: 0.9rem;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-width: 1px;
+    transition: all 0.5s ease-in-out;
+    border: 1px #45a049 solid;
+    background-color: #45a04900;
+    color:  white;
+    font-family: Inter, sans-serif;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+  }
+
+  .DropdownMenu > ul > li > .LogoutButton:hover{
+    border: 1px #45a049 solid;
+    background-color: #45a0497f;
+  }
+
+  .DropdownMenu > ul > li > .LogoutButton:focus{
+    background-color: #e2e2e2;
+    color: #45a049;
+  }
+  
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

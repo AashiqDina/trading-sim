@@ -1,0 +1,1088 @@
+* {
+  box-sizing: border-box;
+}
+
+.StockSearch {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 2rem;
+  flex-grow: 2;
+  font-family: Inter, sans-serif;
+  width: 100%;
+}
+
+.SearchSection{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.StockSearchInput{
+  outline: none;
+    border: none;
+    border-radius: 10rem;
+    min-width: 20%;
+    max-width: 80%;
+    height: 3.2rem;
+    font-size: 1.1rem;
+    font-family: Inter, sans-serif;;
+    font-weight: 500;
+    box-shadow: 0px 0px 20px 0px #3e91444c;
+    transition: all 0.4s ease-in-out;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px #45a049 solid;
+    color: #ffffff;
+    margin: 0;
+}
+
+.StockSearchInput:focus{
+  border: 1px #45a049 solid;
+  box-shadow: 0 0 10px 0.4px #45a049cb;
+}
+
+.StockSearchButton{
+    border: 1px #45a04900 solid;
+    animation-name: BodyBackground;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    border-radius: 1rem 10rem 10rem 1rem;
+    height: 2.85rem;
+    width: 13.05rem;
+    margin-left: -13.2rem;
+    font-size: 1.2rem;
+    font-family: Inter, sans-serif;
+    font-weight: 450;
+    text-align: center;
+    /* box-shadow: 0px 0px 10px 0px #3e91444c; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.5s ease-in-out;
+}
+
+.StockSearchButton:hover{
+  box-shadow: 0px 0px 10px 5px #3e91444c;
+  border: 1px #45a049 solid;
+  color: #9dcfa0;
+}
+
+button:active{
+    border: 1px #45a049 solid;
+    background-color: #45a0497f;
+    transition: all 0s ease-in-out;
+}
+
+.NewsTitleSectionTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.HomeNewsSectionTitle{
+  width: 80%;
+}
+
+.NewsTitleSection > section > article > h2{
+  text-align: start;
+  font-weight: 300;
+  margin: 1rem 1rem 1rem 0rem;
+}
+
+.SomethingSectionTitle{
+  width: 39%;
+}
+
+.NewsTitleSection{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SomethingSection{
+  width: 39%;
+  height: 10rem;
+}
+
+@media (max-width: 600px) {
+  .StockSearchInput{
+    font-size: 0.8rem;
+  }
+  .StockSearchButton{
+    font-size: 1rem;
+    width: 6rem;
+    margin-left: -6.1rem;
+  }
+}
+
+.ToBuyModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.623);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000; 
+  }
+  
+  .ToBuyBody{
+    padding: 2rem;
+    border-radius: 4rem;
+    text-align: center;
+  }
+
+  .ToBuyContent{
+    animation-name: BodyBackground;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    border: 1px #45a049 solid;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+    padding: 2rem;
+    border-radius: 3rem;
+    width: 35rem;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .ModalBody {
+    margin: 10px 0;
+  }
+  
+  .QuantityInput {
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5rem; 
+  }
+  
+  .ToBuyFooter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 1rem;
+  }
+
+  .ToBuyFooter > button{
+    background-color: #00000000;
+    color: white;
+    border-radius: 5rem;
+    border: 1px #45a049 solid;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-family: Inter, sans-serif;
+    width: 15rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .ToBuyFooter > button:hover{
+    border: 1px #45a049 solid;
+    background-color: #45a0497f;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+  }  
+
+
+  .BuyButton{
+    min-width: 2rem;
+    max-width: 7rem;
+    border-radius: 10rem;
+  }
+
+  .ViewButton{
+    min-width: 2rem;
+    max-width: 7rem;
+    border-radius: 10rem
+  }
+
+  .StockNotFound{
+    margin-top: 5rem;
+  }
+
+  .StockNotFound > h2{
+    font-family: Inter, sans-serif;
+    font-weight: 300;
+    font-size: 2.5rem;
+  }
+
+
+
+  
+
+
+  .StockLogo{
+    margin-right: 0.5rem;
+    width: 3.5rem;
+    border-radius: 1rem;
+  }
+
+  .StockPriceText2{
+    margin-top: 0.7rem;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    font-family: Inter, sans-serif;
+    font-size: 1.8rem;
+  }
+
+  .StockPrice{
+    margin-top: 1.5rem;
+    margin-bottom: 1.8rem;
+    font-family: Inter, sans-serif;;
+    font-weight: 750;
+    font-size: 2rem;
+    color: #45a049;
+  }
+
+  .BuyViewButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 30vw;
+    gap: 1vw;
+  }
+
+  .CompleteSearchResult{
+    padding: 1rem;
+    margin-top: 2.5rem;
+    /* box-shadow: 0px 0px 10px 1px #3e91444c; */
+    border-radius: 2rem;
+    /* border: 1px #3e9144 solid; */
+    width: 53rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .StockHeader{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 1rem 0 0 2rem;
+  }
+
+  .StockHeader > h3{
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .StockHeader > span{
+    margin: 0;
+    font-size: 1.8rem;
+    background-color: #45a049;
+    padding: 0.6rem;
+    margin-left: -0.6rem;
+    border-radius: 1.5rem;
+  }
+
+  .StockBody{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .StockBodyLeft, .StockBodyRight{
+    width: 25rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .StockBodyLeft{
+    margin-top: 1rem;
+  }
+
+  .StockBodyLeft > div > h4{
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0;
+    width: 15rem;
+  }
+
+  .StockBodyLeft > div > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .StockBodyLeft > div > p{
+    font-weight: 300;
+    font-family: Inter, sans-serif;
+  }
+
+  .StockBodyLeft > div > div > p{
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 0;
+    font-family: Inter, sans-serif;
+  }
+
+  .lhTitles{
+    display: flex;
+    justify-content: center;
+    gap: 60%;
+  }
+
+  .StockDailyAveragePoint > span{
+    background: #45a049;
+    border-radius: 5rem;
+    content: "";
+    display: block;
+    height: 1.5rem;
+    width: 3px;
+    position: relative;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+    border: 1px #00000031 solid;
+  }
+
+  .StockDailyAveragePoint{
+    width: 100%;
+  }
+
+  .StockFooter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  .StockFooter > button{
+    background-color: #00000000;
+    color: white;
+    outline: none;
+    border-radius: 5rem;
+    border: 1px #45a049 solid;
+    padding: 0.8rem;
+    font-size: 1.5rem;
+    font-family: Inter, sans-serif;
+    width: 15rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .StockFooter > button:hover{
+    border: 1px #45a049 solid;
+    background-color: #45a0497f;
+    box-shadow: 0px 0px 10px 1px #3e91444c;
+  }
+
+  .BuyStockTitle{
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .BuyStockTitle > h2{
+    margin: 0;
+    text-align: left;
+    gap: 0.5rem;
+  }
+
+  .toBuyBody > label{
+    margin: 1rem 0 0 0;
+    text-align: left;
+    font-weight: 300;
+  }
+
+  .toBuyBody > input{
+    height: 2.3rem;
+    font-size: 1rem;
+    font-family: Inter, sans-serif;
+  }
+
+  .SearchSuggestions{
+    animation-name: BodyBackgroundLight;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1000;
+    position: absolute;
+    top: 5.3rem;
+    margin-top: -1.5rem;
+    min-width: 20%;
+    max-width: 80%;
+    width: 100%;
+    transition: all 0.5s ease-in-out;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 3px 0px #3e91444c;
+  }
+
+  .SearchSuggestions > button{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 98%;
+    cursor: pointer;
+    border-radius: 1.5rem;
+    margin: 0 0.5rem 0 0.5rem;
+    background-color: #00000000;
+    border: 0px;
+    height: 62.8px;
+  }
+
+  .SearchSuggestions > button:hover, .SearchSuggestions > button:focus{
+    animation-name: none;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background-color: #1b3f25;
+    border: none;
+    outline: none;
+  }
+
+  .SearchSuggestions > button > img{
+    width: 2.8rem;
+    margin: 0.5rem 0 0.5rem 1rem;
+    border-radius: 1rem;
+    transition: all 0.5s ease-in-out;
+    font-size: 1.6rem;
+    border: 0px white solid;
+  }
+
+  .SearchSuggestions > button > h4{
+    font-size: 1.4rem;
+    font-weight: 250;
+    margin: 0 0 0 1rem;
+    font-family: Inter, sans-serif;
+    transition: all 0.5s ease-in-out;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .suggestionSymbol{
+    /* background-color: #3e9143; */
+    border: 1px #3e9143 solid;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    transition: all 0.5s ease-in-out;
+    text-align: center;
+    margin-left: 0.3rem;
+  }
+
+  .SearchAndResult{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .CompleteTrendingBody{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .TrendingStocksSectionTitle{
+    width: 92%;
+  }
+
+  .TrendingStocksSection{
+    width: 100%;
+  }
+  
+  .TrendingStocksCarouselContainer {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .TrendingStocksCarouselTrack{
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    animation: Scroll 60s linear infinite;
+    height: 7rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .TrendingStocksCarouselTrack2{
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    animation: Scroll2 60s linear infinite;
+    height: 7rem;
+  }
+
+  .TrendingStocksSectionTitle > h2{
+    margin-top: 5rem;
+    text-align: left;
+    font-weight: 300;
+    margin-bottom: 0rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .TrendingStockDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    border: 1px #45a049 solid;
+    border-radius: 2rem;
+    padding: 1rem;
+    white-space: nowrap;
+    font-size: 24px;
+    cursor: pointer;
+    height: 80%;
+    transition: all 0.5s ease-in-out;
+    background: none;
+  }
+
+  .TrendingStockDiv:hover{
+    box-shadow: 0px 0px 10px #45a049;
+    scale: 1.01;
+    background: none;
+  }
+
+  .TrendingStockDiv > img{
+    width: 4rem;
+    border-radius: 0.8rem;
+    transition: all 0.5s ease-in-out;
+
+  }
+
+  .TrendingStockDiv > h2{
+    margin: 0;
+    font-family: Inter, sans-serif;
+    font-weight: 350;
+  }
+
+  .MotherBody{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .MotherBody > section{
+    width: 87%;
+  }
+
+  
+.MotherBody2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomeNewsSection{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 88%;
+  gap: 1rem;
+}
+
+  .CompleteMarketNews{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 100%;
+    animation: growThenSmall 1s ease-in-out;
+  }
+
+  .CompleteMarketNews:hover{
+    scale: 1.005;
+  }
+
+  .marketNewsContainer{
+    width: 100%;
+  }
+
+  .marketNewsHeader{
+    width: 100%;
+  }
+
+  .marketNewsImage > img{
+    width: 12.5rem;
+    height: fit-content;
+    border-radius: 0.6rem;
+    float: left;
+    margin: 0rem 0.5rem 0rem 0.5rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .marketNewsHeader > h3{
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: left;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .marketNewsBody > p{
+    text-align: left;
+    font-weight: 350;
+    margin: 0.7rem 1rem 0 0;
+    transition: all 0.5s ease-in-out;
+
+  }
+
+
+
+  .marketNewsFooter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .marketNewsFooter > p{
+    margin: 0.5rem 0 0 0;
+    font-weight: 200;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .HomeNewsSectionTitle > article{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .newsArrowContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .newsLeftArrow{
+    width: 0;
+    height: 0;
+    border-left: 0px;
+    border-bottom: 10px solid transparent;
+    border-right: 15px solid white;
+    border-top: 10px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .newsLeftArrow:hover{
+    scale: 1.1;
+  }
+
+  .newsRightArrow:hover{
+    scale: 1.1;
+  }
+
+  .newsRightArrow{
+    height: 0;
+    width: 0;
+    border-left: 15px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 0px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .newsArrowTriangleContainer{
+    background: none;
+    border: none;
+  }
+
+  .newsArrowTriangleContainer:hover{
+    background: none;
+    border: none;
+  }
+
+  .newsAnimateLeft{
+    animation: newsGoRight 0.5s ease-in-out;
+  }
+
+  .newsAnimateRight{
+    animation: newsGoLeft 0.5s ease-in-out;
+  }
+
+  @media (max-width: 900px) {
+
+    .StockSearchButton{
+      width: 9rem;
+      margin-left: -9.2rem;
+    }
+
+    .SearchSuggestions{
+      width: 83%;
+    }
+
+    .CompleteSearchResult{
+      width: 35rem;
+    }
+    .StockBodyLeft{
+      margin-top: 1.6rem;
+    }
+    .StockBodyRight{
+      margin-top: 0.5rem;
+    }
+    .StockFooter > button{
+      padding: 0.6rem;
+      font-size: 1.2rem;
+      width: 13rem;
+    }
+
+    .StockBodyLeft > div > h4{
+      font-size: 2.8rem;
+    }
+
+    .StockLogo{
+      width: 3.3rem;
+    }
+
+    .StockHeader > span{
+      font-size: 1.6rem;
+    }
+    
+    .SearchSuggestions > div > h4{
+      font-size: 1.4rem;
+      margin: 1rem 1.7rem 1rem 1rem;
+      font-family: Inter, sans-serif;
+    }
+
+    .SearchSuggestions > div > img{
+      width: 2.5rem;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .marketNewsHeader > h3{
+        font-size: 1rem;
+    }
+
+    .marketNewsBody > p{
+        font-size: 0.9rem;
+    }
+
+    .marketNewsFooter > p{
+      font-size: 0.8rem;
+    }
+
+
+
+    .TrendingStocksCarouselTrack{
+      height: 6rem;
+    }
+
+    .TrendingStockDiv > img{
+      width: 3rem;
+    }
+
+    .TrendingStockDiv > h2{
+      font-size: 1.7rem;
+    } 
+}
+
+
+    @media (max-width: 600px) {
+
+    .SearchSuggestions > button > h4 {
+      font-size: 0.9rem;
+      font-weight: 250;
+      margin: 0 0 0 1rem;
+      font-family: Inter, sans-serif;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .suggestionSymbol {
+      background-color: #3e914400;
+      border: 1px #3e9143 solid;
+      border-radius: 2rem;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      transition: all 0.5s ease-in-out;
+      text-align: center;
+      margin-left: 0.3rem;
+    }
+
+    .NewsTitleSection > section > article > h2{
+      font-size: 1.8rem;
+    }
+
+    .TrendingStocksSectionTitle > h2{
+      font-size: 1.8rem;
+    }
+
+    .StockBodyLeft > div > h4{
+      font-size: 2.5rem;
+    }
+
+
+    .StockBodyLeft > div > p{
+      font-size: 0.9rem;
+    }
+
+    .StockHeader{
+      margin: 0;
+      justify-content: space-around;
+    }
+
+    .ToBuyContent{
+      width: 25rem;
+    }
+
+    .marketNewsHeader > h3{
+        font-size: 0.8rem;
+    }
+
+    .marketNewsBody > p{
+        font-size: 0.7rem;
+    }
+
+    .marketNewsFooter > p{
+      font-size: 0.65rem;
+    }
+
+    .TrendingStocksCarouselTrack{
+      height: 5rem;
+    }
+
+    .TrendingStockDiv > img{
+      width: 2.5rem;
+    }
+
+    .TrendingStockDiv > h2{
+      font-size: 1.5rem;
+    } 
+
+    .TrendingStockDiv{
+      border-radius: 1.5rem;
+    }
+    
+    .marketNewsImage > img{
+      width: 10rem;
+    }
+
+    .BuyStockTitle > h2{
+      font-size: 1.2rem;
+    }
+
+    .BuyStockTitle > h2 > .StockSymbol{
+      font-size: 1.1rem;
+    }
+
+    .StockLogo{
+      width: 1rem;
+      border-radius: 0.8rem;
+    }
+
+  }
+
+  @media (max-width: 500px) {
+
+    .SearchSuggestions > button > h4 {
+      font-size: 0.83rem;
+      font-weight: 250;
+      margin: 0 0 0 1rem;
+      font-family: Inter, sans-serif;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .suggestionSymbol {
+      background-color: #3e914400;
+      border: 1px #3e9143 solid;
+      border-radius: 2rem;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      transition: all 0.5s ease-in-out;
+      text-align: center;
+      margin-left: 0.3rem;
+    }
+    
+    .CompleteMarketNews{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .HomeNewsSection{
+      gap: 2rem;
+    }
+
+    .marketNewsImage{
+      margin-bottom: 1rem;
+    }
+
+  }
+
+  @media (max-width: 420px) {
+
+    .StockSearchInput{
+      max-width: 90%;
+    }
+
+    .StockSearchButton{
+      width: 6rem;
+      margin-left: -6.2rem;
+    }
+
+    .CompleteSearchResult{
+      width: 20rem;
+    }
+
+    .StockLogo{
+      width: 2.8rem;
+    }
+
+    .StockHeader{
+      gap: 0.5rem;
+      margin: 0;
+    }
+
+    .StockHeader > span{
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .StockHeader > h3{
+      font-size: 1.8rem;
+    }
+
+    .SearchSuggestions > div > h4{
+      font-size: 1rem;
+      margin: 1rem 1.7rem 1rem 1rem;
+      font-family: Inter, sans-serif;
+    }
+
+    .StockBodyLeft > div > h4{
+      font-size: 1.8rem;
+    }
+
+
+    .StockBodyLeft > div > p{
+      font-size: 0.8rem;
+    }
+
+    .StockBodyLeft > div > div > p{
+      font-size: 0.9rem;
+    }
+
+    .StockDailyRange > h4{
+      font-size: 0.9rem;
+    }
+
+    .StockDailyRange > p{
+      font-size: 0.8rem;
+    }
+
+    .lhTitles > h4{
+      font-size: 0.9rem;
+    }
+
+    .lhTitles > p{
+      font-size: 0.8rem;
+    }
+
+    .VolumeGFR{
+      font-size: 0.9rem;
+    }
+
+    .StockBodyRight{
+      margin: 0;
+    }
+
+    .StockFooter{
+      gap: 1rem;
+    }
+
+    .StockFooter > button{
+      padding: 0.5rem;
+    }
+
+    .ToBuyContent{
+      width: 90%;
+    }
+  }
+
+@keyframes Scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes Scroll2 {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes growThenSmall {
+  0% {
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.03);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+@keyframes newsGoLeft{
+  0%{
+    transform: translateX(0%);
+  }
+  50%{
+    transform: translateX(-50%);
+  }
+  51%{
+    transform: translateX(150%);
+  }
+  100%{
+    transform: translateX(0%);
+  }
+}
+
+@keyframes newsGoRight{
+  0%{
+    transform: translateX(0%);
+  }
+  50%{
+    transform: translateX(150%);
+  }
+  51%{
+    transform: translateX(-50%);
+  }
+  100%{
+    transform: translateX(0%);
+  }
+}
