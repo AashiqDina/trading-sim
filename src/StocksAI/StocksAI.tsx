@@ -2,7 +2,7 @@ import { HfInference } from '@huggingface/inference'
 
 
 const hf = new HfInference("")
-//"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")
+//"api_key")
 
 export async function StocksAI(_Prompt: String, _StockData: any){
     try {
@@ -21,4 +21,5 @@ export async function StocksAI(_Prompt: String, _StockData: any){
     } catch {
         console.error("Something went wrong")
     }
+
 }
