@@ -96,6 +96,20 @@ export default function StocksTable(props: any){
     }
   }
 
+  function getHoursAgo(dateString) {
+    const lastUpdated = new Date(dateString);
+    const now = new Date();
+  
+    const MinuteDifference = now - lastUpdated;
+    const HourDifference = Math.floor(MinuteDifference / (1000 * 60 * 60));
+  
+    if (HourDifference <= 0) return "Updated Just Now";
+    if (HourDifference === 1) return "Updated 1h ago";
+  
+    return `Updated ${HourDifference}h ago`;
+  }
+
+
   function inputFilter(input: string){
     if(input == ""){
       setFilteredSearch(Portfolio)
@@ -212,13 +226,8 @@ export default function StocksTable(props: any){
                       <td className="tdLogo"><button aria-label='Visit Stock Details Page' onClick={ () => {navigate(`/stock/${encodeURIComponent(String(stockAvg.symbol ?? ''))}`)}} className='tdLogoButton'><img className="StockLogos" src={stockAvg.logo} alt="Stock Logo" /></button></td>
                       <td className="tdCompanies"><div><div><button aria-label='Expand Stock to see individual stocks bought'><h3>{stockAvg.name}</h3><span>Quantity: {Math.round(stockAvg.totalShares*100)/100}</span></button></div></div></td>
                       <td className="tdBoughtPrice"><div>£{stockAvg.totalCost.toFixed(2)}<span>Average: £{stockAvg.avgBuyPrice.toFixed(2)}</span></div></td>
-                      <td className="tdCurrentValue"><div>£{stockAvg.currentWorth.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>Last Updated: {LastUpdatedDictionary?.get(stockAvg.symbol)
-                          ? LastUpdatedDictionary.get(stockAvg.symbol)!.toLocaleString(undefined, {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              day: 'numeric',
-                              month: 'numeric',
-                              year: '2-digit',
+                      <td className="tdCurrentValue"><div>£{stockAvg.currentWorth.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>Last Updated: {
+                          {getHoursAgo(stock.lastUpdated)}
                             })
                           : "Error"}
                           </span>
@@ -304,3 +313,4 @@ export default function StocksTable(props: any){
     )
 
 }
+
