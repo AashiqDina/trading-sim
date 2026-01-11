@@ -43,8 +43,8 @@ export default function StockDetails(props: any){
         <section className='StockData'>
           <article className={BasicStockData?.isMarketOpen ? "OpenMarketArticle" : "CloseMarketArticle"} tabIndex={0}>
             {BasicStockData?.isMarketOpen ? 
-              <img src="/Sun.svg" alt="Market Open" /> : 
-              <img src="/Moon.svg" alt="Market Close" />}
+              <img src={process.env.PUBLIC_URL + "/Sun.svg"} alt="Market Open" /> : 
+              <img src={process.env.PUBLIC_URL + "/Moon.svg"} alt="Market Close" />}
               <h2>{BasicStockData?.isMarketOpen ? "Market Open" : "Market Closed"}</h2>
           </article>
           <article>
@@ -132,4 +132,5 @@ export default function StockDetails(props: any){
 
 
     )
+
 }
