@@ -621,6 +621,8 @@ a{
 }
 
 .StockDetailsTitle{
+	display: flex;
+	align-items: center;
     text-align: left;
     margin: 0;
 }
@@ -731,6 +733,8 @@ a{
 
     .Selector > button{
         width: 5rem;
+		font-size: .75rem;
+		height: 2.6rem;
     }
 
     .BuyStockButton{
@@ -902,4 +906,5 @@ a{
  }
 
 }
+
 
