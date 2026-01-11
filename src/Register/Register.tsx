@@ -19,7 +19,7 @@ function Register() {
     setError("");
   
     try {
-      const checkResponse = await fetch("http://localhost:3000/api/User/checkUsername", {
+      const checkResponse = await fetch("https://tradingsim-backend.onrender.com/api/User/checkUsername", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,3 +142,4 @@ function Register() {
 }
 
 export default Register;
+
