@@ -240,7 +240,11 @@ function getHoursAgo(date?: string | null): string {
                       <td className="tdProfit"><div><div>£{(stockAvg.currentWorth - stockAvg.totalCost).toFixed(2)}<span style={{color: (((((stockAvg.currentWorth/stockAvg.totalCost)*100)-100) >= 0) ? "#45a049" : "#bb1515")}}>{((((stockAvg.currentWorth/stockAvg.totalCost)*100)-100) > 0) ? "+" : null}{(((stockAvg.currentWorth/stockAvg.totalCost)*100)-100).toFixed(1)}%</span></div></div></td>
                       {IndexExpanded != null ? <td style={{padding: 0}}></td> : ""}
                     </tr>
-                    {IndexExpanded == index && stockAvg.transactions.map((stock: any, i: number) => (
+                    {IndexExpanded == index && stockAvg.transactions.map((stock: any, i: number) => {
+                        console.log("lastUpdated value:", stockAvg.lastUpdated);
+                        console.log("typeof:", typeof stockAvg.lastUpdated);
+                        console.log("instanceof Date:", stockAvg.lastUpdated instanceof Date);
+                      return (
                       <tr key={i}>
                         {/* <td><img className="StockLogos" style={{padding: "0rem 0rem 0rem 0.5rem"}} src={stockAvg.logo} alt="Stock Logo" /></td> */}
                         <td className="tdLogoMore">
@@ -263,7 +267,7 @@ function getHoursAgo(date?: string | null): string {
                         </td>}
 
                       </tr>
-                    ))}
+                    ))}}
                     </React.Fragment>
                   ))}
 
