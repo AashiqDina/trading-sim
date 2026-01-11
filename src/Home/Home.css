@@ -111,10 +111,10 @@ button:active{
 
 @media (max-width: 600px) {
   .StockSearchInput{
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   .StockSearchButton{
-    font-size: 1rem;
+    font-size: 0.9rem;
     width: 6rem;
     margin-left: -6.1rem;
   }
@@ -811,6 +811,11 @@ button:active{
 
     @media (max-width: 600px) {
 
+    .StockSearchButton {
+      margin-left: -6.2rem;
+      width: 6rem;
+    }
+
     .SearchSuggestions > button > h4 {
       font-size: 0.9rem;
       font-weight: 250;
@@ -1088,4 +1093,5 @@ button:active{
   }
 
 }
+
 
