@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/trading-sim/static/css/main.d7799cd2.css",
+    "main.css": "/trading-sim/static/css/main.865739c5.css",
     "main.js": "/trading-sim/static/js/main.b8b849a1.js",
     "index.html": "/trading-sim/index.html",
-    "main.d7799cd2.css.map": "/trading-sim/static/css/main.d7799cd2.css.map",
+    "main.865739c5.css.map": "/trading-sim/static/css/main.865739c5.css.map",
     "main.b8b849a1.js.map": "/trading-sim/static/js/main.b8b849a1.js.map"
   },
   "entrypoints": [
-    "static/css/main.d7799cd2.css",
+    "static/css/main.865739c5.css",
     "static/js/main.b8b849a1.js"
   ]
 }
