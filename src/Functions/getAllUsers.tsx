@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function getAllUsers(props: any){
     try{
-        const result = await axios.get(`http://localhost:3000/api/User/List`)
+        const result = await axios.get(`https://tradingsim-backend.onrender.com/api/User/List`)
         console.log("UserList: ", result)
 
         if(result){
@@ -27,4 +27,5 @@ export default async function getAllUsers(props: any){
             buttonText: "Retry"})
         return null;
     }
+
 }
