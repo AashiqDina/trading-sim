@@ -45,7 +45,7 @@ export default async function buyStock(props: any){
 
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/portfolio/${props.user?.id}/stocks`,
+        `https://tradingsim-backend.onrender.com/api/portfolio/${props.user?.id}/stocks`,
         stockPurchaseRequest
       );
       alert('Stock purchased successfully');
@@ -56,5 +56,6 @@ export default async function buyStock(props: any){
       console.error('Error purchasing stock:', error);
       alert('Error purchasing stock');
     }
+
 
 }
