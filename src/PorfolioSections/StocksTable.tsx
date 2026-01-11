@@ -100,7 +100,7 @@ function getHoursAgo(dateString: string): string {
     const lastUpdated = new Date(dateString);
     const now = new Date();
   
-    const MinuteDifference = now - lastUpdated;
+    const MinuteDifference = now.getTime() - lastUpdated.getTime();
     const HourDifference = Math.floor(MinuteDifference / (1000 * 60 * 60));
   
     if (HourDifference <= 0) return "Updated Just Now";
@@ -312,6 +312,7 @@ function getHoursAgo(dateString: string): string {
     )
 
 }
+
 
 
 
