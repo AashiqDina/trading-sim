@@ -99,9 +99,10 @@ const Login = () => {
       </form>
       {error && <p role="alert" className="ErrorType">{error}</p>}
       <p className="noAccount">Don't have an account?</p>
-      <a aria-label="Go to registration page to create an account" href="/register" className="noAccountRegister">Register</a>
+      <a aria-label="Go to registration page to create an account" href="#/register" className="noAccountRegister">Register</a>
     </div>
   );
 };
 
 export default Login;
+
