@@ -3,7 +3,7 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function DeclineFriendRequest(props: any){
     try{
-        const result = await axios.post(`http://localhost:3000/api/User/Decline-Request/${props.userId}/${props.friendId}`)
+        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${props.userId}/${props.friendId}`)
         console.log("Decline Request: ", result)
 
         if(result.data.hasError){
@@ -26,4 +26,5 @@ export default async function DeclineFriendRequest(props: any){
             buttonText: "Retry"})
         return null;
     }
+
 }
