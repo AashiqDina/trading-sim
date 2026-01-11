@@ -674,6 +674,16 @@ table tbody tr:last-child td:last-child {
 
 }
 
+@media (max-width: 600px) {
+	.tdCompanies > div > div > button > span {
+	  font-size: 0.8rem;
+	}
+
+	.tdCompanies > div > div > button > h3{
+	  font-size: 1rem;
+	}
+}
+
 @media (max-width: 550px) {
   .ModalContent .Table{
     min-width: 20rem;
@@ -1289,4 +1299,5 @@ table tbody tr:last-child td:last-child {
   100%{
     width: 20px;
   }
+
 }
