@@ -3,7 +3,7 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function getMarketNews(props: any){
     try{
-        const result = await axios.get(`http://localhost:3000/api/stocks/GetMarketNews`)
+        const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetMarketNews`)
 
         if(result.data.hasError){
             handleTwelveDataError({
@@ -28,3 +28,4 @@ export default async function getMarketNews(props: any){
         return null;
     }
 }
+
