@@ -96,7 +96,7 @@ export default function StocksTable(props: any){
     }
   }
 
-  function getHoursAgo(dateString) {
+function getHoursAgo(dateString: string): string {
     const lastUpdated = new Date(dateString);
     const now = new Date();
   
@@ -312,6 +312,7 @@ export default function StocksTable(props: any){
     )
 
 }
+
 
 
 
