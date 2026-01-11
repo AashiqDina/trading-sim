@@ -11,7 +11,7 @@ export default function updateAllStocksInPortfolio(props: any){
       
         try {
           const response = await axios.put(
-            `http://localhost:3000/api/portfolio/${user?.id}/stocks/update`
+            `https://tradingsim-backend.onrender.com/api/portfolio/${user?.id}/stocks/update`
           );
       
           console.log("Stocks updated:", response.data);
@@ -23,4 +23,5 @@ export default function updateAllStocksInPortfolio(props: any){
       };
 
     return UpdateAllStocksInPortfolio()
+
 }
