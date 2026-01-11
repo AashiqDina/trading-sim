@@ -726,6 +726,23 @@ a{
         width: 80%;
     }
 
+	.TitleLogo{
+		width: 55rem;
+		border-radius: 0.9rem;
+	}
+
+	.StockDetailsTitle{
+		font-size: 1.8rem;
+		font-weight: 550;
+	}
+
+	.StockDetailsTitle > span {
+		margin-left: 0.5rem;
+	}
+
+	.StockSymbol{
+		font-size: 1.2rem;
+	}
 
     .TitleBox{
         margin: 0;
@@ -906,5 +923,6 @@ a{
  }
 
 }
+
 
 
