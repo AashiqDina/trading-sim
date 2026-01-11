@@ -631,7 +631,7 @@ button:active{
 
   .marketNewsImage > img{
     width: 12.5rem;
-    height: fit-content;
+    height: auto;
     border-radius: 0.6rem;
     float: left;
     margin: 0rem 0.5rem 0rem 0.5rem;
@@ -1085,4 +1085,5 @@ button:active{
   100%{
     transform: translateX(0%);
   }
+
 }
