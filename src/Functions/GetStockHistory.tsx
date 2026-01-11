@@ -3,7 +3,7 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function GetStockHistory(props: any){
     try{
-        const result = await axios.get(`https://tradingsim-backend.onrender.com//api/stocks/GetStocksFullHistory/${props.symbol}`)
+        const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetStocksFullHistory/${props.symbol}`)
         console.log(result)
 
         if(result.data.data.hasError){
@@ -30,3 +30,4 @@ export default async function GetStockHistory(props: any){
     }
 
 }
+
