@@ -3,7 +3,7 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function getStockName(props: any){
     try{
-        const result = await axios.get(`http://localhost:3000/api/stocks/GetStockName/${props.symbol}`)
+        const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetStockName/${props.symbol}`)
         console.log(result)
 
         if(result.data.hasError){
@@ -27,4 +27,5 @@ export default async function getStockName(props: any){
             buttonText: "Retry"})
         return null;
     }
+
 }
