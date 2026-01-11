@@ -15,7 +15,6 @@ import { AuthProvider } from "../Functions/AuthContext";
 function App() {
   return (
     <AuthProvider>
-      <Router>
         <div className="App">
           <Header />
           <Routes>
@@ -29,9 +28,9 @@ function App() {
             <Route path="/user/:user/:username" element={<UserPortfolio/>}></Route>
           </Routes>
         </div>
-      </Router>
     </AuthProvider>
   );
 }
+
 
 export default App;
