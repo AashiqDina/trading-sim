@@ -10,7 +10,7 @@ export default async function getPortfolio(props: any) {
   }
 
   try {
-    const response = await axios.get(`http://localhost:3000/api/portfolio/${user.id}`);
+    const response = await axios.get(`https://tradingsim-backend.onrender.com/api/portfolio/${user.id}`);
     const portfolioData = response.data;
 
     if (!portfolioData) {
@@ -49,3 +49,4 @@ export default async function getPortfolio(props: any) {
     return null;
   }
 }
+
