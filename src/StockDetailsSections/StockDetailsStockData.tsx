@@ -104,7 +104,7 @@ export default function StockDetails(props: any){
               </div>
               <div className='genericFlexRow' style={{margin: "0 1rem 0 1rem", justifyContent: "flex-start"}}>
                 <h4>Open:</h4>
-                <h5>£{BasicStockData?.open}</h5>
+                <h5 className='StockDataOpen'>£{BasicStockData?.open}</h5>
               </div>
               <div className='genericFlexRow' style={{margin: "0 1rem 0 1rem", justifyContent: "flex-start"}}>
                 <div className='ClosePrevClose'>
@@ -134,3 +134,4 @@ export default function StockDetails(props: any){
     )
 
 }
+
