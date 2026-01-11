@@ -2,7 +2,8 @@
   "name": "trading-simulator-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://aashiq.github.io/trading-sim",
+  "homepage": "https://aashiqdina.github.io/trading-sim",
+  
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -65,3 +66,4 @@
     "jest": "^27.5.1"
   }
 }
+
