@@ -8,7 +8,7 @@ export default function Error(props: any){
                     <div>
                         <div>
                             {props.warning ?
-                                <img src="/Warning.svg" alt="WARNING SYMBOL" /> : <img src="/Error.svg" alt="ERROR SYMBOL" />}
+                                <img src={process.env.PUBLIC_URL + "/Warning.svg"} alt="WARNING SYMBOL" /> : <img src={process.env.PUBLIC_URL + "/Error.svg"} alt="ERROR SYMBOL" />}
                         </div>
                         <div>
                             <h2>{props.title}</h2>
@@ -24,4 +24,5 @@ export default function Error(props: any){
             </div>
         </>
     )
+
 }
