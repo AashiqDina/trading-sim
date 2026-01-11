@@ -386,6 +386,10 @@ a{
     max-width: 10rem;
 }
 
+.ClosePrevClose > h5{
+	font-weight: 400;
+}
+
 .StockDetailsAddress{
     font-size: 1rem;
     display: flex;
@@ -896,4 +900,5 @@ a{
  100%{
     transform: rotateY(0deg);
  }
+
 }
