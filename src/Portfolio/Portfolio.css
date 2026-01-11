@@ -526,7 +526,6 @@ table tbody tr:last-child td:last-child {
 
   .tdCompanies > div > div{
     align-items: flex-start;
-    padding-left: 1rem;
   }
 
   .tdProfit > div > div > span{
@@ -1134,7 +1133,7 @@ table tbody tr:last-child td:last-child {
   }
 
   .Filter > input {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   .ModalFooter{
     gap: 1rem;
@@ -1301,3 +1300,4 @@ table tbody tr:last-child td:last-child {
   }
 
 }
+
