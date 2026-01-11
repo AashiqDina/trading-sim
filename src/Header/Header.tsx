@@ -84,7 +84,7 @@ const Header: React.FC = () => {
         {user ? (
           <button role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleLink("/portfolio")}} aria-label="Click here to visit your portfolio" className="HeaderUsername" onClick={() => handleLink("/portfolio")}>{user.username}</button>
         ) : (
-            <button aria-label="Login Button" className="Header-logo" onClick={() => handleLink("/login")} tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleLink("/login")}}><img src="/UserIcon.png" alt="Icon for a user that is not logged in" className="UserIcon" /></button>
+            <button aria-label="Login Button" className="Header-logo" onClick={() => handleLink("/login")} tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleLink("/login")}}><img src="%PUBLIC_URL%/UserIcon.png" alt="Icon for a user that is not logged in" className="UserIcon" /></button>
         )}
       
         
@@ -93,3 +93,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
