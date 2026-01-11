@@ -50,7 +50,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
       const getMap = async () => {
-        const map = await axios.get(`http://localhost:3000/api/stocks/GetStockList`)
+        const map = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetStockList`)
         console.log(map.data)
         setStockList(map.data)
       };
@@ -330,3 +330,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
