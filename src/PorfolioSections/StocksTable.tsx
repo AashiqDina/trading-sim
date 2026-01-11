@@ -97,6 +97,9 @@ export default function StocksTable(props: any){
   }
 
 function getHoursAgo(date?: string | null): string {
+  console.log("lastUpdated value:", stockAvg.lastUpdated);
+  console.log("typeof:", typeof stockAvg.lastUpdated);
+  console.log("instanceof Date:", stockAvg.lastUpdated instanceof Date);
   if (!date) return "Not updated";
 
   const parsedDate = new Date(date);
@@ -314,6 +317,7 @@ function getHoursAgo(date?: string | null): string {
     )
 
 }
+
 
 
 
