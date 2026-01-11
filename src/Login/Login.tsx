@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/User/login", {
+      const response = await fetch("https://tradingsim-backend.onrender.com/api/User/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,4 +105,5 @@ const Login = () => {
 };
 
 export default Login;
+
 
