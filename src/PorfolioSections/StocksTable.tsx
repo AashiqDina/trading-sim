@@ -96,19 +96,18 @@ export default function StocksTable(props: any){
     }
   }
 
-function getHoursAgo(dateString: string): string {
-    const lastUpdated = new Date(dateString);
-    const now = new Date();
-  
-    const MinuteDifference = now.getTime() - lastUpdated.getTime();
-    const HourDifference = Math.floor(MinuteDifference / (1000 * 60 * 60));
-  
-    if (HourDifference <= 0) return "Updated Just Now";
-    if (HourDifference === 1) return "Updated 1h ago";
-  
-    return `Updated ${HourDifference}h ago`;
-  }
+function getHoursAgo(date?: Date): string {
+  if (!date) return "Error";
 
+  const minutesDiff = Date.now() - date.getTime();
+  const hoursDiff = Math.floor(minutesDiff / (1000 * 60 * 60));
+
+  if (hoursDiff <= 0) return "Just updated";
+  if (hoursDiff < 1) return `Updated ${minutesDiff}m ago`;
+  if (hoursDiff === 1) return "Updated 1h ago";
+
+  return `Updated ${hoursDiff}h ago`;
+}
 
   function inputFilter(input: string){
     if(input == ""){
@@ -312,6 +311,7 @@ function getHoursAgo(dateString: string): string {
     )
 
 }
+
 
 
 
