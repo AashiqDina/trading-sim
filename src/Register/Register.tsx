@@ -46,7 +46,7 @@ function Register() {
         return;
       }
   
-      const response = await fetch("https://tradingsim-backend.onrender.com//api/User", {
+      const response = await fetch("https://tradingsim-backend.onrender.com/api/User", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,5 +142,6 @@ function Register() {
 }
 
 export default Register;
+
 
 
