@@ -104,10 +104,11 @@ margin-bottom: 3rem;
 
 @media (max-width: 780px) {
     .StockGraphValues > div > h2{
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .StockGraphValues > div > h3{
+        font-size: 0.9rem
     }
 
     .StockGraphButtonCollection > button{
@@ -195,7 +196,7 @@ margin-bottom: 3rem;
         padding: 0.4rem 0 0.4rem 0;
     }
     .StocksGraph{
-        margin-top: 1rem;
+        margin-top: 0.2rem;
     }
 
     .TitleBox > section{
@@ -221,4 +222,5 @@ margin-bottom: 3rem;
     }
 
 }
+
 
