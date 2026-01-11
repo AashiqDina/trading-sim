@@ -46,7 +46,7 @@ const Portfolio = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:3000/api/portfolio/${user?.id}/stocks/delete/${ToDelete.stock}`)
+      const response = await axios.delete(`https://tradingsim-backend.onrender.com/api/portfolio/${user?.id}/stocks/delete/${ToDelete.stock}`)
       console.log("Successfully Deleted: ", response)
       setToReload(true)
       setToDelete({stock: null, name: null, logo: null})
@@ -219,3 +219,4 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
