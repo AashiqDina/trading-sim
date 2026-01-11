@@ -200,11 +200,11 @@ margin-bottom: 3rem;
 
 @media (max-width: 400px) {
     .StockGraphValues > div > h2{
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .StockGraphValues > div > h3{
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .StocksGraph{
@@ -214,4 +214,5 @@ margin-bottom: 3rem;
     .TitleBox > section{
         margin-top: 1rem;
     }
+
 }
