@@ -96,13 +96,16 @@ export default function StocksTable(props: any){
     }
   }
 
-function getHoursAgo(date?: Date): string {
+function getHoursAgo(date?: string | Date | null): string {
   if (!date) return "Error";
 
-  const minutesDiff = Date.now() - date.getTime();
-  const hoursDiff = Math.floor(minutesDiff / (1000 * 60 * 60));
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
 
-  if (hoursDiff <= 0) return "Just updated";
+  const msDiff = Date.now() - parsedDate.getTime();
+  const minutesDiff = Math.floor(msDiff / (1000 * 60));
+  const hoursDiff = Math.floor(msDiff / (1000 * 60 * 60));
+
+  if (minutesDiff < 1) return "Just updated";
   if (hoursDiff < 1) return `Updated ${minutesDiff}m ago`;
   if (hoursDiff === 1) return "Updated 1h ago";
 
@@ -226,8 +229,7 @@ function getHoursAgo(date?: Date): string {
                       <td className="tdCompanies"><div><div><button aria-label='Expand Stock to see individual stocks bought'><h3>{stockAvg.name}</h3><span>Quantity: {Math.round(stockAvg.totalShares*100)/100}</span></button></div></div></td>
                       <td className="tdBoughtPrice"><div>£{stockAvg.totalCost.toFixed(2)}<span>Average: £{stockAvg.avgBuyPrice.toFixed(2)}</span></div></td>
                       <td className="tdCurrentValue"><div>£{stockAvg.currentWorth.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>Last Updated:
-                        {stockAvg.lastUpdated ? getHoursAgo(stockAvg.lastUpdated)
-                          : "Error"}
+                        {getHoursAgo(stockAvg.lastUpdated)}
                           </span>
                         </div>
                       </td>
@@ -311,6 +313,7 @@ function getHoursAgo(date?: Date): string {
     )
 
 }
+
 
 
 
