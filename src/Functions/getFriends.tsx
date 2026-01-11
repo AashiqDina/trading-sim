@@ -3,7 +3,7 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function getFriends(props: any){
  try{
-        const result = await axios.get(`http://localhost:3000/api/User/Get-Friends/${props.userId}`)
+        const result = await axios.get(`https://tradingsim-backend.onrender.com/api/User/Get-Friends/${props.userId}`)
         console.log("Friends List: ",result)
 
         if(result.data.hasError){
@@ -27,4 +27,5 @@ export default async function getFriends(props: any){
             buttonText: "Retry"})
         return null;
     }
+
 }
