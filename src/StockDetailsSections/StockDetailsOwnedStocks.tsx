@@ -48,6 +48,22 @@ export default function StockDetailsOwnedStocks(props: any){
       getLastUpdated()
     }, [Portfolio])
 
+    function getHoursAgo(date?: string | Date | null): string {
+      if (!date) return "N/A";
+    
+      const parsedDate = typeof date === "string" ? new Date(date) : date;
+    
+      const msDiff = Date.now() - parsedDate.getTime();
+      const minutesDiff = Math.floor(msDiff / (1000 * 60));
+      const hoursDiff = Math.floor(msDiff / (1000 * 60 * 60));
+    
+      if (minutesDiff < 1) return "Just updated";
+      if (hoursDiff < 1) return `Updated ${minutesDiff}m ago`;
+      if (hoursDiff === 1) return "Updated 1h ago";
+    
+      return `Updated ${hoursDiff}h ago`;
+    }
+
     return(
       <>
         {FilteredPortfolio != null && FilteredPortfolio.stocks.length != 0 ?
@@ -69,15 +85,10 @@ export default function StockDetailsOwnedStocks(props: any){
                      <td className="tdLogo"><img className="StockLogos" src={stock.logo} alt="Stock Logo" /></td>
                      <td className="tdCompanies"><div><div><h3>{stock.name}</h3><span>Quantity: {stock.quantity}</span></div></div></td>
                      <td className="tdBoughtPrice"> £{(stock.purchasePrice*stock.quantity).toFixed(2)}</td>
-                      <td className="tdCurrentValue"><div>£{stock.currentPrice.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>Last Updated: {LastUpdatedDictionary?.get(props.symbol)
-                          ? LastUpdatedDictionary.get(props.symbol)!.toLocaleString(undefined, {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              day: 'numeric',
-                              month: 'numeric',
-                              year: '2-digit',
-                            })
-                          : "Error"}
+                      <td className="tdCurrentValue"><div>£{stock.currentPrice.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>
+                        {LastUpdatedDictionary?.get(stockAvg.symbol)
+                          ? getHoursAgo(LastUpdatedDictionary.get(stockAvg.symbol))
+                          : "N/A"}
                           </span>
                         </div>
                       </td>
@@ -93,4 +104,5 @@ export default function StockDetailsOwnedStocks(props: any){
           
         </>
     )
+
 }
