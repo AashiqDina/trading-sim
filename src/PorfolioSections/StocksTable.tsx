@@ -96,10 +96,10 @@ export default function StocksTable(props: any){
     }
   }
 
-function getHoursAgo(date?: string | null): string {
-  if (!date) return "Not updated";
+function getHoursAgo(date?: string | Date | null): string {
+  if (!date) return "N/A";
 
-  const parsedDate = new Date(date);
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
 
   const msDiff = Date.now() - parsedDate.getTime();
   const minutesDiff = Math.floor(msDiff / (1000 * 60));
@@ -320,6 +320,7 @@ function getHoursAgo(date?: string | null): string {
     )
 
 }
+
 
 
 
