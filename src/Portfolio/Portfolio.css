@@ -497,7 +497,7 @@ table tbody tr:last-child td:last-child {
 }
 
 .tdProfit > div > div > span{
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: end;
 }
 
@@ -1300,4 +1300,5 @@ table tbody tr:last-child td:last-child {
   }
 
 }
+
 
