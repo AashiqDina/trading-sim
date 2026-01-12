@@ -745,7 +745,7 @@ a{
 	}
 
     .TitleBox{
-        margin: 0;
+        margin: 1rem 1rem 0 1rem;
     }
 
     .Selector > button{
@@ -923,6 +923,7 @@ a{
  }
 
 }
+
 
 
 
