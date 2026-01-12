@@ -40,7 +40,7 @@ export default function StockDetailsOwnedStocks(props: any){
 
     useEffect(() => {
     const getLastUpdated = async () => {
-      let LastUpdatedDictionary = await axios.get(`http://localhost:3000/api/stocks/GetAllStockLastUpdated`)
+      let LastUpdatedDictionary = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetAllStockLastUpdated`)
       const map = new Map<string, Date>(
       Object.entries(LastUpdatedDictionary.data.data).map(([key, value]) => [key, new Date(value as string)]));
       setLastUpdatedDictionary(map);
@@ -106,6 +106,7 @@ export default function StockDetailsOwnedStocks(props: any){
     )
 
 }
+
 
 
 
