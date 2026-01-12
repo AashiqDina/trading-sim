@@ -675,11 +675,11 @@ table tbody tr:last-child td:last-child {
 
 @media (max-width: 600px) {
 	.tdCompanies > div > div > button > span {
-	  font-size: 0.8rem;
+	  font-size: 0.7rem;
 	}
 
 	.tdCompanies > div > div > button > h3{
-	  font-size: 1rem;
+	  font-size: 0.9rem;
 	}
 }
 
@@ -1300,5 +1300,6 @@ table tbody tr:last-child td:last-child {
   }
 
 }
+
 
 
