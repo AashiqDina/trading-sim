@@ -234,7 +234,9 @@ function getHoursAgo(date?: string | null): string {
                       <td className="tdCompanies"><div><div><button aria-label='Expand Stock to see individual stocks bought'><h3>{stockAvg.name}</h3><span>Quantity: {Math.round(stockAvg.totalShares*100)/100}</span></button></div></div></td>
                       <td className="tdBoughtPrice"><div>£{stockAvg.totalCost.toFixed(2)}<span>Average: £{stockAvg.avgBuyPrice.toFixed(2)}</span></div></td>
                       <td className="tdCurrentValue"><div>£{stockAvg.currentWorth.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>Updated:
-                        {getHoursAgo(stockAvg.lastUpdated)}
+                        {LastUpdatedDictionary?.get(stockAvg.symbol)
+                          ? getHoursAgo(LastUpdatedDictionary.get(stockAvg.symbol))
+                          : "N/A"}
                           </span>
                         </div>
                       </td>
@@ -318,6 +320,7 @@ function getHoursAgo(date?: string | null): string {
     )
 
 }
+
 
 
 
