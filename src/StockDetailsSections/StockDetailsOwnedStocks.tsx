@@ -86,8 +86,8 @@ export default function StockDetailsOwnedStocks(props: any){
                      <td className="tdCompanies"><div><div><h3>{stock.name}</h3><span>Quantity: {stock.quantity}</span></div></div></td>
                      <td className="tdBoughtPrice"> £{(stock.purchasePrice*stock.quantity).toFixed(2)}</td>
                       <td className="tdCurrentValue"><div>£{stock.currentPrice.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>
-                        {LastUpdatedDictionary?.get(stockAvg.symbol)
-                          ? getHoursAgo(LastUpdatedDictionary.get(stockAvg.symbol))
+                        {LastUpdatedDictionary?.get(stock.symbol)
+                          ? getHoursAgo(LastUpdatedDictionary.get(stock.symbol))
                           : "N/A"}
                           </span>
                         </div>
@@ -106,4 +106,5 @@ export default function StockDetailsOwnedStocks(props: any){
     )
 
 }
+
 
