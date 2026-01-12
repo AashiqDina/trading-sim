@@ -423,6 +423,7 @@ table tbody tr:last-child td:last-child {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin: 0.1rem;
 }
 
 .tdBoughtPrice > div{
@@ -711,6 +712,7 @@ table tbody tr:last-child td:last-child {
 
   .StockLogos{
     width: 25px;
+	margin: 0.1rem
   }
 }
 
@@ -1300,6 +1302,7 @@ table tbody tr:last-child td:last-child {
   }
 
 }
+
 
 
 
