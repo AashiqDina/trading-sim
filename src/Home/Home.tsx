@@ -10,6 +10,7 @@ import getTrendingStocks from '../Functions/getTrendingStocks';
 import Loading from '../Loading/Loading';
 import getMarketNews from '../Functions/getMarketNews';
 import SponsoredAd from '../Ads/SponsoredAd';
+import AiLoading from "../Loading/AiLoading"
 
 type StockInfo = {
   symbol: string;
@@ -210,15 +211,14 @@ const Home: React.FC = () => {
               />
             <button aria-label={`Search for ${stockSymbol}`} className='StockSearchButton' onClick={() => {searchStock("")}}>Search</button>
           </section>
-          {displaySuggestions && suggestions.length != 0 && stockSymbol.length > 0 && <section className='SearchSuggestions'>
-             {suggestions.map((suggestion, index) => {
-              return (
-                <button key={index} onClick={() => {searchStock(suggestion.symbol)}} style={(suggestions.length == 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index == suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index == 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}>
+          {displaySuggestions && suggestions.length !== 0 && stockSymbol.length > 0 && <section className='SearchSuggestions'>
+             {suggestions.map((suggestion, index) => 
+                suggestion.symbol ? (
+                <button key={suggestion.symbol} onClick={() => {searchStock(suggestion.symbol)}} style={(suggestions.length == 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index == suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index == 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}>
                   <img src={suggestion.logo} alt="" />
                   <h4>{suggestion.name}<span className='suggestionSymbol'>{suggestion.symbol}</span></h4>
-                </button>
-            )
-            })}
+                </button>) : (<AiLoading/>)
+                )}
           </section>}
         </section>
         {/* {(
@@ -330,4 +330,5 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
 
