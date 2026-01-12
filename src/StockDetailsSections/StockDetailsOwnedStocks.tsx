@@ -67,7 +67,7 @@ export default function StockDetailsOwnedStocks(props: any){
     return(
       <>
         {FilteredPortfolio != null && FilteredPortfolio.stocks.length != 0 ?
-          <div className="StocksTable">
+          <div className="StocksTable" style={{marginTop: "1rem"}}>
             <table className="Table" style={{transition: "all 0.6s ease-in-out"}}>
               <thead>
                 <tr>
@@ -106,3 +106,4 @@ export default function StockDetailsOwnedStocks(props: any){
     )
 
 }
+
