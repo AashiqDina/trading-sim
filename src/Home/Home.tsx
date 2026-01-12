@@ -211,7 +211,7 @@ const Home: React.FC = () => {
               />
             <button aria-label={`Search for ${stockSymbol}`} className='StockSearchButton' onClick={() => {searchStock("")}}>Search</button>
           </section>
-          {displaySuggestions && suggestions.length !== 0 && stockSymbol.length > 0 && <section className='SearchSuggestions'>
+          {displaySuggestions && suggestions && suggestions.length !== 0 && stockSymbol.length > 0 && <section className='SearchSuggestions'>
              {suggestions.map((suggestion, index) => 
                 suggestion.symbol ? (
                 <button key={suggestion.symbol} onClick={() => {searchStock(suggestion.symbol)}} style={(suggestions.length == 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index == suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index == 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}>
@@ -231,39 +231,57 @@ const Home: React.FC = () => {
       </section>
       <section className='MotherBody'>
       <section className='CompleteTrendingBody'>
-        {(trendingStocksList.length != 0) && <article className='TrendingStocksSectionTitle'>
+        {(trendingStocksList) && (trendingStocksList.length != 0) && <article className='TrendingStocksSectionTitle'>
           <h2>Trending Stocks</h2>
         </article>}
-        {(trendingStocksList.length != 0) && <article className='TrendingStocksSection'>
+        {(trendingStocksList) && (trendingStocksList.length != 0) && <article className='TrendingStocksSection'>
           <div className='TrendingStocksCarouselContainer'>
             <div className='TrendingStocksCarouselTrack'>
               {
-                trendingStocksList.map((stock, index) => {
+                trendingStocksList && trendingStocksList.map((stock, index) => {
                   const data = getNameImage(stock)
-                  return (
-                    <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
-                      <img src={data?.logo} alt="" />
-                      <h2>{data?.name}</h2>
-                    </button>
-                  )
+                  if(data){
+                    return (
+                      <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
+                        <img src={data?.logo} alt="" />
+                        <h2>{data?.name}</h2>
+                      </button>
+                    )
+                  }
+                  else{
+                    return (
+                      <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
+                        <Loading scale={0.2} marginBottom={-0.3}/>
+                      </button>
+                    )
+                  }
                 })
               }
               {
-                trendingStocksList.map((stock, index) => {
+                trendingStocksList && trendingStocksList.map((stock, index) => {
                   const data = getNameImage(stock)
-                  return (
-                    <div className='TrendingStockDiv' key={stock + index} onClick={() => searchStock(stock)}>
-                      <img src={data?.logo} alt="" />
-                      <h2>{data?.name}</h2>
-                    </div>
-                  )
+                  if(data){
+                    return (
+                      <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
+                        <img src={data?.logo} alt="" />
+                        <h2>{data?.name}</h2>
+                      </button>
+                    )
+                  }
+                  else{
+                    return (
+                      <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
+                        <Loading scale={0.2}/>
+                      </button>
+                    )
+                  }
                 })
               }
             </div>
           </div>
         </article>}
 
-        {(trendingStocksList.length == 0) && <article className='TrendingStocksSection'>
+        {(trendingStocksList) && (trendingStocksList.length == 0) && <article className='TrendingStocksSection'>
           <Loading/>
         </article>}
       </section>
