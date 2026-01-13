@@ -173,7 +173,7 @@ export default function Friends(){
             </section>}
             {!loading && <section className='FriendsList'>
               {friendsList?.map((friend: any, index: number) => (
-                <article key={friend.id} onClick={() => navigate(`/user/${friend.id}/${friend.username}`)}>
+                <article key={friend.id + "-" + friend.username} onClick={() => navigate(`/user/${friend.friendsUserId}/${friend.username}`)}>
                   <div className='FriendNameAndProfit'>
                     <h3>{friend.username}</h3>
                   </div>
