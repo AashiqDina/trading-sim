@@ -7,7 +7,9 @@ export default function Loading(props: any){
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setShowMessage(true)
+            if(!props.scale){
+                setShowMessage(true)
+            }
         }, 5000);
 
        return () => clearTimeout(timeout)
@@ -31,7 +33,7 @@ export default function Loading(props: any){
                 <div className='BarC'></div>
                 <div className='BarD'></div>
                 <div className='BarE'></div>
-                <p className='LongLoadingMessage' style={showMessage ? {opacity: 1} : undefined}>This app uses on-demand hosting, so the first request may take a few seconds{dots}</p>
+                <p className='LongLoadingMessage' style={showMessage ? {opacity: 1} : undefined}>This app uses on-demand hosting, so the first request may take a minute{dots}</p>
             </div>
         </>
     )

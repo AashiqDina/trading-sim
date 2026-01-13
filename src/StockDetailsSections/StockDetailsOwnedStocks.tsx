@@ -85,14 +85,14 @@ export default function StockDetailsOwnedStocks(props: any){
                      <td className="tdLogo"><img className="StockLogos" src={stock.logo} alt="Stock Logo" /></td>
                      <td className="tdCompanies"><div><div><h3>{stock.name}</h3><span>Quantity: {stock.quantity}</span></div></div></td>
                      <td className="tdBoughtPrice"> £{(stock.purchasePrice*stock.quantity).toFixed(2)}</td>
-                      <td className="tdCurrentValue"><div>£{stock.currentPrice.toFixed(2)}<span className={"LastUpdatedStockTableValue"}>
+                      <td className="tdCurrentValue"><div>£{(stock.currentPrice*stock.quantity).toFixed(2)}<span className={"LastUpdatedStockTableValue"}>
                         {LastUpdatedDictionary?.get(props.symbol)
                           ? getHoursAgo(LastUpdatedDictionary.get(props.symbol))
                           : "N/A"}
                           </span>
                         </div>
                       </td>
-                      <td className="tdProfit"><div><div>£{(stock.currentPrice - (stock.purchasePrice * stock.quantity)).toFixed(2)}<span style={{color: (((((stock.currentPrice/(stock.purchasePrice*stock.quantity))*100)-100) >= 0) ? "#45a049" : "#bb1515")}}>{((((stock.currentPrice/(stock.purchasePrice*stock.quantity))*100)-100) > 0) ? "+" : null}{((stock.currentPrice/(stock.purchasePrice*stock.quantity)*100)-100).toFixed(1)}%</span></div></div></td>
+                      <td className="tdProfit"><div><div>£{((stock.currentPrice*stock.quantity) - (stock.purchasePrice*stock.quantity)).toFixed(2)}<span style={{color: ((((((stock.currentPrice*stock.quantity)/(stock.purchasePrice*stock.quantity))*100)-100) >= 0) ? "#45a049" : "#bb1515")}}>{(((((stock.currentPrice*stock.quantity)/(stock.purchasePrice*stock.quantity))*100)-100) > 0) ? "+" : null}{(((stock.currentPrice*stock.quantity)/(stock.purchasePrice*stock.quantity)*100)-100).toFixed(1)}%</span></div></div></td>
                    </tr>
                 ))}
               </tbody>
