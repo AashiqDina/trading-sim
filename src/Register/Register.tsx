@@ -69,7 +69,7 @@ function Register() {
   
       if (data.success) {
         console.log("Register successful");
-        navigate("/");
+        navigate("/login");
       } else {
         setError(data.message || "Registration failed");
       }
@@ -142,6 +142,7 @@ function Register() {
 }
 
 export default Register;
+
 
 
 
