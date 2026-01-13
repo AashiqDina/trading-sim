@@ -356,8 +356,12 @@
         align-items: center;
         justify-content: center;
         flex-direction: row;
-        gap: 0.5rem;
+        gap: 0rem;
         width: 15rem;
+    }
+
+    .FriendRequestsList > article{
+        width: 80%;
     }
 
 }
