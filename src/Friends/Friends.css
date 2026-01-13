@@ -190,7 +190,7 @@
 }
 
 .FriendRequestsList > article > h3{
-    margin: 0;
+    margin: 0 0 0 0.5rem;
     font-weight: 300;
     padding: 0.8rem 0 0.8rem 0;
 }
@@ -350,4 +350,14 @@
     .FriendsList > article:hover{
         padding: 0.2rem 0.7rem 0.2rem 0.7rem;
     }
+
+    .FriendRequestsList > article > div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 0.5rem;
+        width: 15rem;
+    }
+
 }
