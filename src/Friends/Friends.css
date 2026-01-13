@@ -161,6 +161,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 0.5rem;
 }
 
 .FriendRequestsList > article{
@@ -190,7 +191,7 @@
 }
 
 .FriendRequestsList > article > h3{
-    margin: 0 0 0 0.5rem;
+    margin: 0 0.5rem 0 0.5rem;
     font-weight: 300;
     padding: 0.8rem 0 0.8rem 0;
 }
@@ -354,7 +355,7 @@
     .FriendRequestsList > article > div{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: end;
         flex-direction: row;
         gap: 0rem;
         width: 15rem;
@@ -362,6 +363,11 @@
 
     .FriendRequestsList > article{
         width: 80%;
+    }
+
+    .FriendRequestsList > article > div > button{
+        width: 5rem;
+        margin-right: 0.3rem;
     }
 
 }
