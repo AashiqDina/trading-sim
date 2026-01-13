@@ -3,7 +3,7 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function DeleteFriend(props: any){
  try{
-        const result = await axios.delete(`https://tradingsim-backend.onrender.com//User/Delete-Friend/${props.userId}/${props.friendId}`)
+        const result = await axios.delete(`https://tradingsim-backend.onrender.com/api/User/Delete-Friend/${props.userId}/${props.friendId}`)
         console.log("Delete Friend: ", result)
 
         if(result.data.hasError){

@@ -111,7 +111,7 @@ export default function Friends(){
     }
 
     async function HandleDeleteFriend(friendId: number){
-      await DeleteFriend({userId: user?.id, friendId: friendId})
+      await DeleteFriend({userId: user?.id, friendId: friendId, setDisplayError: setDisplayError})
       await refreshAll();
     }
 
@@ -125,13 +125,10 @@ export default function Friends(){
                 {(displaySuggestions) && (searchList.length > 0) && (input.length > 0) && <article className='UserFriendSuggestions'>
                     {searchList.map((OtherUser) => {
                       if(OtherUser.id == user?.id){
-                        return (
-                        <React.Fragment key={OtherUser.id}>
-                        </React.Fragment>
-                        )
+                        return null
                       }
                       else{
-                        if(sentRequestsList.some((user: { id: number; username: string; profitLoss: number;}) => user.id === OtherUser.id)){
+                        if(sentRequestsList.some((user: { friendsUserId: number, profitLoss: number, userId: number, username: string}) => user.friendsUserId === OtherUser.id)){
                           return (
                             <div key={OtherUser.id}>
                               <h3>{OtherUser.username}</h3>
@@ -140,7 +137,7 @@ export default function Friends(){
                               </div>
                             </div>)
                         }
-                        else if(receivedRequestList.some((user: { id: number; username: string; profitLoss: number;}) => user.id === OtherUser.id)){
+                        else if(receivedRequestList.some((user:  { friendsUserId: number, profitLoss: number, userId: number, username: string}) => user.friendsUserId === OtherUser.id)){
                           return (
                             <div key={OtherUser.id}>
                               <h3>{OtherUser.username}</h3>
@@ -150,7 +147,7 @@ export default function Friends(){
                               </div>
                             </div>)
                         }
-                        else if(friendsList?.some((user: { id: number; username: string; profitLoss: number;}) => user.id === OtherUser.id)){
+                        else if(friendsList?.some((user: { friendsUserId: number, profitLoss: number, userId: number, username: string}) => user.friendsUserId === OtherUser.id)){
                           return (
                             <div key={OtherUser.id} onClick={() => navigate(`/user/${OtherUser.id}/${OtherUser.username}`)} style={{cursor: "pointer"}}>
                                 <h3>{OtherUser.username}</h3>
@@ -171,7 +168,7 @@ export default function Friends(){
             </section>}
             {!loading && <section className='FriendsTitle'>
                 <div></div>
-                <h2>Friends</h2>
+                 <h2>Friends</h2>
                 <div></div>
             </section>}
             {!loading && <section className='FriendsList'>
@@ -183,7 +180,7 @@ export default function Friends(){
                   <div className='plAndDeleteContainer'>
                     <p style={friend.profitLoss < 0 ? {color: "rgba(200, 25, 25, 1)"} : {color: "rgb(69, 160, 73)"}}>{friend.profitLoss < 0 ? "-" : "+"}£{(Math.abs(friend.profitLoss)).toFixed(2)}</p>
                     <div className='DeleteButtonContainer'>
-                      <button aria-label={`Remove ${friend.username} as a friend`} className='DeleteButton' onClick={(e) => {e.stopPropagation(); setDeleteFriendModal({id: friend.id, username: friend.username, profitLoss: friend.profitLoss})}}>
+                      <button aria-label={`Remove ${friend.username} as a friend`} className='DeleteButton' onClick={(e) => {e.stopPropagation(); setDeleteFriendModal({id: friend.friendsUserId, username: friend.username, profitLoss: friend.profitLoss})}}>
                         <div className="CrossContainer">
                           <div className="Cross1"></div>
                           <div className="Cross2"></div>
@@ -203,16 +200,16 @@ export default function Friends(){
             </section>
             <section className='FriendRequestsList'>
               {receivedRequestList?.map((FriendRequest: any, index: number) => (
-                <article key={index}>
+                <article key={"Received-Requests" + index}>
                   <h3>{FriendRequest.username}</h3>
                   <div>
-                    <button aria-label={`Accept ${FriendRequest.username}'s Friend Request`} onClick={() => {HandleAcceptFriendRequest(FriendRequest.id)}}>Accept</button>
-                    <button aria-label={`Decline ${FriendRequest.username}'s Friend Request`} onClick={() => {HandleDeclineFriendRequest(FriendRequest.id)}}>Decline</button>
+                    <button aria-label={`Accept ${FriendRequest.username}'s Friend Request`} onClick={() => {HandleAcceptFriendRequest(FriendRequest.friendsUserId)}}>Accept</button>
+                    <button aria-label={`Decline ${FriendRequest.username}'s Friend Request`} onClick={() => {HandleDeclineFriendRequest(FriendRequest.friendsUserId)}}>Decline</button>
                   </div>
                 </article>
               ))}
               {sentRequestsList?.map((FriendRequest: any, index: number) => (
-                <article key={index}>
+                <article key={"Sent-Requests" + index}>
                   <h3>{FriendRequest.username}</h3>
                     <h4>Pending</h4>
                 </article>
