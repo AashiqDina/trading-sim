@@ -30,14 +30,19 @@ export default function Friends(){
     const [sentRequestsList, setSentRequestsList] = useState<any | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [DeleteFriendModal, setDeleteFriendModal] = useState<{id: number; username: string; profitLoss: number} | null>(null)
+    const [profitLossMap, setProfitLossMap] = useState<Map<number, number>>(new Map());
     const wrapperRef = useRef<HTMLDivElement>(null);
-    
 
     useEffect(() => {
         async function getUsers(){
             const users = await getAllUsers({setDisplayError: setDisplayError})
             console.log(users)
             setUserList(users)
+            const ProfitLosses = new Map()
+            users.forEach((user: {id: Number; username: String; profitLoss: Number}) => {
+              ProfitLosses.set(user.id, user.profitLoss);
+            });
+            setProfitLossMap(ProfitLosses)
         }
         getUsers()
     }, [])
@@ -178,7 +183,7 @@ export default function Friends(){
                     <h3>{friend.username}</h3>
                   </div>
                   <div className='plAndDeleteContainer'>
-                    <p style={friend.profitLoss < 0 ? {color: "rgba(200, 25, 25, 1)"} : {color: "rgb(69, 160, 73)"}}>{friend.profitLoss < 0 ? "-" : "+"}£{(Math.abs(friend.profitLoss)).toFixed(2)}</p>
+                    <p style={(profitLossMap.get(friend.friendsUserId) ?? 0) < 0 ? {color: "rgba(200, 25, 25, 1)"} : {color: "rgb(69, 160, 73)"}}>{(profitLossMap.get(friend.friendsUserId) ?? 0) < 0 ? "-" : "+"}£{(Math.abs(profitLossMap.get(friend.friendsUserId) ?? 0)).toFixed(2)}</p>
                     <div className='DeleteButtonContainer'>
                       <button aria-label={`Remove ${friend.username} as a friend`} className='DeleteButton' onClick={(e) => {e.stopPropagation(); setDeleteFriendModal({id: friend.friendsUserId, username: friend.username, profitLoss: friend.profitLoss})}}>
                         <div className="CrossContainer">
