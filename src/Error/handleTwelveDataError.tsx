@@ -1,5 +1,6 @@
 export default function handleTwelveDataError(props: any){
     const response = props.response
+    console.log("hittin dem errors")
     if(response.errorCode == 400){
         props.setDisplayError({
             display: true, 
@@ -66,8 +67,8 @@ export default function handleTwelveDataError(props: any){
     else {
         props.setDisplayError({
             display: true,
-            title: "Unknown API Error 🤯",
-            bodyText: `The API returned an unexpected error code: ${response.ErrorCode}`,
+            title: "Unknown API Error",
+            bodyText: `The API returned an unexpected error code: ${response.errorCode}`,
             warning: false,
             buttonText: "Try Again"
         });

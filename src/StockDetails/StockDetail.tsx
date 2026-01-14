@@ -82,7 +82,7 @@ const StockDetail: React.FC = () => {
       };
 
     const handleBuyStock = async () => {
-        await buyStock({stockPrice: stockPrice, stockSymbol: stockSymbol, quantity: quantity, setShowConfetti: setShowConfetti, setIsModalOpen: setIsModalOpen, user: user})
+        await buyStock({stockPrice: stockPrice, stockSymbol: stockSymbol, quantity: quantity, setDisplayError: setDisplayError, setShowConfetti: setShowConfetti, setIsModalOpen: setIsModalOpen, user: user})
     };
 
     const HandleAiResponse = async() => {
@@ -157,14 +157,14 @@ const StockDetail: React.FC = () => {
         recycle={false}
       />}
         <header className='TitleBox'>
-          <section style={StockName.length > 18 && WinWidth < 600 ? {justifyContent: "center"} : undefined}>
+          <section style={StockName && StockName.length > 18 && WinWidth < 600 ? {justifyContent: "center"} : undefined}>
             <img className='TitleLogo' src={stockLogo} alt={`Logo`} />
-              <article className='StockDetailsPrice' style={StockName.length > 18 && WinWidth < 600 ? {alignItems: "center"} : undefined}>
+              <article className='StockDetailsPrice' style={StockName && StockName.length > 18 && WinWidth < 600 ? {alignItems: "center"} : undefined}>
                 <div className='MiniNameSymbolSection'>
-                  <h1 className='StockDetailsTitle' style={StockName.length > 18 && WinWidth < 600 ? {textAlign: "center"} : undefined} >{StockName}<span className='StockSymbol'>{stockSymbol}</span></h1>
+                  <h1 className='StockDetailsTitle' style={StockName && StockName.length > 18 && WinWidth < 600 ? {textAlign: "center"} : undefined} >{StockName}<span className='StockSymbol'>{stockSymbol}</span></h1>
                 </div>
                 {/* <div className='TitleLogo'></div> */}
-                <h2 style={StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{stockPrice?.toFixed(2)}</h2>
+                <h2 style={StockName && StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{stockPrice?.toFixed(2)}</h2>
               </article>
           </section>
           <section className='CompleteSelector'>

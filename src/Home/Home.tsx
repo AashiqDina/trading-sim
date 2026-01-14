@@ -130,14 +130,6 @@ const Home: React.FC = () => {
         navigate(`/stock/${encodeURIComponent(String(symbol ?? ''))}`)
       }
     }
-    else{
-      setDisplayError({
-            display: true, 
-            title: "Hmm… couldn’t find that stock.", 
-            bodyText: "Please double-check that the symbol you entered is correct.", 
-            warning: false, 
-            buttonText: "Retry"})
-    }
   };
 
   function getNameImage(theSymbol: string){

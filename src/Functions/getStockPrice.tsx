@@ -4,14 +4,24 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 export default async function getStockPrice(props: any){
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/${props.symbol}`)
-        console.log(result)
 
         if(result.data.response.hasError){
-            handleTwelveDataError({
-                response: result.data.response,
-                setDisplayError: props.setDisplayError
-            });
+            if(result.data.response.errorCode == 404){
+                props.setDisplayError({
+                    display: true, 
+                    title: "Hmm… couldn’t find that stock.", 
+                    bodyText: "Please double-check that the symbol you entered is correct.", 
+                    warning: false, 
+                    buttonText: "Retry"})
+            }
+            else{
+                handleTwelveDataError({
+                    response: result.data.response,
+                    setDisplayError: props.setDisplayError
+                });
+            }
             return null;
+            
         }
         else{
             return result.data.response.data;

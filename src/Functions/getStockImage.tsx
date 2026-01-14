@@ -4,11 +4,10 @@ import handleTwelveDataError from "../Error/handleTwelveDataError";
 export default async function getStockImage(props: any){
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/StockImage/${props.symbol}`)
-        console.log(result)
 
         if(result.data.image.hasError){
             handleTwelveDataError({
-                response: result.data.response,
+                response: result.data.image,
                 setDisplayError: props.setDisplayError
             });
             return null;
