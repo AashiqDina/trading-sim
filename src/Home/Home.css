@@ -886,19 +886,22 @@ button:active{
     }
 
     .TrendingStocksCarouselTrack{
-      height: 5rem;
+      height: 4rem;
+      margin-top: 0.2rem;
     }
 
     .TrendingStockDiv > img{
-      width: 2.5rem;
+      width: 1.8rem;
+      border-radius: 0.5rem;
     }
 
     .TrendingStockDiv > h2{
-      font-size: 1.5rem;
+      font-size: 1rem;
     } 
 
     .TrendingStockDiv{
-      border-radius: 1.5rem;
+      border-radius: 1.1rem;
+      gap: 0.5rem;
     }
     
     .marketNewsImage > img{
