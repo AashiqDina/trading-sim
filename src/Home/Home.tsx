@@ -45,6 +45,7 @@ const Home: React.FC = () => {
   const [trendingStocksList, setTrendingStocksList] = useState<string[]>([])
   const [marketNews, setMarketNews] = useState<any[] | null>(null)
   const [marketNewsIndex, setMarketNewsIndex] = useState<{index: number, direction: string}>({index: 0, direction: "left"})
+  const [WinWidth, setWinWidth] = useState(window.innerWidth);
   const MarketNewsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -108,6 +109,12 @@ const Home: React.FC = () => {
     }
   });
   }, [marketNewsIndex])
+
+  useEffect(() => {
+    const handleResize = () => setWinWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const searchStock = async (symbol: string) => {
 
@@ -302,10 +309,11 @@ const Home: React.FC = () => {
                   return (
                     <a href={news.url} aria-label={`Read news: ${news.headline}`} className='CompleteMarketNews' key={news.url} style={{animationDelay: `${index * 0.1}s`}} ref={(el) => {if (el) MarketNewsRef.current[index] = el;}}>
                       <div className='marketNewsImage'>
-                        <img src={news.image} alt={news.source + " image"} />
+                        {WinWidth > 600 && <img src={news.image} alt={news.source + " image"} />}
                       </div>
-                      <div className='marketNewsContainer'>
-                        <div className='marketNewsHeader'>
+                      <div className={WinWidth > 600 ? 'marketNewsContainer' : 'marketNewsContainerMobile'}>
+                        <div className={WinWidth > 600 ? 'marketNewsHeader' : 'marketNewsHeaderMobile'}>
+                          {WinWidth < 600 && <img className='newsImageInHeader' src={news.image} alt={news.source + " image"} />}
                           <h3>{news.headline}</h3>
                         </div>
                         <div className='marketNewsBody'>
