@@ -133,10 +133,13 @@ function Register() {
 
         <button aria-label="Submit and Create account" className="SubmitButton" type="submit">Register</button>
       </form>
-      <p className="noAccount">
+      <a className="HaveALook" href="#/user/1/AashiqD">
+        See my profile for a preview.
+      </a>
+      <p className="noAccount" style={{marginTop: "0.8rem"}}>
         Already have an account?
       </p>
-      <a className="noAccountRegister" aria-label="Go to login page" href="/login">Login here</a>
+      <a className="noAccountRegister" aria-label="Go to login page" href="#/login">Login here</a>
     </section>
   );
 }

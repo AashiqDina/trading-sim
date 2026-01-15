@@ -111,6 +111,20 @@
     box-shadow: 0px 0px 30px 2px #3e91444c;
   }
 
+  .HaveALook{
+    font-weight: 200;
+    background: linear-gradient(90deg, #e2e2e2 25%, #45a049 50%, #e2e2e2 75%);
+    background-size: 200% 100%;
+    animation-name: shimmer;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    margin: 0;
+  }
+
   @media (max-width: 400px) {
     .register-container{
       width: 20rem;

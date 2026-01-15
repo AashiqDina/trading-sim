@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-html, body {
-  overflow-x: hidden;
-}
-
 .StockSearch {
   display: flex;
   justify-content: center;
@@ -896,8 +892,8 @@ button:active{
     .TrendingStocksCarouselTrack{
       height: 4rem;
       margin-top: 0.2rem;
-      /* width: 200%; */
-	    animation: Scroll 45s linear infinite;
+      width: 200%;
+	    animation: Scroll 9s linear infinite;
     }
 
     .TrendingStockDiv > img{
