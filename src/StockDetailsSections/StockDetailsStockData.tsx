@@ -104,16 +104,16 @@ export default function StockDetails(props: any){
               </div>
               <div className='genericFlexRow' style={{margin: "0 1rem 0 1rem", justifyContent: "flex-start"}}>
                 <h4>Open:</h4>
-                <h5 className='StockDataOpen'>£{BasicStockData?.open}</h5>
+                <h5 className='StockDataOpen'>£{BasicStockData ? BasicStockData?.open.toFixed(2) : "error"}</h5>
               </div>
               <div className='genericFlexRow' style={{margin: "0 1rem 0 1rem", justifyContent: "flex-start"}}>
                 <div className='ClosePrevClose'>
                   <h4>Close:</h4>
-                  <h5>£{BasicStockData?.close}</h5>
+                  <h5>£{BasicStockData ? BasicStockData.close.toFixed(2) : "error"}</h5>
                 </div>
                 <div className='ClosePrevClose'>
                   <h4>Previous Close:</h4>
-                  <h5>£{BasicStockData?.previousClose}</h5>
+                  <h5>£{BasicStockData ? BasicStockData?.previousClose.toFixed(2) : "error"}</h5>
                 </div>
                 <div className='ClosePrevClose' style={{gap: "0.4rem", color: BasicStockData?.change > 0 ? "#45a049" : "rgb(187, 21, 21)"}}>
                   <h6>{BasicStockData?.percentChange > 0 ? "+" : undefined}{BasicStockData ? (BasicStockData?.percentChange).toFixed(2) : undefined}%</h6>

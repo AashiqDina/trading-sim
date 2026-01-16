@@ -31,19 +31,22 @@ export default function AiChat(props: any){
                       <input 
                         aria-label="Ask a question about the stock"  
                         value={props.AIAssistantSearchInput} 
-                        placeholder='Ask a question'
+                        // placeholder='Ask a question'
+                        placeholder='Currently disabled due to free-tier API limitations'
+                        style={{color: "white"}}
                         onChange={(e) => props.setSearchInput(e.target.value)} 
                         type="text" 
+                        disabled
                         onKeyDown={(e) => {
                           if(e.key === "Enter"){
                             props.setSearchInput(e.currentTarget.value)
                           }
                         }}
                         />
-                      <button aria-label="Submit query to AI" onClick={() => props.HandleAiResponse()}>
+                      <button disabled aria-label="Submit query to AI" onClick={() => props.HandleAiResponse()}>
                         <div>
                           <div style={{width: "1.1rem", height: "0.2rem", transform: "translateY(0.45px) translateX(4px) rotate(-45deg)"}} className="ArrowOne Top"></div>
-                          <div style={{width: "1.1rem", height: "0.2rem", transform: "translateY(-3px) translateX(14px) rotate(45deg)"}} className="ArrowTwo Top"></div>
+                          <div style={{width: "1.1rem", height: "0.2rem", transform: "translateY(-2.6px) translateX(14px) rotate(45deg)"}} className="ArrowTwo Top"></div>
                         </div>
                       </button>
                     </div>

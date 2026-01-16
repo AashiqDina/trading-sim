@@ -155,7 +155,7 @@ const Portfolio = () => {
                 </h5>
                 <div>
                   <span style={Profit != null && Profit >= 0 ? {color: '#45a049'} : {color: '#bb1515'}}>
-                    {Profit != null && Profit >= 0 ? "+" : ""}{(PorfolioValue != null && Invested != null) ? ((PorfolioValue/Invested)*100-100).toFixed(2) : ""}{(PorfolioValue != null && Invested != null) ? "%" : ""}
+                    {Profit != null && Profit >= 0 ? "+" : ""}{(PorfolioValue && Invested) ? (((PorfolioValue/Invested)*100-100).toFixed(2)) : ""}{(PorfolioValue != null && Invested != null) ? "%" : ""}
                   </span>
                 </div>
               </div>
