@@ -34,7 +34,7 @@ A React-based frontend for a stock trading simulator that allows users to explor
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **React**
 * **TypeScript**
@@ -44,9 +44,10 @@ A React-based frontend for a stock trading simulator that allows users to explor
 
 ---
 
-## 🎯 Design & Engineering Focus
+## Design & Engineering Focus
 
 * Clear separation between UI components and data-fetching logic
 * Predictable state updates using React hooks and context
 * Defensive programming to handle unreliable external data
 * Readable, maintainable code over premature optimisation
+
