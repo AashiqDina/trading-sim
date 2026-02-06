@@ -616,6 +616,7 @@ button:active{
     flex-direction: row;
     width: 100%;
     animation: growThenSmall 1s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
 
   .CompleteMarketNews:hover{
@@ -741,6 +742,12 @@ button:active{
 
   .newsAnimateRight{
     animation: newsGoLeft 0.3s ease-in-out;
+  }
+
+  .NoNewsFoundHeading{
+    font-size: 2rem;
+    font-weight: 400;
+    font-family: Inter, sans-serif;
   }
 
   @media (max-width: 900px) {

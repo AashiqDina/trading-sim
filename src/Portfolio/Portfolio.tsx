@@ -105,17 +105,17 @@ const Portfolio = () => {
       }));
 
       if (FilteredOption === "Oldest") {
-        combined.sort((a: { stock: { id: number; }; }, b: { stock: { id: number; }; }) => a.stock.id - b.stock.id);
+        combined.sort((a: { stock: { id: number; }; }, b: { stock: { id: number; }; }) => Number(a.stock.id) - Number(b.stock.id));
       } else if (FilteredOption === "Newest") {
-        combined.sort((a: { stock: { id: number; }; }, b: { stock: { id: number; }; }) => b.stock.id - a.stock.id);
+        combined.sort((a: { stock: { id: number; }; }, b: { stock: { id: number; }; }) => Number(b.stock.id) - Number(a.stock.id));
       } else if (FilteredOption === "ProfitAsc") {
-        combined.sort((a: { stock: { profitLoss: number; }; }, b: { stock: { profitLoss: number; }; }) => a.stock.profitLoss - b.stock.profitLoss);
+        combined.sort((a: { stock: { profitLoss: number; }; }, b: { stock: { profitLoss: number; }; }) => Number(a.stock.profitLoss) - Number(b.stock.profitLoss));
       } else if (FilteredOption === "ProfitDesc") {
-        combined.sort((a: { stock: { profitLoss: number; }; }, b: { stock: { profitLoss: number; }; }) => b.stock.profitLoss - a.stock.profitLoss);
+        combined.sort((a: { stock: { profitLoss: number; }; }, b: { stock: { profitLoss: number; }; }) => Number(b.stock.profitLoss) - Number(a.stock.profitLoss));
       } else if (FilteredOption === "ValueAsc") {
-        combined.sort((a: { stock: { totalValue: number; }; }, b: { stock: { totalValue: number; }; }) => a.stock.totalValue - b.stock.totalValue);
+        combined.sort((a: { stock: { totalValue: number; }; }, b: { stock: { totalValue: number; }; }) => Number(a.stock.totalValue) - Number(b.stock.totalValue));
       } else if (FilteredOption === "ValueDesc") {
-        combined.sort((a: { stock: { totalValue: number; }; }, b: { stock: { totalValue: number; }; }) => b.stock.totalValue - a.stock.totalValue);
+        combined.sort((a: { stock: { totalValue: number; }; }, b: { stock: { totalValue: number; }; }) => Number(b.stock.totalValue) - Number(a.stock.totalValue));
       }
   
       const sortedStocks = combined.map((item: { stock: any; }) => item.stock);
