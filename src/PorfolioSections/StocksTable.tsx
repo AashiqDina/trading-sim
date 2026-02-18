@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Today } from '@mui/icons-material';
 import { useNavigate } from "react-router-dom";
 
-export default function StocksTable(props: any){
+function StocksTable(props: any){
 
   // should look like this: [{Stock Symbol, Avg, []}]
   const [IndexExpanded, setIndexExpanded] = useState<number | null>(null)
@@ -320,6 +320,8 @@ function getHoursAgo(date?: string | Date | null): string {
     )
 
 }
+
+export default React.memo(StocksTable)
 
 
 
