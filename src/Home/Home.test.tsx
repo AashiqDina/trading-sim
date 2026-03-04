@@ -9,19 +9,25 @@ import StockPage from '../StockDetails/StockDetail'
 import getTrendingStocksMock from "../Functions/getTrendingStocks";
 import getStockPriceMock from "../Functions/getStockPrice";
 import getMarketNewsMock from '../Functions/getMarketNews';
+import GetStockListMock from '../Functions/getStockList';
 
-const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock;
+const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock; // for typescript compile time we manually tell typescript these are of type jest.mock so we can change the returned value later
 const mockedGetStockPrice = getStockPriceMock as jest.Mock;
 const mockedGetMarketNews = getMarketNewsMock as jest.Mock;
+const mockedGetStockList = GetStockListMock as jest.Mock;
 
+
+// Jest Learning
+//
+// jest.mock mocks import functions returning its calls with a undefined unless specified
 
 jest.mock('axios'); // mocks axios functions to test with edge cases without backend
 
 jest.mock("../Functions/AuthContext", () => {
-  const actual = jest.requireActual("../Functions/AuthContext");
+  const actual = jest.requireActual("../Functions/AuthContext"); // loads the real module
   return {
-    ...actual,
-    useAuth: () => ({
+    ...actual, // copies it over here to keep the other functions
+    useAuth: () => ({ // useAuth is overridden with what we want it to output so the output of the function useAuth would be a use Obj as specified below
       user: {
         id: 1,
         username: "TestUser",
@@ -35,12 +41,12 @@ jest.mock("../Functions/AuthContext", () => {
 });
 
 jest.mock("focus-trap-react", () => {
-  return ({ children }: any) => <div>{children}</div>;
+  return ({ children }: any) => <div>{children}</div>; // way one since theres only one default function
 });
 
-jest.mock("../Functions/getMarketNews", () => ({
-  __esModule: true,
-  default: jest.fn()
+jest.mock("../Functions/getMarketNews", () => ({ // way two of doing it 
+  __esModule: true, // since its default
+  default: jest.fn() // default: ... since its export default function getMarket news rather than const varName = () => {...}
 }));
 
 jest.mock("../Functions/getTrendingStocks", () => ({
@@ -53,34 +59,40 @@ jest.mock("../Functions/getStockPrice", () => ({
   default: jest.fn()
 }));
 
-describe('Home - GetStockTrendingList edge cases', () => {
+jest.mock("../Functions/getStockList", () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
-    test('handles empty response', async () => {
-        (axios.get as jest.Mock).mockResolvedValueOnce({data: {}});
+// Get Trending List
+describe('Home - GetStockTrendingList edge cases', () => { // describe sets a container of related tests contains a description and a function of tests
 
-        mockedGetTrendingStocks.mockResolvedValueOnce([]);
+    test('handles empty response', async () => { // test creates a test case, taking a string and function as a parameter
 
-        render(
-            <MemoryRouter>
+        (axios.get as jest.Mock).mockResolvedValueOnce({data: {}}); // this and below are two ways of doing the same thing
+        mockedGetTrendingStocks.mockResolvedValueOnce([]); // the choice of which one to use depends on maintainability and how you want to structure your code
+        mockedGetStockList.mockResolvedValueOnce({});
+
+        render( // render the application but use a memory router instead of the hashRouter we used in index.tsx since its light weight and doesnt rely on url manipulation
+            <MemoryRouter> 
                 <AuthProvider>
                     <Home/>
                 </AuthProvider>
             </MemoryRouter>
+
+            // the rest is the same structure as with App.tsx, except only render what we need
         );
 
-        await waitFor(() => {
-            expect(screen.queryByText('No Stocks Current Trending')).toBeInTheDocument();
+        await waitFor(() => { // await the async function to finish
+            expect(screen.queryByText('No Stocks Current Trending')).toBeInTheDocument(); // check if the screen displays text
         })
     })
 
     test('handles normal response', async () => {
-        (axios.get as jest.Mock).mockResolvedValueOnce({data: {
-            "Apple Inc.": { symbol: "AAPL", logo: "logo" },
-            "Microsoft Corp.": { symbol: "MSFT", logo: "logo" },
-        }});
 
         mockedGetTrendingStocks.mockResolvedValueOnce( ["AAPL", "MSFT"]);
         mockedGetStockPrice.mockResolvedValue(123);
+        mockedGetStockList.mockResolvedValueOnce({"Apple Inc.": { symbol: "AAPL", logo: "logo" }, "Microsoft Corp.": { symbol: "MSFT", logo: "logo" }});
 
         render(
             <MemoryRouter initialEntries={['/']}>
@@ -108,12 +120,8 @@ describe('Home - GetStockTrendingList edge cases', () => {
     })
 
     test("handles broken response", async () => {
-        (axios.get as jest.Mock).mockResolvedValueOnce({data: {
-            "Bad Stock": { symbol: null, logo: null },
-            "Another Bad": { symbol: "", logo: "" },
-        }})
-
-        mockedGetTrendingStocks.mockResolvedValueOnce(["Bad Stock", "Another Bad"]);
+        mockedGetTrendingStocks.mockResolvedValueOnce([null, ""]);
+        mockedGetStockList.mockResolvedValueOnce({"Bad Stock": { symbol: "MSFT", logo: null }, "Another Bad": { symbol: "APPL", logo: "" }});
 
         render(
             <MemoryRouter>
@@ -135,7 +143,8 @@ describe('Home - GetStockTrendingList edge cases', () => {
             "Bad Stock": { symbol: null, logo: null },
         }})
 
-        mockedGetTrendingStocks.mockResolvedValueOnce( ["AAPL", "Bad Stock"]);
+        mockedGetTrendingStocks.mockResolvedValueOnce( ["AAPL", ""]);
+        mockedGetStockList.mockResolvedValueOnce({"Bad Stock": { symbol: null, logo: null }, "Apple Inc.": { symbol: "AAPL", logo: "logo"}});
         mockedGetStockPrice.mockResolvedValue(123);
 
         render(
@@ -197,6 +206,7 @@ describe('Home - GetStockTrendingList edge cases', () => {
 
 })
 
+// get marketNews
 describe("Home - getMarketNews edge cases", () => {
     
     test("handles empty response", async () => {
@@ -360,20 +370,9 @@ describe("Home - getMarketNews edge cases", () => {
     
 })
 
+// describe("Search functionality - Search Edge Cases", () => {
 
-
-
-
-
-
-//if multiple axios calls are in the code
-
-// (axios.get as jest.Mock).mockImplementation((url) => {
-//     if(url === 'https://tradingsim-backend.onrender.com/api/stocks/GetStockList'){
-
-//     }
-//     // else if(url === 'In case of multiple axios calls the url can be specified'){
-
-//     // }
-//     return Promise.reject(new Error(`URL doesnt matches any cases above: ${url}`))
+//     test("handle normal Search Suggestions", () => {
+        
+//     })
 // })

@@ -11,6 +11,7 @@ import Loading from '../Loading/Loading';
 import getMarketNews from '../Functions/getMarketNews';
 import SponsoredAd from '../Ads/SponsoredAd';
 import AiLoading from "../Loading/AiLoading"
+import GetStockList from '../Functions/getStockList';
 
 type StockInfo = {
   symbol: string;
@@ -46,15 +47,17 @@ const Home: React.FC = () => {
   const [marketNews, setMarketNews] = useState<any[] | null>(null)
   const [marketNewsIndex, setMarketNewsIndex] = useState<{index: number, direction: string}>({index: 0, direction: "left"})
   const [WinWidth, setWinWidth] = useState(window.innerWidth);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingTrending, setIsLoadingTrending] = useState(true)
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(true)
   const MarketNewsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
       const getMap = async () => {
-        const map = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetStockList`)
-        setStockList(map.data)
+        const map = await GetStockList({setDisplayError: setDisplayError})
+        setStockList(map)
+        setIsLoadingSuggestions(false)
       };
   
       getMap();
@@ -74,7 +77,7 @@ const Home: React.FC = () => {
     const getTrendingList = async () => {
       const trendingStocks =  await getTrendingStocks({setDisplayError: setDisplayError});
       setTrendingStocksList(trendingStocks);
-      setIsLoading(false)
+      setIsLoadingTrending(false)
     }
     getTrendingList();
   },[]);
@@ -155,21 +158,21 @@ const Home: React.FC = () => {
     }
     
     if(stockList){
-    const matches = (Object.entries(stockList) as [string, { symbol: string; logo: string }][])
-            .filter(([name, data]) => {
-              return(
-                name.toLowerCase().startsWith(symbol.toLowerCase()) || data.symbol.toLowerCase().startsWith(symbol)
-              )
-            })
-            .slice(0, 5)
-            .map(([name, stock]) => ({
-              name,
-              symbol: stock.symbol,
-              logo: stock.logo,
-            }));
+      const matches = (Object.entries(stockList) as [string, { symbol: string; logo: string }][])
+              .filter(([name, data]) => {
+                return(
+                  name.toLowerCase().startsWith(symbol.toLowerCase()) || data.symbol.toLowerCase().startsWith(symbol)
+                )
+              })
+              .slice(0, 5)
+              .map(([name, stock]) => ({
+                name,
+                symbol: stock.symbol,
+                logo: stock.logo,
+              }));
 
-    setSuggestions(matches);
-   }
+      setSuggestions(matches);
+    }
   }
 
   function newsLeft(){
@@ -226,10 +229,10 @@ const Home: React.FC = () => {
       </section>
       <section className='MotherBody'>
       <section className='CompleteTrendingBody'>
-        {trendingStocksList && (trendingStocksList.length > 0) && <article className='TrendingStocksSectionTitle'>
+        {trendingStocksList && stockList && (trendingStocksList.length > 0) && <article className='TrendingStocksSectionTitle'>
           <h2>Trending Stocks</h2>
         </article>}
-        {trendingStocksList && (trendingStocksList.length > 0) ? <article className='TrendingStocksSection'>
+        {trendingStocksList && stockList && (trendingStocksList.length > 0) ? <article className='TrendingStocksSection'>
           <div className='TrendingStocksCarouselContainer'>
             <div className='TrendingStocksCarouselTrack'>
               {
@@ -287,7 +290,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         </article> :
-        isLoading ? <article className='TrendingStocksSection'>
+        isLoadingSuggestions || isLoadingTrending ? <article className='TrendingStocksSection'>
           <Loading/>
         </article> :
         <h3 className='NoNewsFoundHeading'>No Stocks Current Trending</h3>        

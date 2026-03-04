@@ -9,11 +9,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import React from "react";
 import { useRef, useEffect, useState } from "react";
 
 ChartJS.register(LineElement, LineController, PointElement, LinearScale, TimeScale, Tooltip, Legend, CategoryScale);
 
-export default function QuickStats(props: any){
+function QuickStats(props: any){
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const chartRef = useRef<ChartJS | null>(null);
@@ -245,3 +246,5 @@ useEffect(() => {
         </>
     )
 }
+
+export default React.memo(QuickStats)
