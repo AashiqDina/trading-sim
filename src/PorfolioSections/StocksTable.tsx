@@ -2,7 +2,6 @@ import { FocusTrap } from 'focus-trap-react';
 import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
-import { Today } from '@mui/icons-material';
 import { useNavigate } from "react-router-dom";
 
 function StocksTable(props: any){
@@ -248,8 +247,7 @@ function getHoursAgo(date?: string | Date | null): string {
                         {/* <td><img className="StockLogos" style={{padding: "0rem 0rem 0rem 0.5rem"}} src={stockAvg.logo} alt="Stock Logo" /></td> */}
                         <td className="tdLogoMore">
                           <div style={{height: "10px", width: "10px", transform: "rotate(-90deg)", marginLeft: "20px", scale: "0.85"}}>
-                            <div className={`ArrowOne`} ></div>
-                            <div className={`ArrowTwo`} ></div>
+                            <div className={`MoreStocksLine`} ></div>
                           </div>
                         </td>
                         <td className="tdCompanies" ><div><div><p style={{fontWeight: 400}}>{stockAvg.name}</p><span>Quantity: {stock.quantity}</span></div></div></td>

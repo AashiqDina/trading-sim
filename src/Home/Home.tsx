@@ -209,7 +209,7 @@ const Home: React.FC = () => {
               />
             <button aria-label={`Search for ${stockSymbol}`} className='StockSearchButton' onClick={() => {searchStock("")}}>Search</button>
           </section>
-          {displaySuggestions && suggestions && suggestions.length !== 0 && stockSymbol.length > 0 && <section className='SearchSuggestions'>
+          {displaySuggestions && suggestions && suggestions.length !== 0 && stockSymbol.length > 0 && <section className='SearchSuggestions' data-testid="SearchSuggestions">
              {suggestions.map((suggestion, index) => 
                 suggestion.symbol ? (
                 <button key={suggestion.symbol} onClick={() => {searchStock(suggestion.symbol)}} style={(suggestions.length == 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index == suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index == 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}>

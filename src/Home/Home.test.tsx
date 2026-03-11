@@ -370,9 +370,59 @@ describe("Home - getMarketNews edge cases", () => {
     
 })
 
-// describe("Search functionality - Search Edge Cases", () => {
+describe("Search functionality - Search Edge Cases", () => {
 
-//     test("handle normal Search Suggestions", () => {
+    test("handle Normal Search Suggestions", async () => {
+        mockedGetStockList.mockResolvedValueOnce({"Apple Inc.": { symbol: "AAPL", logo: "logo" }, "Microsoft Corp.": { symbol: "MSFT", logo: "logo" }, "Amazon.com Inc.": {symbol: "AMZN", logo: "logo"}})
+        mockedGetTrendingStocks.mockResolvedValueOnce([]) // ensure it doesnt find the stocks in trending stocks
         
-//     })
-// })
+        render(
+            <MemoryRouter>
+                <AuthProvider>
+                    <Home/>
+                </AuthProvider>
+            </MemoryRouter>
+        )
+
+        await waitFor(() =>
+            expect(mockedGetStockList).toHaveBeenCalled() // testing inputs so have to wait for data to be received from API calls
+        );
+
+        const input = screen.getByPlaceholderText(/search by stock name or symbol/i); // get the search bar
+        fireEvent.focus(input) // focus on it to get the suggestions to appear
+        fireEvent.change(input, { target: {value: 'A'}}) // set value in the search bar to 'A' to test
+
+
+        const apple = await screen.findByText('Apple Inc.'); // find relevant search results along with their dedicated stock symbols, only need await once since we want the data to be loaded first
+
+        expect(apple).toBeInTheDocument();
+        expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
+        expect(screen.getByText('Amazon.com Inc.')).toBeInTheDocument();
+        expect(screen.getByText('AAPL')).toBeInTheDocument();
+        expect(screen.getByText('AMZN')).toBeInTheDocument();
+        expect(screen.queryByText('Microsoft Corp.')).not.toBeInTheDocument();
+    })
+
+    test("handles Empty Seatch Suggestions", async () => {
+        mockedGetStockList.mockResolvedValueOnce({})
+        mockedGetTrendingStocks.mockResolvedValueOnce([])
+
+        render(
+            <MemoryRouter>
+                <AuthProvider>
+                    <Home/>
+                </AuthProvider>
+            </MemoryRouter>
+        )
+
+        const input = screen.getByPlaceholderText(/search by stock name or symbol/i)
+        fireEvent.focus(input)
+        fireEvent.change(input, {target: {value: 'A'}})
+
+        await waitFor(() => 
+            expect(screen.queryByTestId('SearchSuggestions')).not.toBeInTheDocument()
+        )        
+    })
+
+
+})

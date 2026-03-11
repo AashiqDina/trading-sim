@@ -30,8 +30,7 @@ const Portfolio = () => {
   const [originalValues, setOriginalValues] = useState<any | null>(null)
   const [FilteredSearch, setFilteredSearch] = useState<any | null>([])
   const [displayError, setDisplayError] = useState<{display: boolean, warning: boolean, title: string, bodyText: string, buttonText: string}>({display: false, title: "", bodyText: "", warning: false, buttonText: ""});
-
-
+  
   const Fetched = useRef(false)
 
   function handleDelete(index: number, stock: any, name: string, logo: string){
@@ -126,7 +125,14 @@ const Portfolio = () => {
       }));
     }
   }, [FilteredOption]);
-  
+    
+  function scrollToSection(JumpTo: string) {
+    const element = document.getElementById(JumpTo);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   //-------------------------------------------------------------------------------
   // HTML SECTION BELOW
   //-------------------------------------------------------------------------------
@@ -192,7 +198,8 @@ const Portfolio = () => {
             otherUser={false}
             />
 
-          <a href={JumpTo} onClick={() => setJumpTo(JumpTo == "#ToJump" ? "#Top" : "#ToJump")}><button aria-label="Jump Down to the stock table" className="ViewMore">          
+
+          <a onClick={() => {setJumpTo(JumpTo == "#ToJump" ? "#Top" : "#ToJump"); JumpTo == "#ToJump" ? scrollToSection("Top") : scrollToSection("ToJump");}}><button aria-label="Jump Down to the stock table" className="ViewMore">          
             <div className={`ArrowOne ${JumpTo == "#ToJump" ? "Top" : ""}`} ></div>
             <div className={`ArrowTwo ${JumpTo == "#ToJump" ? "Top" : ""}`} ></div></button>
           </a>

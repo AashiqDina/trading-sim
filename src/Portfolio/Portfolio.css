@@ -755,6 +755,15 @@ table tbody tr:last-child td:last-child {
   background-color: #75ee7b60;
 }
 
+.MoreStocksLine{
+  background-color: white;
+  height: 4px;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  transform: translateY(9px) translateX(-5px) rotate(90deg);
+  width: 1.3rem;
+}
+
 .ArrowOne{
   background-color: white;
   height: 4px;
