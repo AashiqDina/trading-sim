@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import React from "react";
 import { useRef, useEffect, useState } from "react";
+import Portfolio from "../Portfolio/Portfolio";
 
 ChartJS.register(LineElement, LineController, PointElement, LinearScale, TimeScale, Tooltip, Legend, CategoryScale);
 
@@ -81,9 +82,7 @@ useEffect(() => {
                             xValue = dataPoint.label as string;
                         });
 
-                        props.setPortfolioValue(portfolioValue.toFixed(2));
-                        props.setProfit((portfolioValue - investedValue).toFixed(2));
-                        props.setInvested(investedValue.toFixed(2));
+                        props.setPortfolio({...props.portfolio, currentValue: portfolioValue, totalInvested: investedValue, profitLoss: (portfolioValue-investedValue)})
                         setHoverValue(xValue);
                     },
                 },
@@ -108,7 +107,6 @@ useEffect(() => {
 
         const investedByDate: Record<string, number> = {};
         const allTransactions = props.FilteredSearch.flatMap((stock: { transactions: any; }) => stock.transactions);
-        console.log("Hiry", History)
 
         History.forEach((stockHistory: any) => {
             var stock = undefined;
@@ -149,11 +147,9 @@ useEffect(() => {
             0
             );
 
-            props.setPortfolioValue(totalValue.toFixed(2))
-            props.setInvested(totalPurchase.toFixed(2))
-            props.setProfit(totalProfit.toFixed(2))
+            props.setPortfolio({...props.portfolio, currentValue: totalValue, totalInvested: totalPurchase, profitLoss: (totalProfit)})
 
-            console.log("allt: ", allTransactions)
+
             const filteredH = History.filter((hItem: { symbol: any; }) =>
                 allTransactions.some((tItem: { symbol: any; }) => tItem.symbol === hItem.symbol)
                 );
@@ -193,15 +189,11 @@ useEffect(() => {
 
         setILV(extendedILV);
         setVLV(VLV);
-        console.log("VLV: ", VLV)
-        console.log("Array of Values Amounts", VLV);
     }
 
-    // function leaveGraphRefresh(){
+    // function leaveGraphRefresh(){ // scrapped in case users want to copy and paste values
     //     setHoverValue(null)
-    //     props.setPortfolioValue(props.originalValues.PortfolioValue)
-    //     props.setInvested(props.originalValues.Invested)
-    //     props.setProfit(props.originalValues.Profit)
+    //     props.setPortfolio({...props.portfolio, totalInvested: props.originalValues.Invested, currentValue: props.originalValues.PortfolioValue, profitLoss: props.originalValues.Profit})
     // }
     
     return (

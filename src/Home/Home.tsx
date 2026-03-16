@@ -66,7 +66,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     const getMap = async () => {
       const result = await getMarketNews({setDisplayError: setDisplayError})
-      console.log(result)
       setMarketNews(result)
     };
   
@@ -323,7 +322,6 @@ const Home: React.FC = () => {
               (marketNews && marketNews.length == 0) ? <h3 className='NoNewsFoundHeading'>No News Found</h3> :
               (marketNews != null) ? 
                 marketNews.slice(marketNewsIndex.index, marketNewsIndex.index + 3).map((news, index) => {
-                  console.log(news)
                   return (
                     <a href={news.url || "brokenURL"} aria-label={`Read news: ${news.headline || "brokenHeadline"}`} className='CompleteMarketNews' key={news.url || index} style={{animationDelay: `${index * 0.1}s`}} ref={(el) => {if (el) MarketNewsRef.current[index] = el;}}>
                       <div className='marketNewsImage'>

@@ -152,7 +152,7 @@ describe('Home - GetStockTrendingList edge cases', () => { // describe sets a co
                 <AuthProvider>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/stock/:symbol" element={<StockPage />} />
+                        <Route path="/stock/:symbol" element={<StockPage />}/>
                     </Routes>
                 </AuthProvider>
             </MemoryRouter>
@@ -382,6 +382,7 @@ describe("Search functionality - Search Edge Cases", () => {
                     <Home/>
                 </AuthProvider>
             </MemoryRouter>
+
         )
 
         await waitFor(() =>

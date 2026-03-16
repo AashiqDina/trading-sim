@@ -19,20 +19,14 @@ const Portfolio = () => {
   const [portfolio, setPortfolio] = useState<any>(null);
   const [ToDelete, setToDelete] = useState<{stock: number | null, name: string | null, logo: string | null}>({stock: null, name: null, logo: null});
   const [ModalVisible, setModalVisibility] = useState(false);
-  const [ToReload, setToReload] = useState(false);
   const [FilteredOption, setFilteredOption] = useState("");
   const [JumpTo, setJumpTo] = useState("Top");
   const [FilterHistory, setFilterHistory] = useState("all")
   const [StockHistory, setStockHistory] = useState<any | null>(null)
-  const [Invested, setInvested] = useState<number | null>(null)
-  const [PorfolioValue, setPorfolioValue] = useState<number | null>(null)
-  const [Profit, setProfit] = useState<number | null>(null)
   const [originalValues, setOriginalValues] = useState<any | null>(null)
   const [FilteredSearch, setFilteredSearch] = useState<any | null>([])
   const [displayError, setDisplayError] = useState<{display: boolean, warning: boolean, title: string, bodyText: string, buttonText: string}>({display: false, title: "", bodyText: "", warning: false, buttonText: ""});
   
-  const Fetched = useRef(false)
-
   function handleDelete(index: number, stock: any, name: string, logo: string){
     setToDelete({stock: stock.id, name: name, logo: logo})
     console.log("Deleting Stock: " + stock)
@@ -47,7 +41,6 @@ const Portfolio = () => {
     try {
       const response = await axios.delete(`https://tradingsim-backend.onrender.com/api/portfolio/${user?.id}/stocks/delete/${ToDelete.stock}`)
       console.log("Successfully Deleted: ", response)
-      setToReload(true)
       setToDelete({stock: null, name: null, logo: null})
       setModalVisibility(false)
     } catch (error) {
@@ -56,46 +49,24 @@ const Portfolio = () => {
   }
 
   useEffect(() => {
-    if ((user?.id && !Fetched.current)) {
-      Fetched.current = true;
+    if(user?.id){
       const updateAndFetch = async () => {
-        const updateResponse = await updateAllStocksInPortfolio({ user });
-        console.log("Update Response: " , updateResponse)
-        const result = await getPortfolio({ user: user, setDisplayError: setDisplayError});
-        setPortfolio(result);
-        console.log("Portfolio Result: ", result)
-        setInvested(result.totalInvested.toFixed(2))
-        setPorfolioValue(result.currentValue.toFixed(2))
-        setProfit(result.profitLoss.toFixed(2))
-        setOriginalValues({Invested: result.totalInvested.toFixed(2), PortfolioValue: result.currentValue.toFixed(2), Profit: result.profitLoss.toFixed(2)})
-      };
-
-      updateAndFetch();
-    }
-  }, [user]);
-  
-  useEffect(() => { // Fetch the History
-    if (user?.id) {
-      const updateAndFetch = async () => {
-        let id = user?.id
-        const History = await getHistory({ id, FilterHistory });
-        setStockHistory(History)
-      };
-
-      updateAndFetch();
-    }
-  }, [user, FilterHistory]);
-
-  useEffect(() => { // Reset after delete
-    if(ToDelete.name == null && ToReload && ToDelete.logo == null){
-      const FetchPortfolioData = async () => {
-        setToReload(false)
-        const result = await getPortfolio({ user });
-        setPortfolio(result);
+        const updateResponse = await updateAllStocksInPortfolio({ user })
+        const id = user?.id
+        updateResponse ? console.log("Stocks Updated") : console.log("Update Failed")
+        const [portfolioResult, historyResult] = await Promise.all([
+          getPortfolio({user: user, setDisplayError: setDisplayError}),
+          getHistory({ id, FilterHistory})
+        ])
+        console.log("PP: ", portfolioResult)
+        setPortfolio(portfolioResult);
+        setStockHistory(historyResult)
+        setOriginalValues({Invested: portfolioResult.totalInvested, PortfolioValue: portfolioResult.currentValue, Profit: portfolioResult.profitLoss})
       }
-      FetchPortfolioData();
+
+      updateAndFetch()
     }
-  }, [ToDelete, ToReload])
+  }, [user, FilterHistory, ToDelete])
 
   useEffect(() => { // Filter for Portfolio Table
     if (FilteredOption !== "") {
@@ -149,19 +120,19 @@ const Portfolio = () => {
             <article className="PortfolioSummary">
               <div>
                 <h4>Invested</h4>
-                <h5>£{Invested}</h5>
+                <h5>£{portfolio.totalInvested.toFixed(2)}</h5>
               </div>
               <div className="PortfolioSummaryCenter">
                 <h3>Portfolio Value</h3>
-                <h4>£{PorfolioValue}</h4>
+                <h4>£{portfolio.currentValue.toFixed(2)}</h4>
               </div>
               <div>
                 <h4>Profit</h4>
-                <h5>{Profit != null && Profit >= 0 ? "+" : "-"}£{Profit != null ? Math.abs(Profit) : ""}
+                <h5>{portfolio.profitLoss != null && portfolio.profitLoss >= 0 ? "+" : "-"}£{portfolio.profitLoss != null ? Math.abs(portfolio.profitLoss.toFixed(2)) : ""}
                 </h5>
                 <div>
-                  <span style={Profit != null && Profit >= 0 ? {color: '#45a049'} : {color: '#bb1515'}}>
-                    {Profit != null && Profit >= 0 ? "+" : ""}{(PorfolioValue && Invested) ? (((PorfolioValue/Invested)*100-100).toFixed(2)) : ""}{(PorfolioValue != null && Invested != null) ? "%" : ""}
+                  <span style={portfolio.profitLoss != null && portfolio.profitLoss >= 0 ? {color: '#45a049'} : {color: '#bb1515'}}>
+                    {portfolio.profitLoss != null && portfolio.profitLoss >= 0 ? "+" : ""}{(portfolio.currentValue && portfolio.totalInvested) ? (((portfolio.currentValue/portfolio.totalInvested)*100-100).toFixed(2)) : ""}{(portfolio.currentValue != null && portfolio.totalInvested != null) ? "%" : ""}
                   </span>
                 </div>
               </div>
@@ -169,13 +140,11 @@ const Portfolio = () => {
           </section>
 
           <QuickStats 
-            portfolio={portfolio} 
+            portfolio={portfolio}
+            setPortfolio={setPortfolio}
             History={StockHistory} 
             FilterHistory={FilterHistory} 
             setFilterHistory={setFilterHistory}
-            setPortfolioValue={setPorfolioValue}
-            setProfit={setProfit}
-            setInvested={setInvested}
             FilteredSearch={FilteredSearch}
             originalValues={originalValues}
             />
