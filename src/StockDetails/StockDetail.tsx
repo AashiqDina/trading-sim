@@ -35,9 +35,7 @@ const StockDetail: React.FC = () => {
     const [StockCompanyDetails, setCompanyDetails] = useState<CompanyProfile | null | undefined>(undefined);
     const [DisplayedData, setDisplayedData] = useState<any | null>("Overview")
     const [UserPrompts, setUserPrompts] = useState<string[]>([])
-    //(["Hi","Can you tell me about this stock?","ok how about this?","so blah blahblahblah"])
     const [AiResponses, setAiResponses] = useState<string[]>([])
-    //(["Hi","Sure blah blah blah blah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blahblah blah blah","blah blah blahblah blah blahblah blah blah", "bla"])
     const [AIAssistantSearchInput,setSearchInput] = useState<string>("")
     const [stockPrice, setStockPrice] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -47,6 +45,21 @@ const StockDetail: React.FC = () => {
     const [displayError, setDisplayError] = useState<{display: boolean, warning: boolean, title: string, bodyText: string, buttonText: string}>({display: false, title: "", bodyText: "", warning: false, buttonText: ""});
     
     useEffect(() => {
+        const GetData = async () => {
+          try{
+              const [stockName, stockPrice, stockImage] = await Promise.all([
+                getStockName({symbol: stockSymbol, setDisplayError: setDisplayError}),
+                getStockPrice({symbol: stockSymbol, setDisplayError: setDisplayError}),
+                getStockImage({symbol: stockSymbol, setDisplayError: setDisplayError})
+              ])
+              setStockName(stockName);
+              setStockPrice(stockPrice)
+              setStockLogo(stockImage);
+          }
+          catch(error){
+              handleAxiosError(error);
+          }
+        }
         GetData()
     }, [])
 
@@ -55,21 +68,6 @@ const StockDetail: React.FC = () => {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-    const GetData = async() => {
-        try{
-            const response = await getStockName({symbol: stockSymbol, setDisplayError: setDisplayError});
-            setStockName(response);
-            const response3 = await getStockPrice({symbol: stockSymbol, setDisplayError: setDisplayError});
-            setStockPrice(response3)
-            const response2 = await getStockImage({symbol: stockSymbol, setDisplayError: setDisplayError})
-            setStockLogo(response2);
-        }
-        catch(error){
-            handleAxiosError(error);
-        }
-
-    }
 
     const handleAxiosError = (error: unknown) => {
         if (axios.isAxiosError(error)) {
@@ -227,7 +225,7 @@ const StockDetail: React.FC = () => {
                           id="quantity"
                           type="number"
                           value={quantity}
-                          onChange={(e) => {setQuantity(e.target.value); setCost((String(Number(e.target.value)*(stockPrice || 0))))}}
+                          onChange={(e) => {setQuantity(e.target.value); setCost((Number(e.target.value)*(stockPrice || 0)).toFixed(2))}}
                           className="QuantityInput"
                           onBlur={() => {
                             if (quantity === "" || Number(quantity) < 1) {
@@ -244,8 +242,8 @@ const StockDetail: React.FC = () => {
                           value={(cost || String(Number(quantity)*(stockPrice || 0)))}
                           onChange={(e) => {
                             let q = (Number(e.target.value)/(stockPrice || 0))
-                            setQuantity(String(q)); 
-                            setCost(String(Number(q)*(stockPrice || 0)))}}
+                            setQuantity(q.toFixed(2)); 
+                            setCost((Number(q)*(stockPrice || 0)).toFixed(2))}}
                           className="QuantityInput"
                           onBlur={() => {
                             if (cost) setCost(Number(cost).toFixed(2));

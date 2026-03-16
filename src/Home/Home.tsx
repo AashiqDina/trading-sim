@@ -13,15 +13,8 @@ import SponsoredAd from '../Ads/SponsoredAd';
 import AiLoading from "../Loading/AiLoading"
 import GetStockList from '../Functions/getStockList';
 
-type StockInfo = {
-  symbol: string;
-  logo: string;
-};
-
-type StockMap = Record<string, StockInfo>;
-
 const Home: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   let ProfitColour: string = '#45a049';
@@ -47,39 +40,25 @@ const Home: React.FC = () => {
   const [marketNews, setMarketNews] = useState<any[] | null>(null)
   const [marketNewsIndex, setMarketNewsIndex] = useState<{index: number, direction: string}>({index: 0, direction: "left"})
   const [WinWidth, setWinWidth] = useState(window.innerWidth);
-  const [isLoadingTrending, setIsLoadingTrending] = useState(true)
-  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const MarketNewsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
-      const getMap = async () => {
-        const map = await GetStockList({setDisplayError: setDisplayError})
-        setStockList(map)
-        setIsLoadingSuggestions(false)
-      };
-  
-      getMap();
-    }, []);
-
-  useEffect(() => {
-    const getMap = async () => {
-      const result = await getMarketNews({setDisplayError: setDisplayError})
-      setMarketNews(result)
-    };
-  
-    getMap();
-  }, []);
-
-  useEffect(() => {
-    const getTrendingList = async () => {
-      const trendingStocks =  await getTrendingStocks({setDisplayError: setDisplayError});
-      setTrendingStocksList(trendingStocks);
-      setIsLoadingTrending(false)
+    const getData = async () => {
+      const [StockList, MarketNews, TrendingList] = await Promise.all([
+        GetStockList({setDisplayError: setDisplayError}),
+        getMarketNews({setDisplayError: setDisplayError}),
+        getTrendingStocks({setDisplayError: setDisplayError})
+      ])
+      setIsLoading(false)
+      setStockList(StockList)
+      setMarketNews(MarketNews)
+      setTrendingStocksList(TrendingList)
     }
-    getTrendingList();
-  },[]);
+    getData()
+  }, [])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -289,7 +268,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         </article> :
-        isLoadingSuggestions || isLoadingTrending ? <article className='TrendingStocksSection'>
+        isLoading ? <article className='TrendingStocksSection'>
           <Loading/>
         </article> :
         <h3 className='NoNewsFoundHeading'>No Stocks Current Trending</h3>        

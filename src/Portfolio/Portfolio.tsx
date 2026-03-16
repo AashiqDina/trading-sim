@@ -58,7 +58,6 @@ const Portfolio = () => {
           getPortfolio({user: user, setDisplayError: setDisplayError}),
           getHistory({ id, FilterHistory})
         ])
-        console.log("PP: ", portfolioResult)
         setPortfolio(portfolioResult);
         setStockHistory(historyResult)
         setOriginalValues({Invested: portfolioResult.totalInvested, PortfolioValue: portfolioResult.currentValue, Profit: portfolioResult.profitLoss})
