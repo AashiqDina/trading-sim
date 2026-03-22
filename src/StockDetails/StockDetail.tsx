@@ -10,7 +10,7 @@ import StockDetails from '../StockDetailsSections/StockDetailsStockData'
 import StockDetailsOwnedStocks from '../StockDetailsSections/StockDetailsOwnedStocks';
 import StockDetailsNews from '../StockDetailsSections/StockDetailsNews';
 import buyStock from '../Functions/buyStock';
-import { FocusTrap } from 'focus-trap-react';
+import FocusTrap from 'focus-trap-react';
 import Confetti from 'react-confetti';
 import AiChat from '../StockDetailsSections/AiChat';
 import StockDetailsOverview from '../StockDetailsSections/StockDetailsOverview';
@@ -162,7 +162,7 @@ const StockDetail: React.FC = () => {
                   <h1 className='StockDetailsTitle' style={StockName && StockName.length > 18 && WinWidth < 600 ? {textAlign: "center"} : undefined} >{StockName}<span className='StockSymbol'>{stockSymbol}</span></h1>
                 </div>
                 {/* <div className='TitleLogo'></div> */}
-                <h2 style={StockName && StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{stockPrice?.toFixed(2)}</h2>
+                <h2 style={StockName && StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{typeof stockPrice === "number" ? stockPrice.toFixed(2) : "..."}</h2>
               </article>
           </section>
           <section className='CompleteSelector'>
