@@ -1,27 +1,30 @@
-import { findAllByRole, findByText, fireEvent, queryAllByRole, render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import Home from './Home';
-import { AuthProvider } from '../Functions/AuthContext';
-import '@testing-library/jest-dom';
-import getTrendingStocksMock from "../Functions/getTrendingStocks";
-import getStockPriceMock from "../Functions/getStockPrice";
-import getMarketNewsMock from '../Functions/getMarketNews';
-import GetStockListMock from '../Functions/getStockList';
-import GetStockHistoryMock from "../Functions/GetStockHistory";
+import { AuthProvider } from '../../Functions/AuthContext';
+import Home from '../Home';
+import getTrendingStocksMock from "../../Functions/getTrendingStocks";
+import getStockPriceMock from "../../Functions/getStockPrice";
+import getMarketNewsMock from '../../Functions/getMarketNews';
+import GetStockListMock from '../../Functions/getStockList';
+import GetStockHistoryMock from "../../Functions/GetStockHistory";
+import StockDetail from '../../StockDetails/StockDetail';
 import HomeSearch from './HomeSearch';
 import userEvent from "@testing-library/user-event";
-import StockDetail from '../StockDetails/StockDetail';
+import '@testing-library/jest-dom';
+import { mockStockList } from '../../mocks/Home/mockStockList';
+import { mockHistory } from '../../mocks/StockDetails/mockHistory';
 
 const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock; // for typescript compile time we manually tell typescript these are of type jest.mock so we can change the returned value later
 const mockedGetStockPrice = getStockPriceMock as jest.Mock;
-const mockedGetStockList = GetStockListMock as jest.Mock;
+const mockedGetStockList = GetStockListMock as jest.Mock; // use .default for ES module default export
 const mockedGetMarketNews = getMarketNewsMock as jest.Mock;
 const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
 
+
 jest.mock('axios'); // mocks axios functions to test with edge cases without backend
 
-jest.mock("../Functions/AuthContext", () => {
-  const actual = jest.requireActual("../Functions/AuthContext"); // loads the real module
+jest.mock("../../Functions/AuthContext", () => {
+  const actual = jest.requireActual("../../Functions/AuthContext"); // loads the real module
   return {
     ...actual, // copies it over here to keep the other functions
     useAuth: () => ({ // useAuth is overridden with what we want it to output so the output of the function useAuth would be a use Obj as specified below
@@ -42,59 +45,37 @@ jest.mock("focus-trap-react", () => ({
   default: ({ children }: any) => <div>{children}</div>,
 }))
 
-jest.mock("../Functions/getTrendingStocks", () => ({
+jest.mock("../../Functions/getTrendingStocks", () => ({
   __esModule: true,
   default: jest.fn()
 }));
 
-jest.mock("../Functions/getStockPrice", () => ({
+jest.mock("../../Functions/getStockPrice", () => ({
   __esModule: true,
   default: jest.fn()
 }));
 
-jest.mock("../Functions/getStockList", () => ({
+jest.mock("../../Functions/getStockList", () => ({
   __esModule: true,
   default: jest.fn()
 }))
 
-jest.mock("../Functions/getMarketNews", () => ({
+jest.mock("../../Functions/getMarketNews", () => ({
   __esModule: true,
   default: jest.fn()
 }))
 
-jest.mock("../Functions/GetStockHistory", () => ({
+jest.mock("../../Functions/GetStockHistory", () => ({
   __esModule: true,
   default: jest.fn().mockResolvedValue([]),
 }));
 
-jest.mock("../Functions/getStockName", () => ({
+jest.mock("../../Functions/getStockName", () => ({
   __esModule: true,
   default: jest.fn().mockResolvedValue("Apple Inc."),
 }));
 
-jest.mock('../Error/Error', () => () => <div>ErrorMock</div>);
-
-const mockStockList = {
-  "Apple Inc.": { symbol: "AAPL", logo: "" },
-  "Alphabet Inc.": { symbol: "GOOG", logo: "" },
-  "Amazon.com Inc.": { symbol: "AMZN", logo: "" },
-  "Advanced Micro Devices": { symbol: "AMD", logo: "" },
-  "American Express": { symbol: "AXP", logo: "" },
-  "Meta Platforms": { symbol: "META", logo: "" },
-  "Microsoft Corporation": { symbol: "MSFT", logo: "" },
-  "Netflix, Inc.": { symbol: "NFLX", logo: "" },
-  "NVIDIA Corporation": { symbol: "NVDA", logo: "" },
-  "PepsiCo, Inc.": { symbol: "PEP", logo: "" },
-  "PayPal Holdings": { symbol: "PYPL", logo: "" },
-  "Tesla, Inc.": { symbol: "TSLA", logo: "" },
-  "Alcoa Corporation": {symbol: "AA", logo: ""}
-};
-
-const mockHistory = [
-  { datetime: "2006-05-05T00:00:00", open: 1.7325, high: 1.752, low: 1.7075, close: 1.752, volume: 114818000 },
-  { datetime: "2006-05-08T00:00:00", open: 1.7495, high: 1.7655, low: 1.734, close: 1.755, volume: 120000000 },
-  { datetime: "2006-05-09T00:00:00", open: 1.760, high: 1.780, low: 1.750, close: 1.770, volume: 115000000 },
-];
+jest.mock('../../Error/Error', () => () => <div>ErrorMock</div>);
 
 describe("Renders Search input and Button", () => {
 
@@ -163,6 +144,16 @@ describe("Search Suggestions and Searhc correctly Work", () => {
         await userEvent.click(suggestions[0])
         expect(search).toHaveBeenCalledWith("AA");
     })
+
+    test("Clicking search button calls searchStock with input value", async () => {
+        const search = jest.fn();
+        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={search}/>);
+        const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
+        const button = screen.getByRole("button", { name: /search/i });
+        await userEvent.type(input, "AAPL");
+        await userEvent.click(button);
+        expect(search).toHaveBeenCalledWith("AAPL");
+        });
 
     test("Arrow Navigation", async () => {
         render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)

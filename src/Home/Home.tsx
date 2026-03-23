@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '../Functions/AuthContext';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -10,21 +10,32 @@ import getTrendingStocks from '../Functions/getTrendingStocks';
 import Loading from '../Loading/Loading';
 import getMarketNews from '../Functions/getMarketNews';
 import SponsoredAd from '../Ads/SponsoredAd';
-import AiLoading from "../Loading/AiLoading"
 import GetStockList from '../Functions/getStockList';
-import HomeSearch from './HomeSearch';
+import HomeSearch from './HomeComponents/HomeSearch';
+import HomeTrending from './HomeComponents/HomeTrending';
+
+type stockList = Record<string, {symbol: string, logo: string}> | null
+type marketNews = {
+  category: string;
+  datetime: number;
+  headline: string;
+  id: number;
+  image: string;
+  related: string;
+  source: string;
+  summary: string;
+  url: string;
+};
+type trendingStocksList = string[] 
+
 
 const Home: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-
-
   // State for stock search
-  const [stockList, setStockList] = useState<Record<string, {symbol: string, logo: string}> | null>();
+  const [data, setData] = useState<{stockList: stockList, marketNews: marketNews[], trendingStocks: trendingStocksList}>({stockList: null, marketNews: [], trendingStocks: []});
   const [displayError, setDisplayError] = useState<{display: boolean, warning: boolean, title: string, bodyText: string, buttonText: string}>({display: false, title: "", bodyText: "", warning: false, buttonText: ""});
-  const [trendingStocksList, setTrendingStocksList] = useState<string[]>([])
-  const [marketNews, setMarketNews] = useState<any[] | null>(null)
   const [marketNewsIndex, setMarketNewsIndex] = useState<{index: number, direction: string}>({index: 0, direction: "left"})
   const [WinWidth, setWinWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(true)
@@ -39,9 +50,8 @@ const Home: React.FC = () => {
         getTrendingStocks({setDisplayError: setDisplayError})
       ])
       setIsLoading(false)
-      setStockList(StockList)
-      setMarketNews(MarketNews)
-      setTrendingStocksList(TrendingList)
+      console.log(TrendingList)
+      setData({stockList: StockList, marketNews: MarketNews, trendingStocks: TrendingList})
     }
     getData()
   }, [])
@@ -64,32 +74,15 @@ const Home: React.FC = () => {
   });
   }, [marketNewsIndex])
 
-  useEffect(() => {
-    const handleResize = () => setWinWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
-  function getNameImage(theSymbol: string){
-    if(stockList == null){
-      return null
-    }
-    for(const [name, {symbol, logo}] of Object.entries(stockList)){
-      if(theSymbol == symbol){
-        return {name, logo}
-      }
-    } 
-    return null
-  }
-
-  const searchStock = async (symbol: string) => {
+  const searchStock = useCallback(async (symbol: string) => {
           
     var stockPrice = await getStockPrice({symbol: symbol, setDisplayError: setDisplayError})
       
     if(stockPrice != null){
       navigate(`/stock/${encodeURIComponent(String(symbol ?? ''))}`)
     }
-  };
+  }, [navigate, setDisplayError]);
 
   function newsLeft(){
     marketNewsIndex.index == 0 ? setMarketNewsIndex({index: 97, direction: "left"}) : setMarketNewsIndex({index: marketNewsIndex.index-3, direction: "left"})
@@ -103,82 +96,26 @@ const Home: React.FC = () => {
   return (
     <>
       <HomeSearch 
-        stockList={stockList ?? null}
+        stockList={data?.stockList ?? null}
         isLoading={isLoading}
         searchStock={searchStock}
       />
+
       <section className='MotherBody'>
-      <section className='CompleteTrendingBody'>
-        {trendingStocksList && stockList && (trendingStocksList.length > 0) && <article className='TrendingStocksSectionTitle'>
-          <h2>Trending Stocks</h2>
-        </article>}
-        {trendingStocksList && stockList && (trendingStocksList.length > 0) ? <article className='TrendingStocksSection'>
-          <div className='TrendingStocksCarouselContainer'>
-            <div className='TrendingStocksCarouselTrack'>
-              {
-                trendingStocksList.map((stock, index) => {
-                  const data = getNameImage(stock)
-                  if(!(trendingStocksList.length > 0 && stockList)){
-                    return (
-                      <button className='TrendingStockDiv' key={stock}>
-                        { WinWidth > 600 ? <Loading scale={0.2} marginBottom={-0.3}/> : <Loading scale={0.1} marginBottom={-0.4}/>}
-                      </button>
-                    )
-                  }
-                  if(!data){
-                    return (
-                      <button className='TrendingStockDiv' key={stock}>
-                        <img src={process.env.PUBLIC_URL + "/Error.svg"} alt="ERROR SYMBOL" />
-                        <h2>Error - No Stock Found</h2>
-                      </button>
-                    )
-                  }
-                  return (
-                    <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
-                      <img src={data?.logo} alt="" />
-                      <h2>{data?.name}</h2>
-                    </button>
-                   )
-                })
-              }
-              {
-                trendingStocksList.map((stock, index) => {
-                  const data = getNameImage(stock)
-                  if(!(trendingStocksList.length > 0 && stockList)){
-                    return (
-                      <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
-                        { WinWidth > 600 ? <Loading scale={0.2} marginBottom={-0.3}/> : <Loading scale={0.1} marginBottom={-0.4}/>}
-                      </button>
-                    )
-                  }
-                  if(!data){
-                    return (
-                      <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
-                        <img src={process.env.PUBLIC_URL + "/Error.svg"} alt="ERROR SYMBOL" />
-                        <h2>Error - No Stock Found</h2>
-                      </button>
-                    )
-                  }
-                  return (
-                    <button className='TrendingStockDiv' key={stock} onClick={() => {searchStock(stock);}}>
-                      <img src={data?.logo} alt="" />
-                      <h2>{data?.name}</h2>
-                    </button>
-                   )
-                })
-              }
-            </div>
-          </div>
-        </article> :
-        isLoading ? <article className='TrendingStocksSection'>
-          <Loading/>
-        </article> :
-        <h3 className='NoNewsFoundHeading'>No Stocks Current Trending</h3>        
-        }
-      </section>
+        {isLoading ? 
+          <section className='CompleteTrendingBody'>
+            <article className='TrendingStocksSection'>
+              <Loading/>
+            </article>
+          </section>
+        : <HomeTrending
+            stockList={data?.stockList ?? null}
+            trendingStocksList={data?.trendingStocks}
+            searchStock={searchStock}
+        />}
       </section>
       <>
-      {(marketNews != null) ? 
+      {(data?.marketNews != null) ? 
       <section className='NewsTitleSection'>
           <section className='HomeNewsSectionTitle'>
             <article>
@@ -195,15 +132,15 @@ const Home: React.FC = () => {
           </section>
       </section> : undefined}
       <section className='MotherBody2'>
-          <article className='HomeNewsSection' style={((marketNews == null && trendingStocksList.length != 0) || (marketNews?.length == 0)) ? {justifyContent: 'center'} : undefined}>
+          <article className='HomeNewsSection' style={((data?.marketNews == null && data?.trendingStocks.length != 0) || (data?.marketNews?.length == 0)) ? {justifyContent: 'center'} : undefined}>
             {false && <SponsoredAd></SponsoredAd>} {/* Doesnt work unless I have a domain, didnt know about that until after all of this*/}
             {
-              (marketNews == null && trendingStocksList.length != 0) ?
+              (data?.marketNews == null && data?.trendingStocks.length != 0) ?
                 <Loading top={8} height={46} marginBottom={-1}/>
               :
-              (marketNews && marketNews.length == 0) ? <h3 className='NoNewsFoundHeading'>No News Found</h3> :
-              (marketNews != null) ? 
-                marketNews.slice(marketNewsIndex.index, marketNewsIndex.index + 3).map((news, index) => {
+              (data?.marketNews && data?.marketNews.length == 0) ? <h3 className='NoNewsFoundHeading'>No News Found</h3> :
+              (data?.marketNews != null) ? 
+                data?.marketNews.slice(marketNewsIndex.index, marketNewsIndex.index + 3).map((news, index) => {
                   return (
                     <a href={news.url || "brokenURL"} aria-label={`Read news: ${news.headline || "brokenHeadline"}`} className='CompleteMarketNews' key={news.url || index} style={{animationDelay: `${index * 0.1}s`}} ref={(el) => {if (el) MarketNewsRef.current[index] = el;}}>
                       <div className='marketNewsImage'>
@@ -247,5 +184,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-

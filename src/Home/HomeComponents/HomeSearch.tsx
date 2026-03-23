@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import AiLoading from "../Loading/AiLoading";
+import AiLoading from "../../Loading/AiLoading";
 import React from "react";
 import './HomeSearch.css'
-
 
 type Props = {
     stockList: Record<string, {symbol: string, logo: string}> | null;
@@ -23,13 +22,18 @@ const HomeSearch = ({ stockList, isLoading, searchStock}: Props) => {
     const [displaySuggestions, setDisplaySuggestions] = useState<boolean>(false)
     const inputRef = useRef<HTMLInputElement>(null);
     const suggestionRefs = useRef<(HTMLButtonElement | null)[]>([]);
-    const wrapperRef = useRef<HTMLDivElement>(null);
         
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-          if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-            setDisplaySuggestions(false);
-          }
+            const target = event.target as Node;
+            const clickedOnInput = inputRef.current?.contains(target);
+            const clickedOnSuggestion = suggestionRefs.current.some(
+                (btn) => btn?.contains(target)
+            );
+
+            if (!clickedOnInput && !clickedOnSuggestion) {
+                setDisplaySuggestions(false);
+            }
         }
     
         document.addEventListener("mousedown", handleClickOutside);
@@ -73,7 +77,7 @@ const HomeSearch = ({ stockList, isLoading, searchStock}: Props) => {
 
     return (
         <section className='SearchAndResult'>
-            <section ref={wrapperRef} className='StockSearch'>
+            <section className='StockSearch'>
               <section className='SearchSection'>
                 <input 
                   aria-label="Search by stock name or symbol (e.g. AAPL or Apple)"
