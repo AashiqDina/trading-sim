@@ -1,9 +1,10 @@
 import React from "react";
 import './HomeTrending.css'
+import { stockList, trendingStocksList } from "../../types";
 
 type props = {
-    stockList: Record<string, {symbol: string, logo: string}> | null; 
-    trendingStocksList: string[];
+    stockList: stockList; 
+    trendingStocksList: trendingStocksList
     searchStock: (symbol: string) => void
 }
 

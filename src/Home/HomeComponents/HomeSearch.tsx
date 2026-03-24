@@ -2,20 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import AiLoading from "../../Loading/AiLoading";
 import React from "react";
 import './HomeSearch.css'
+import { Suggestion, stockList } from "../../types";
 
 type Props = {
-    stockList: Record<string, {symbol: string, logo: string}> | null;
-    isLoading: boolean;
+    stockList: stockList
     searchStock: (symbol: string) => void;
 };
 
-type Suggestion = {
-  name: string;
-  symbol: string;
-  logo: string;
-};
-
-const HomeSearch = ({ stockList, isLoading, searchStock}: Props) => {
+const HomeSearch = ({ stockList, searchStock}: Props) => {
 
     const [stockSymbol, setStockSymbol] = useState<string>('');
     const [suggestions, setSuggestions] = useState<Suggestion[]>([])
@@ -73,8 +67,6 @@ const HomeSearch = ({ stockList, isLoading, searchStock}: Props) => {
         setSuggestions(matches);
     }
     
-    if(isLoading) return (<></>)
-
     return (
         <section className='SearchAndResult'>
             <section className='StockSearch'>

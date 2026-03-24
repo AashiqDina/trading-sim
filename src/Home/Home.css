@@ -2,33 +2,9 @@
   box-sizing: border-box;
 }
 
-.NewsTitleSectionTitle{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.HomeNewsSectionTitle{
-  width: 80%;
-}
-
-.NewsTitleSection > section > article > h2{
-  text-align: start;
-  font-weight: 300;
-  margin: 1rem 1rem 1rem 0rem;
-}
-
 .SomethingSectionTitle{
   width: 39%;
 }
-
-.NewsTitleSection{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .SomethingSection{
   width: 39%;
   height: 10rem;
@@ -309,156 +285,6 @@
   margin-bottom: 2rem;
 }
 
-.HomeNewsSection{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  width: 88%;
-  gap: 1rem;
-}
-
-  .CompleteMarketNews{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    width: 100%;
-    animation: growThenSmall 1s ease-in-out;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .CompleteMarketNews:hover{
-    scale: 1.005;
-  }
-
-  .marketNewsContainer{
-    width: 100%;
-  }
-
-  .marketNewsHeader{
-    width: 100%;
-  }
-
-  .marketNewsHeaderMobile{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .newsImageInHeader{
-    width: 6rem;
-    border-radius: 0.4rem;
-  }
-
-  .marketNewsImage > img{
-    width: 12.5rem;
-    height: auto;
-    border-radius: 0.6rem;
-    float: left;
-    margin: 0rem 0.5rem 0rem 0.5rem;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .marketNewsHeader > h3, .marketNewsHeaderMobile > h3{
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
-    text-align: left;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .marketNewsBody > p{
-    text-align: left;
-    font-weight: 350;
-    margin: 0.7rem 1rem 0 0;
-    transition: all 0.5s ease-in-out;
-
-  }
-
-
-
-  .marketNewsFooter{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .marketNewsFooter > p{
-    margin: 0.5rem 0 0 0;
-    font-weight: 200;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .HomeNewsSectionTitle > article{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .newsArrowContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .newsLeftArrow{
-    width: 0;
-    height: 0;
-    border-left: 0px;
-    border-bottom: 10px solid transparent;
-    border-right: 15px solid white;
-    border-top: 10px solid transparent;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .newsLeftArrow:hover{
-    scale: 1.1;
-  }
-
-  .newsRightArrow:hover{
-    scale: 1.1;
-  }
-
-  .newsRightArrow{
-    height: 0;
-    width: 0;
-    border-left: 15px solid white;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 0px;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .newsArrowTriangleContainer{
-    background: none;
-    border: none;
-  }
-
-  .newsArrowTriangleContainer:hover{
-    background: none;
-    border: none;
-  }
-
-  .newsAnimateLeft{
-    animation: newsGoRight 0.3s ease-in-out;
-  }
-
-  .newsAnimateRight{
-    animation: newsGoLeft 0.3s ease-in-out;
-  }
-
-  .NoNewsFoundHeading{
-    font-size: 2rem;
-    font-weight: 400;
-    font-family: Inter, sans-serif;
-  }
-
 @media (max-width: 900px) {
 
     .StockBodyLeft{
@@ -486,27 +312,8 @@
     }
   }
 
-  @media (max-width: 800px) {
-    .marketNewsHeader > h3, .marketNewsHeaderMobile > h3{
-        font-size: 1rem;
-    }
-
-    .marketNewsBody > p{
-        font-size: 0.9rem;
-    }
-
-    .marketNewsFooter > p{
-      font-size: 0.8rem;
-    }
-
-}
-
 
     @media (max-width: 600px) {
-
-    .NewsTitleSection > section > article > h2{
-      font-size: 1.8rem;
-    }
 
     .StockBodyLeft > div > h4{
       font-size: 2.5rem;
@@ -526,22 +333,6 @@
       width: 25rem;
     }
 
-    .marketNewsHeader > h3, .marketNewsHeaderMobile > h3{
-        font-size: 0.8rem;
-    }
-
-    .marketNewsBody > p{
-        font-size: 0.7rem;
-    }
-
-    .marketNewsFooter > p{
-      font-size: 0.65rem;
-    }
-    
-    .marketNewsImage > img{
-      width: 10rem;
-    }
-
     .BuyStockTitle > h2{
       font-size: 1.2rem;
     }
@@ -553,27 +344,6 @@
     .StockLogo{
       width: 1rem;
       border-radius: 0.8rem;
-    }
-
-    .marketNewsContainerMobile > .marketNewsBody > p{
-      margin: 0.3rem 1rem 0 0;
-    }
-
-    .HomeNewsSection{
-      gap: 0.5rem;
-    }
-
-  }
-
-  @media (max-width: 500px) {
-    
-    .CompleteMarketNews{
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .marketNewsImage{
-      margin-bottom: 1rem;
     }
 
   }
@@ -654,48 +424,4 @@
       width: 90%;
     }
   }
-
-@keyframes growThenSmall {
-  0% {
-    transform: scale(1);
-  }
-  50%{
-    transform: scale(1.03);
-  }
-  100%{
-    transform: scale(1);
-  }
-}
-
-@keyframes newsGoLeft{
-  0%{
-    transform: translateX(0%);
-  }
-  50%{
-    transform: translateX(-50%);
-  }
-  51%{
-    transform: translateX(150%);
-  }
-  100%{
-    transform: translateX(0%);
-  }
-}
-
-@keyframes newsGoRight{
-  0%{
-    transform: translateX(0%);
-  }
-  50%{
-    transform: translateX(150%);
-  }
-  51%{
-    transform: translateX(-50%);
-  }
-  100%{
-    transform: translateX(0%);
-  }
-
-}
-
 

@@ -80,30 +80,25 @@ jest.mock('../../Error/Error', () => () => <div>ErrorMock</div>);
 describe("Renders Search input and Button", () => {
 
     test("Render Input and Button", () => {
-        render(<HomeSearch stockList={{}} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={{}} searchStock={jest.fn()}/>)
         expect(screen.getByPlaceholderText(/search by stock name or symbol/i)).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
     })
     test("Suggestions Not Shown On Render", () => {
-        render(<HomeSearch stockList={{}} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={{}} searchStock={jest.fn()}/>)
         expect(screen.queryByTestId("SearchSuggestions")).not.toBeInTheDocument();
     })
     test("Renders Fine When StockList is Null", () => {
-        render(<HomeSearch stockList={null} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={null} searchStock={jest.fn()}/>)
         expect(screen.getByPlaceholderText(/search by stock name or symbol/i)).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
-    })
-    test("Renders Nothing if isLoading is true", () => {
-        render(<HomeSearch stockList={{}} isLoading={true} searchStock={jest.fn()}/>)
-        expect(screen.queryByPlaceholderText(/search by stock name or symbol/i)).not.toBeInTheDocument();
-        expect(screen.queryByRole("button", { name: /search/i })).not.toBeInTheDocument()
     })
 })
 
 describe("Search Suggestions and Searhc correctly Work", () => {
 
     test("Render Suggestions When Typing", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "a")
         const suggestions = await screen.findAllByRole("option");
@@ -111,7 +106,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
     })
 
     test("Correctly Filtered Suggestions", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "a")
         const suggestions = await screen.findAllByRole("option");
@@ -125,7 +120,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
     })
 
     test("Correctly Sorted Suggestions", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "aa")
         const suggestions = await screen.findAllByRole("option");
@@ -137,7 +132,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
 
     test("Clicking Stock Suggestions calls function", async () => {
         const search = jest.fn()
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={search}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={search}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "aa");
         const suggestions = await screen.findAllByRole("option")
@@ -147,7 +142,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
 
     test("Clicking search button calls searchStock with input value", async () => {
         const search = jest.fn();
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={search}/>);
+        render(<HomeSearch stockList={mockStockList} searchStock={search}/>);
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         const button = screen.getByRole("button", { name: /search/i });
         await userEvent.type(input, "AAPL");
@@ -156,7 +151,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
         });
 
     test("Arrow Navigation", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "a")
         const suggestions = await screen.findAllByRole("option")
@@ -174,7 +169,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
 
     test("Enter on Suggestions", async () => {
         const search = jest.fn()
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={search}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={search}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "aa")
         const suggestions = screen.getAllByRole("option");
@@ -185,7 +180,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
 
     test("Enter on Input", async () => {
         const search = jest.fn()
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={search}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={search}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "aapl")
         await userEvent.keyboard("{Enter}")
@@ -193,14 +188,14 @@ describe("Search Suggestions and Searhc correctly Work", () => {
     })
 
     test("No Suggestions when Inputs Dont Match", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "RandomNonsenseThatDoesNotMatchSuggestions")
         expect(screen.queryByRole("option")).not.toBeInTheDocument();
     })
 
     test("Clearing Input", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "a")
         await userEvent.clear(input)
@@ -209,7 +204,7 @@ describe("Search Suggestions and Searhc correctly Work", () => {
     })
 
     test("Case Sensitivity", async () => {
-        render(<HomeSearch stockList={mockStockList} isLoading={false} searchStock={jest.fn()}/>)
+        render(<HomeSearch stockList={mockStockList} searchStock={jest.fn()}/>)
         const input = screen.getByPlaceholderText(/search by stock name or symbol/i);
         await userEvent.type(input, "aapl")
         const suggestion = screen.getAllByRole("option")
