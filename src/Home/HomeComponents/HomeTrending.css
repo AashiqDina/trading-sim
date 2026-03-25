@@ -125,7 +125,7 @@
         .TrendingStocksCarouselTrack{
             height: 4rem;
             margin-top: 0.2rem;
-            width: 200%;
+            width: max-content;
             animation: Scroll 9s linear infinite;
         }
 

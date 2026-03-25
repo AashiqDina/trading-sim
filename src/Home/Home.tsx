@@ -11,12 +11,11 @@ import getMarketNews from '../Functions/getMarketNews';
 import GetStockList from '../Functions/getStockList';
 import HomeSearch from './HomeComponents/HomeSearch';
 import HomeTrending from './HomeComponents/HomeTrending';
-import { marketNews, stockList, trendingStocksList, HomeData, DisplayError } from '../types'; 
+import { HomeData, DisplayError } from '../types'; 
 import HomeNews from './HomeComponents/HomeNews';
 
 
 const Home: React.FC = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [data, setData] = useState<HomeData>({stockList: null, marketNews: [], trendingList: []});
@@ -41,6 +40,16 @@ const Home: React.FC = () => {
 
         if(!mounted) return
         setData({stockList: StockList, marketNews: MarketNews, trendingList: TrendingList})
+      }
+      catch (err) {
+        if (!mounted) return;
+        setDisplayError({
+          display: true,
+          warning: true,
+          title: "Something went wrong",
+          bodyText: "Failed to load homepage data.",
+          buttonText: "Retry"
+        });
       }
       finally{
         if(mounted) setIsLoading(false)

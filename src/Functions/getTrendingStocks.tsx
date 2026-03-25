@@ -1,16 +1,22 @@
 import axios from "axios"
-import handleTwelveDataError from "../Error/handleTwelveDataError";
 
 export default async function getTrendingStocks(props: any){
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetTrendingStocks`)
 
-        if(result.status == 200){
-            return result.data.trendingStocks
-        }
-        else{
+
+        
+        if(result.data.hasError){
+            props.setDisplayError({
+                display: true, 
+                title: "Our Trending Stocks are a bit shy", 
+                bodyText: "Looks like they've hid somewhere", 
+                warning: false, 
+                buttonText: "Retry"})
             return null;
         }
+        return result.data.trendingStocks
+
 
     }
     catch(error){
@@ -20,7 +26,7 @@ export default async function getTrendingStocks(props: any){
             bodyText: "Looks like our servers took a coffee break. Try again in a moment!", 
             warning: false, 
             buttonText: "Retry"})
-        return null;
+        return [];
     }
 
 }

@@ -159,6 +159,14 @@
     font-family: Inter, sans-serif;
   }
 
+  
+  .MotherBody2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
   @media (max-width: 800px) {
     .marketNewsHeader > h3{
         font-size: 1rem;

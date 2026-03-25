@@ -10,7 +10,7 @@ export default async function getMarketNews(props: any){
                 response: result.data,
                 setDisplayError: props.setDisplayError
             });
-            return null;
+            return [];
         }
         else{
             return result.data.data;
@@ -25,7 +25,7 @@ export default async function getMarketNews(props: any){
             bodyText: "Looks like our servers took a coffee break. Try again in a moment!", 
             warning: false, 
             buttonText: "Retry"})
-        return null;
+        return [];
     }
 }
 

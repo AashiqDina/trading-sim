@@ -1,82 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from '../../Functions/AuthContext';
-import Home from '../Home';
-import getTrendingStocksMock from "../../Functions/getTrendingStocks";
-import getStockPriceMock from "../../Functions/getStockPrice";
-import getMarketNewsMock from '../../Functions/getMarketNews';
-import GetStockListMock from '../../Functions/getStockList';
-import GetStockHistoryMock from "../../Functions/GetStockHistory";
-import StockDetail from '../../StockDetails/StockDetail';
-import HomeSearch from './HomeSearch';
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
-import { mockStockList } from '../../mocks/Home/mockStockList';
-import { mockHistory } from '../../mocks/StockDetails/mockHistory';
 import HomeNews from './HomeNews';
 import { mockMarketNews } from '../../mocks/Home/mockMarketNews';
 import { marketNews } from '../../types';
 
-const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock; // for typescript compile time we manually tell typescript these are of type jest.mock so we can change the returned value later
-const mockedGetStockPrice = getStockPriceMock as jest.Mock;
-const mockedGetStockList = GetStockListMock as jest.Mock; // use .default for ES module default export
-const mockedGetMarketNews = getMarketNewsMock as jest.Mock;
-const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
-
-
 jest.mock('axios'); // mocks axios functions to test with edge cases without backend
-
-jest.mock("../../Functions/AuthContext", () => {
-  const actual = jest.requireActual("../../Functions/AuthContext"); // loads the real module
-  return {
-    ...actual, // copies it over here to keep the other functions
-    useAuth: () => ({ // useAuth is overridden with what we want it to output so the output of the function useAuth would be a use Obj as specified below
-      user: {
-        id: 1,
-        username: "TestUser",
-        investedAmount: 0,
-        currentValue: 0,
-        profitLoss: 0,
-        portfolio: undefined
-      }
-    })
-  };
-});
-
-jest.mock("focus-trap-react", () => ({
-  __esModule: true,
-  default: ({ children }: any) => <div>{children}</div>,
-}))
-
-jest.mock("../../Functions/getTrendingStocks", () => ({
-  __esModule: true,
-  default: jest.fn()
-}));
-
-jest.mock("../../Functions/getStockPrice", () => ({
-  __esModule: true,
-  default: jest.fn()
-}));
-
-jest.mock("../../Functions/getStockList", () => ({
-  __esModule: true,
-  default: jest.fn()
-}))
 
 jest.mock("../../Functions/getMarketNews", () => ({
   __esModule: true,
   default: jest.fn()
 }))
-
-jest.mock("../../Functions/GetStockHistory", () => ({
-  __esModule: true,
-  default: jest.fn().mockResolvedValue([]),
-}));
-
-jest.mock("../../Functions/getStockName", () => ({
-  __esModule: true,
-  default: jest.fn().mockResolvedValue("Apple Inc."),
-}));
 
 jest.mock('../../Error/Error', () => () => <div>ErrorMock</div>);
 

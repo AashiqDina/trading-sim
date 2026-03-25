@@ -3,7 +3,7 @@ import "./Error.css";
 export default function Error(props: any){
     return (
         <>
-            <div className="WarningPopUp">
+            <div className="WarningPopUp" data-testid="ErrorMessage">
                 <div>
                     <div>
                         <div>

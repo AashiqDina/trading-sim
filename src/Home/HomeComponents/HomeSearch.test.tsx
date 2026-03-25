@@ -21,24 +21,7 @@ const mockedGetMarketNews = getMarketNewsMock as jest.Mock;
 const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
 
 
-jest.mock('axios'); // mocks axios functions to test with edge cases without backend
-
-jest.mock("../../Functions/AuthContext", () => {
-  const actual = jest.requireActual("../../Functions/AuthContext"); // loads the real module
-  return {
-    ...actual, // copies it over here to keep the other functions
-    useAuth: () => ({ // useAuth is overridden with what we want it to output so the output of the function useAuth would be a use Obj as specified below
-      user: {
-        id: 1,
-        username: "TestUser",
-        investedAmount: 0,
-        currentValue: 0,
-        profitLoss: 0,
-        portfolio: undefined
-      }
-    })
-  };
-});
+jest.mock('axios');
 
 jest.mock("focus-trap-react", () => ({
   __esModule: true,
@@ -260,6 +243,6 @@ describe("Search Integration Test", () => {
         const input = await screen.findByPlaceholderText(/search by stock name or symbol/i)
         await userEvent.type(input, "aapl")
         await userEvent.keyboard("{Enter}")
-        expect(await screen.findByText("Buy Stock")).toBeInTheDocument()
+        expect(await screen.findByText(/Overview/i)).toBeInTheDocument();
     })
 })

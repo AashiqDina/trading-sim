@@ -8,7 +8,6 @@ import getMarketNewsMock from '../../Functions/getMarketNews';
 import GetStockListMock from '../../Functions/getStockList';
 import GetStockHistoryMock from "../../Functions/GetStockHistory";
 import StockDetail from '../../StockDetails/StockDetail';
-import HomeSearch from './HomeSearch';
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
 import HomeTrending from './HomeTrending';
@@ -23,23 +22,6 @@ const mockedGetStockList = GetStockListMock as jest.Mock;
 const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
 
 jest.mock('axios'); // mocks axios functions to test with edge cases without backend
-
-jest.mock("../../Functions/AuthContext", () => {
-  const actual = jest.requireActual("../../Functions/AuthContext"); // loads the real module
-  return {
-    ...actual, // copies it over here to keep the other functions
-    useAuth: () => ({ // useAuth is overridden with what we want it to output so the output of the function useAuth would be a use Obj as specified below
-      user: {
-        id: 1,
-        username: "TestUser",
-        investedAmount: 0,
-        currentValue: 0,
-        profitLoss: 0,
-        portfolio: undefined
-      }
-    })
-  };
-});
 
 jest.mock("focus-trap-react", () => {
   return ({ children }: any) => <div>{children}</div>;
@@ -74,7 +56,7 @@ describe('Renders Correctly and Functions Correctly', () => {
 
     test('StockList and trendingStockList - Renders', () => {
         render(<HomeTrending stockList={mockStockList} trendingStocksList={mockTrendingStocks} searchStock={jest.fn()}/>)
-        expect(screen.getAllByRole("button")).toHaveLength(20);
+        expect(screen.getAllByTestId("trendingStocks")).toHaveLength(20);
     })
 
     test('StockList Empty and trendingStockList - Renders', () => {
@@ -171,6 +153,6 @@ describe("HomeTesting Integration Tests", () => {
 
         const trendingButton = await screen.findAllByRole("button", { name: /Apple Inc./i });
         await userEvent.click(trendingButton[0]);
-        expect(await screen.findByText("Buy Stock")).toBeInTheDocument();
+        expect(await screen.findByText(/Overview/i)).toBeInTheDocument();
     })
 })

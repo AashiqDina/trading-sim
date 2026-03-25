@@ -29,26 +29,22 @@ const HomeTrending = ({stockList, trendingStocksList, searchStock}: props) => {
             </article>
             <article className='TrendingStocksSection'>
             <div className='TrendingStocksCarouselContainer'>
-                <div className='TrendingStocksCarouselTrack'>
-                {
-                    [...trendingStocksList, ...trendingStocksList].map((stock, index) => {
-                    const data = symbolMap[stock]
-                    if(!data){
-                        return (
-                        <button className='TrendingStockDiv' key={stock + '-' + index}>
-                            <img src={process.env.PUBLIC_URL + "/Error.svg"} alt="ERROR SYMBOL" />
-                            <h2>Error - No Stock Found</h2>
-                        </button>
-                        )
-                    }
+                  <div className='TrendingStocksCarouselTrack'>
+                    {[...trendingStocksList].concat([...trendingStocksList]).map((stock, index) => {
+                    const data = symbolMap[stock];
                     return (
-                        <button aria-label={data.name}  className='TrendingStockDiv' key={stock + '-' + index} onClick={() => {searchStock(stock);}}>
-                            <img src={data.logo} alt="" />
-                            <h2>{data.name}</h2>
+                        <button
+                        data-testid="trendingStocks" 
+                        key={`${stock}-${index}`}
+                        aria-label={data?.name || "Unknown Stock"}
+                        className='TrendingStockDiv'
+                        onClick={() => data && searchStock(stock)}
+                        >
+                        <img src={data?.logo || process.env.PUBLIC_URL + "/Error.svg"} alt={data?.name || 'Unknown Stock Logo'} />
+                        <h2>{data?.name || "Error - No Stock Found"}</h2>
                         </button>
                     )
-                    })
-                }
+                    })}
                 </div>
             </div>
             </article>  
