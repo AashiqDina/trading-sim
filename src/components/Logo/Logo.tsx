@@ -2,7 +2,7 @@ import './Logo.css';
 
 export default function Logo(){
     return (
-        <div className='TheLogo'>
+        <div data-testid="SiteLogo" className='TheLogo'>
             <div className='BarCollection'>
                 <div className='BarOne'></div>
                 <div className='BarTwo'></div>

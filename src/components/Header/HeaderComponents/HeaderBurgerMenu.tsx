@@ -7,7 +7,7 @@ type props = {
     handleLink: (arg0: string) => void
 }
 
-export default function HomeBurgerMenu({setMenuOpen, menuOpen, handleLink}: props){
+export default function HeaderBurgerMenu({setMenuOpen, menuOpen, handleLink}: props){
     const { user } = useAuth();
     const logout = useLogout()
     
