@@ -1,4 +1,4 @@
-import { marketNews } from "../../types";
+import { marketNews } from "../../types/types";
 
 export const mockMarketNews: marketNews[] = Array.from({ length: 20 }, (_, i) => ({
     category: `Category ${i + 1}`,

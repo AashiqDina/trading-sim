@@ -1,6 +1,5 @@
 export default function handleTwelveDataError(props: any){
     const response = props.response
-    console.log("hittin dem errors")
     if(response.errorCode == 400){
         props.setDisplayError({
             display: true, 

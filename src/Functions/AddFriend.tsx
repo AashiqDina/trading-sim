@@ -1,5 +1,5 @@
 import axios from "axios";
-import handleTwelveDataError from "../Error/handleTwelveDataError";
+import handleTwelveDataError from "../error/handleTwelveDataError";
 
 export default async function AddFriend(props: any){
  try{
