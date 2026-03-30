@@ -39,7 +39,7 @@ A React-based frontend for a stock trading simulator that allows users to explor
 * **React**
 * **TypeScript**
 * **Axios**
-* **Jest (Basic)**
+* **Jest**
 * **HTML/CSS**
 
 ---
