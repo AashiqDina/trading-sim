@@ -1,7 +1,7 @@
 // Components tested in their own files
 
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import Home from './Home';
 import getTrendingStocksMock from "../../api/getTrendingStocks";
 import getMarketNewsMock from '../../api/getMarketNews';

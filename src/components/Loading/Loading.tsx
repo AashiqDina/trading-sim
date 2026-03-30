@@ -16,14 +16,15 @@ export default function Loading(props: any){
     }, [])
 
     useEffect(() => {
-        if(showMessage){
+        if(!showMessage) return
+
             const interval = setInterval(() => {
-                (dots.length >= 3) ? setDots(".") : setDots(dots + ".")
+                setDots(prev => prev.length >= 3 ? "." : prev + ".")
             }, 1000)
 
             return () => clearInterval(interval)
-        }
-    }, [dots])
+
+    }, [showMessage])
 
     return (
         <>
@@ -33,7 +34,7 @@ export default function Loading(props: any){
                 <div className='BarC'></div>
                 <div className='BarD'></div>
                 <div className='BarE'></div>
-                <p className='LongLoadingMessage' style={showMessage ? {opacity: 1, top: `${props.top || 17}rem`} : undefined}>This app uses on-demand hosting, so the first request may take a minute{dots}</p>
+                <p className='LongLoadingMessage' style={showMessage ? {opacity: 1, top: `${props.top || 17}rem`} : {opacity: 0}}>This app uses on-demand hosting, so the first request may take a minute{dots}</p>
             </div>
         </>
     )

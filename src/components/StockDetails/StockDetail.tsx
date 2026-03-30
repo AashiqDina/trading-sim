@@ -4,7 +4,6 @@ import axios from "axios";
 import './StockDetail.css';
 import { StockApiInfo, CompanyProfile } from "../../interfaces/interfaces";
 import { useAuth } from "../../auth/AuthContext";
-import { StocksAI } from '../StocksAI/StocksAI';
 import CompanyInformation from './StockDetailsComponents/StockDetailsCompanyInformation'
 import StockDetails from './StockDetailsComponents/StockDetailsStockData'
 import StockDetailsOwnedStocks from './StockDetailsComponents/StockDetailsOwnedStocks';
@@ -12,7 +11,6 @@ import StockDetailsNews from './StockDetailsComponents/StockDetailsNews';
 import buyStock from '../../functions/buyStock';
 import FocusTrap from 'focus-trap-react';
 import Confetti from 'react-confetti';
-import AiChat from './StockDetailsComponents/AiChat';
 import StockDetailsOverview from './StockDetailsComponents/StockDetailsOverview';
 import getStockImage from '../../functions/getStockImage';
 import Error from '../../error/Error';
@@ -82,44 +80,6 @@ const StockDetail: React.FC = () => {
     const handleBuyStock = async () => {
         await buyStock({stockPrice: stockPrice, stockSymbol: stockSymbol, quantity: quantity, setDisplayError: setDisplayError, setShowConfetti: setShowConfetti, setIsModalOpen: setIsModalOpen, user: user})
     };
-
-    const HandleAiResponse = async() => {
-      try{
-        if(AIAssistantSearchInput == ""){
-          // Todo handle blank submit
-          return
-        }
-        if(UserPrompts[0] == ""){
-          setUserPrompts([AIAssistantSearchInput])
-        }
-        else{
-          setUserPrompts(prevValues => [
-            ...prevValues,
-            AIAssistantSearchInput
-          ])
-        }
-
-
-        const AllStockData = [BasicStockData, StockCompanyDetails]
-        const AiResponse = await StocksAI(AIAssistantSearchInput, AllStockData)
-        console.log(AiResponse)
-        if(AiResponses[0] == ""){
-          AiResponse != null ? setAiResponses([AiResponse]) : setAiResponses(["Failed to communicate with the AI API."])
-        }
-        else{
-          AiResponse != null ? setAiResponses(prevValues => [
-            ...prevValues,
-            AiResponse
-          ]) : setAiResponses(prevValues => [
-            ...prevValues,
-            "Failed to communicate with the AI API."
-          ])
-        }
-        setSearchInput("")
-      }
-      catch{
-      }
-    }
 
       function SwitchSection(Section: string){
         switch(Section){
@@ -196,10 +156,7 @@ const StockDetail: React.FC = () => {
               } 
               {
                 (DisplayedData == "News") && <StockDetailsNews symbol={stockSymbol} setDisplayError={setDisplayError}/>
-              } 
-              {
-                (DisplayedData == "AIAssistant") && <AiChat setSearchInput={setSearchInput} HandleAiResponse={HandleAiResponse} AIAssistantSearchInput={AIAssistantSearchInput} AiResponses={AiResponses} UserPrompts={UserPrompts}/>
-              }         
+              }       
             </div>
         </section>
         {isModalOpen && (
