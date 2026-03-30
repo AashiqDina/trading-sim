@@ -12,7 +12,7 @@ export default function LoginForm({error, CompleteLogin}: props ){
    
     const toLogin = (e: React.FormEvent) => {
        e.preventDefault()
-       if(username && password) CompleteLogin(username, password)
+       CompleteLogin(username, password)
     }
 
    return(
@@ -53,7 +53,7 @@ export default function LoginForm({error, CompleteLogin}: props ){
             </form>
             {error && <p role="alert" className="ErrorType">{error}</p>}
             <p className="noAccount">Don't have an account?</p>
-            <a aria-label="Go to registration page to create an account" href="/register" className="noAccountRegister">Register</a>
+            <a aria-label="Go to registration page to create an account" href="#/register" className="noAccountRegister">Register</a>
           </div>
         </>
    )

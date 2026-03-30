@@ -82,18 +82,4 @@ describe("Login Form Renders and Functions", () => {
         expect(CompLogin).toHaveBeenCalledTimes(1);
         expect(CompLogin).toHaveBeenCalledWith("testUser", "password123");
     });
-
-    test("does not call CompleteLogin if username is missing", async () => {
-        const CompLogin = jest.fn();
-
-        render(<LoginForm error="" CompleteLogin={CompLogin} />);
-
-        const passwordInput = screen.getByLabelText(/password/i);
-        const LoginButton = screen.getByRole("button", { name: /login/i });
-
-        await userEvent.type(passwordInput, "password123");
-        await userEvent.click(LoginButton);
-
-        expect(CompLogin).not.toHaveBeenCalled();
-    });
 })

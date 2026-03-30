@@ -1,147 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Register.css";
+import { useRegister } from "../../hooks/useRegister";
+import RegisterForm from "./RegisterForm";
+import { FocusTrap } from "focus-trap-react";
+import ErrorPopup from "../../error/ErrorPopup";
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  const {toRegister, error,  errorCode, resetError} = useRegister()
 
-  useEffect(() => {
-
-  }, [error]);
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
   
-    try {
-      const checkResponse = await fetch("https://tradingsim-backend.onrender.com/api/User/checkUsername", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username }),
-      });
-
-      if (password !== confirmPassword) {
-        setError("Passwords do not match");
-        return;
-      }
-  
-      console.log("Check Response Status:", checkResponse.status);
-      const checkResponseText = await checkResponse.text();
-      console.log("Check Response Text:", checkResponseText);
-  
-      if (!checkResponse.ok) {
-        throw new Error("Error checking username availability");
-      }
-  
-      const checkData = JSON.parse(checkResponseText);
-      if (checkData.exists) {
-        setError("Username already taken. Please choose another one.");
-        return;
-      }
-  
-      const response = await fetch("https://tradingsim-backend.onrender.com/api/User", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-  
-      const responseText = await response.text();
-      console.log("Response Text:", responseText);
-  
-      let data;
-      if (responseText) {
-        data = JSON.parse(responseText);
-      } else {
-        throw new Error("Empty response from server");
-      }
-  
-      if (data.success) {
-        console.log("Register successful");
-        navigate("/login");
-      } else {
-        setError(data.message || "Registration failed");
-      }
-    } catch (error) {
-      console.error("Error during registration process:", error);
-      const errStr = `${error}`
-      setError(errStr);
-    }
-  };
-  
-  
-
   return (
-    <section className={`register-container ${(error && (error != "")) ? "error" : ""}`}>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
-      <label htmlFor="username" className="SrOnly">Username</label>
-        <div className="form-group">
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
-            className="UsernameInput"
-            aria-label="input chosen username"
-            aria-required
-            required
-          />
-        </div>
-        <div className="form-group">
-        <label htmlFor="password" className="SrOnly">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-            className="PasswordInput"
-            aria-label="input chosen password"
-            aria-required
-            required
-          />
-        </div>
-        <div className="form-group">
-        <label htmlFor="confirmPassword" className="SrOnly">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm your password"
-            className="ConfirmPasswordInput"
-            aria-label="confirm chosen password"
-            aria-required
-            required
-          />
-        </div>
-
-        {error && <p role="alert" className="RegisterError">{error}</p>}
-
-        <button aria-label="Submit and Create account" className="SubmitButton" type="submit">Register</button>
-      </form>
-      <a className="HaveALook" href="#/user/1/AashiqD">
-        See my profile for a preview.
-      </a>
-      <p className="noAccount" style={{marginTop: "0.8rem"}}>
-        Already have an account?
-      </p>
-      <a className="noAccountRegister" aria-label="Go to login page" href="#/login">Login here</a>
-    </section>
-  );
+    <>
+      <RegisterForm
+        error={error}
+        CompleteRegister={toRegister}
+      />
+      {errorCode &&
+        <FocusTrap>
+          <div className="ToBuyModal" aria-labelledby="RegistrationError" role='dialog' aria-modal="true">
+            <ErrorPopup 
+              ErrorCode={errorCode}
+              Confirm={() => {resetError()}}
+              />
+          </div>
+        </FocusTrap>}
+    </>
+  )  
 }
 
 export default Register;

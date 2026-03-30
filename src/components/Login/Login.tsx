@@ -9,11 +9,10 @@ import { useLogin } from "../../hooks/useLogin";
 const Login = () => {
   const { user } = useAuth();
 
-  if (user) return <Navigate to="/" replace />
-
   const {CompleteLogin, error, errorCode, resetError} = useLogin()
 
-  
+  if (user) return <Navigate to="/" replace />
+
   return (
     <>
       <LoginForm
@@ -22,7 +21,7 @@ const Login = () => {
       />
       {errorCode &&
         <FocusTrap>
-          <div className="ToBuyModal" aria-labelledby="BuyStockTile" role='dialog' aria-modal="true">
+          <div className="ToBuyModal" aria-labelledby="LoginError" role='dialog' aria-modal="true">
             <ErrorPopup 
               ErrorCode={errorCode}
               Confirm={() => {resetError()}}

@@ -30,6 +30,13 @@ describe("Login Renders and functuonality tests", () => {
             user: mockedUser
         })
 
+        mockedUseLogin.mockReturnValue({
+            CompleteLogin: jest.fn(),
+            error: '',
+            errorCode: null,
+            resetError: jest.fn()
+        })
+
         render(
             <MemoryRouter initialEntries={["/login"]}>
                 <Routes>
