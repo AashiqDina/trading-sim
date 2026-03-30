@@ -23,12 +23,14 @@ export function useRegister(){
     
         try {
 
+            if(username.length < 3) throw new ApiError(1006) // Usernames need to be at least 3 characters 
             await checkUsername(username)
         
             if (password !== confirmPassword) throw new ApiError(1004) // Passwords do not match
-        
+            else if(password.length < 8) throw new ApiError(1005) // Passwords need to be at least 8 characters
+            
             await handleRegister(username, password)
-            navigate("/")
+            navigate("/login")
         
         } 
         catch (err) {
@@ -36,6 +38,8 @@ export function useRegister(){
                 if(err.code === 1002) setError("Error Checking Username Availability")
                 else if(err.code === 1003) setError("Username Already Taken")
                 else if(err.code === 1004) setError("Passwords Do Not Match")
+                else if(err.code === 1005) setError("Passwords Need To Be At Least 8 Characters")
+                else if(err.code === 1006) setError("Usernames Need To Be At Least 3 Characters")
                 else setErrorCode(err.code)
             }
             else{
