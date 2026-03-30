@@ -1,4 +1,4 @@
-# Trading Simulator – Frontend
+# Trading Simulator - Frontend
 
 A React-based frontend for a stock trading simulator that allows users to explore trending stocks, manage a virtual portfolio, and track profit and loss in real time. The application focuses on clean UI, predictable state management, and seamless integration with a backend API.
 
