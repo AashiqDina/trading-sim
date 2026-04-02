@@ -57,12 +57,6 @@ export interface FiftyTwoWeek {
     country: string;
     phone: string;
   }
-  
-  export interface Suggestion {
-    name: string;
-    symbol: string;
-    logo: string;
-  }
 
   export interface UserObj{
     id: number;

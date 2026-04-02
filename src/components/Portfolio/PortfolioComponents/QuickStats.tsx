@@ -9,192 +9,181 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import React from "react";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
 import { useRef, useEffect, useState } from "react";
+import { PortfolioStock, StockHistoryItem } from "../../../types/types";
 
 ChartJS.register(LineElement, LineController, PointElement, LinearScale, TimeScale, Tooltip, Legend, CategoryScale);
 
-function QuickStats(props: any){
+type props = {
+    fullHistory: StockHistoryItem[] | null,
+    history: StockHistoryItem[] | null,
+    filterHistory: string,
+    visibleStocks: PortfolioStock[]
+    setFilterHistory: Dispatch<SetStateAction<string>>,
+    setHoverValues: Dispatch<SetStateAction<{ invested: number; value: number; profit: number; } | null>>
+}
+
+
+function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilterHistory, setHoverValues}: props){
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const chartRef = useRef<ChartJS | null>(null);
     const [hoverValue, setHoverValue] = useState<string | null>(null);
-    const [valueLineValues, setVLV] = useState<any[] | undefined>(undefined)
-    const [investedLineValues, setILV] = useState<any[] | undefined>(undefined)
-    var canReset = true
-
-    useEffect(() => {
-        setGraphValues()
-    }, [props.History, props.FilteredSearch])
-
-useEffect(() => {
-    if (!canvasRef.current || !valueLineValues || !investedLineValues) return;
-
-    const ctx = canvasRef.current.getContext("2d");
-    if (!ctx) return;
-
-    if (chartRef.current) {
-        chartRef.current.destroy();
-    }
-
-    chartRef.current = new ChartJS(ctx, {
-        type: "line",
-        data: {
-            labels: valueLineValues.map(entry => entry.date),
-            datasets: [
-                {
-                    label: "Invested",
-                    data: investedLineValues.map(p => p.invested),
-                    borderColor: "#45a049ff",
-                    backgroundColor: "#45a049ff",
-                    fill: false,
-                    pointRadius: 0
-                },
-                {
-                    label: "Portfolio Value",
-                    data: valueLineValues.map(entry => entry.value),
-                    borderColor: "green",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                tooltip: {
-                    mode: "index",
-                    intersect: false,
-                    enabled: false,
-                    external: (context) => {
-                        const tooltip = context.tooltip;
-                        if (!tooltip || !tooltip.dataPoints || tooltip.dataPoints.length === 0) return;
-
-                        let investedValue = 0;
-                        let portfolioValue = 0;
-                        let xValue = "";
-
-                        tooltip.dataPoints.forEach((dataPoint) => {
-                            if (dataPoint.dataset.label === "Invested") investedValue = dataPoint.parsed.y;
-                            if (dataPoint.dataset.label === "Portfolio Value") portfolioValue = dataPoint.parsed.y;
-                            xValue = dataPoint.label as string;
-                        });
-
-                        props.setPortfolio({...props.portfolio, currentValue: portfolioValue, totalInvested: investedValue, profitLoss: (portfolioValue-investedValue)})
-                        setHoverValue(xValue);
-                    },
-                },
-            },
-            interaction: { mode: "index", intersect: false },
-            scales: { x: { display: false }, y: { display: false } },
-        },
-    });
-
-    return () => chartRef.current?.destroy();
-
-}, [valueLineValues, investedLineValues, props.FilteredSearch]);
-
     
+    const stockMap = useMemo(() => {
+        if (!fullHistory) return new Map();
+        return new Map(fullHistory.map(s => [s.stockId, s]));
+    }, [fullHistory]);
 
-    let History = props.History?.data || []
-
-    const setGraphValues = () => {
-        var ILV: any[] | undefined = undefined
-        var VLV: any[] | undefined = undefined
-
+    const visibleStockIds = useMemo(() => {
+        return new Set(visibleStocks.map(s => s.id));
+        }, [visibleStocks]);
+    
+    const graphData = useMemo(() => {
+        if (!fullHistory || !history || visibleStocks.length === 0) {
+            return { invested: [], value: [] };
+        }
 
         const investedByDate: Record<string, number> = {};
-        const allTransactions = props.FilteredSearch.flatMap((stock: { transactions: any; }) => stock.transactions);
-
-        History.forEach((stockHistory: any) => {
-            var stock = undefined;
-
-            if(allTransactions.length > 0){
-                stock = allTransactions.find((s: any) => s.id == stockHistory.stockId);
-            }
-            else{
-                stock = props.portfolio.stocks.find((s: any) => s.id == stockHistory.stockId);
-            }
-
-
-            if (!stock || stockHistory.history.length === 0){
-                return;
-            }
-
-            const firstDate = stockHistory.history[0].timestamp.split("T")[0];
-
-            investedByDate[firstDate] = (investedByDate[firstDate] || 0) + (stock.purchasePrice * stock.quantity);
-        });
-
-        ILV = Object.entries(investedByDate).map(([date, invested]) => ({ date, invested })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-        let value = 0
-        ILV = ILV.map((entry) => {
-            value += entry.invested
-            return {...entry, invested: value}
-        })
-        setILV(ILV)
-
         const valueByDate: Record<string, number> = {};
 
 
-        if(allTransactions.length > 0){
-            const totalProfit = allTransactions.reduce((sum: any, stock: { profitLoss: any; }) => sum + stock.profitLoss, 0);
-            const totalValue = allTransactions.reduce((sum: any, stock: { totalValue: any; }) => sum + stock.totalValue, 0);
-            const totalPurchase = allTransactions.reduce(
-            (sum: number, stock: { purchasePrice: number; quantity: number; }) => sum + stock.purchasePrice * stock.quantity,
-            0
-            );
+        history.forEach(stockHistory => {
+            if (!visibleStockIds.has(stockHistory.stockId)) return;
+            const fullStock = stockMap.get(stockHistory.stockId);
+            
+            if (!fullStock) return;
 
-            props.setPortfolio({...props.portfolio, currentValue: totalValue, totalInvested: totalPurchase, profitLoss: (totalProfit)})
+            const firstInv = fullStock.history[0];
+            const investedAmount = firstInv.price * firstInv.quantity;
+
+            stockHistory.history.forEach(tx => {
+                const date = tx.timestamp.split("T")[0];
+                const amount = tx.price * tx.quantity;
+
+                investedByDate[date] =
+                    (investedByDate[date] || 0) + investedAmount;
+
+                valueByDate[date] =
+                    (valueByDate[date] || 0) + amount;
+            });
+        });
 
 
-            const filteredH = History.filter((hItem: { symbol: any; }) =>
-                allTransactions.some((tItem: { symbol: any; }) => tItem.symbol === hItem.symbol)
-                );
-            filteredH.forEach((stockHistory: any) => {
-                stockHistory.history.forEach((Entry: any) => {
-                    valueByDate[Entry.timestamp.split("T")[0]] = (valueByDate[Entry.timestamp.split("T")[0]] || 0) + (Entry.price * Entry.quantity)
-                })
-            })
+        const allDates = Array.from(
+            new Set([
+                ...Object.keys(investedByDate),
+                ...Object.keys(valueByDate)
+            ])
+        ).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+        let investedValue = 0;
+        let valueValue = 0;
+
+        const invested = [];
+        const value = [];
+
+        for (const date of allDates) {
+
+            if (investedByDate[date] !== undefined) {
+                investedValue = investedByDate[date];
+            }
+
+            if (valueByDate[date] !== undefined) {
+                valueValue = valueByDate[date];
+            }
+
+            invested.push({
+                date,
+                invested: investedValue
+            });
+
+            value.push({
+                date,
+                value: valueValue
+            });
         }
-        else{
-            History.forEach((stockHistory: any) => {
-                stockHistory.history.forEach((Entry: any) => {
-                    valueByDate[Entry.timestamp.split("T")[0]] = (valueByDate[Entry.timestamp.split("T")[0]] || 0) + (Entry.price * Entry.quantity)
-                })
-            })
-        }
 
-        VLV = Object.entries(valueByDate).map(([date, value]) => ({ date, value })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-        const extendedILV = [...ILV];
-        const lastInvested = ILV.length > 0 ? ILV[ILV.length - 1].invested : 0;
+        return { invested, value };
 
-        let currentInvested = lastInvested;
+    }, [history, visibleStocks, fullHistory]);
 
-        VLV.forEach((entry) => {
-            const exists = extendedILV.find(e => e.date === entry.date);
-            if (!exists) {
-                extendedILV.push({
-                    date: entry.date,
-                    invested: currentInvested,
-                });
-            } else {
-                currentInvested = exists.invested;
+
+    useEffect(() => {
+        if (!canvasRef.current) return;
+
+
+        const ctx = canvasRef.current!.getContext("2d");
+        if (!ctx) return;
+
+        chartRef.current?.destroy();
+
+        chartRef.current = new ChartJS(ctx, {
+            type: "line",
+            data: {
+                labels: graphData.value.map((e: { date: string; }) => e.date),
+                datasets: [
+                    {
+                        label: "Invested",
+                        data: graphData.invested.map((e: { invested: number; }) => e.invested),
+                        borderColor: "#45a049ff",
+                        pointRadius: 0
+                    },
+                    {
+                        label: "Portfolio Value",
+                        data: graphData.value.map((e: { value: number; }) => e.value),
+                        borderColor: "green",
+                        pointRadius: 0
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        enabled: false,
+                        external: (context) => {
+                            const tooltip = context.tooltip;
+                            if (!tooltip?.dataPoints?.length) return;
+
+                            let invested = 0;
+                            let value = 0;
+                            let date = "";
+
+                            tooltip.dataPoints.forEach(dp => {
+                                if (dp.dataset.label === "Invested") invested = dp.parsed.y;
+                                if (dp.dataset.label === "Portfolio Value") value = dp.parsed.y;
+                                date = dp.label as string;
+                            });
+
+                            setHoverValues({
+                                invested,
+                                value,
+                                profit: value - invested
+                            });
+
+                            setHoverValue(date);
+                        }
+                    }
+                },
+                interaction: { mode: "index", intersect: false },
+                scales: { x: { display: false }, y: { display: true } },
+                layout: {
+                    padding: 0
+                    },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                }
             }
         });
 
-        extendedILV.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    }, [graphData, setHoverValues]);
 
-        setILV(extendedILV);
-        setVLV(VLV);
-    }
 
-    // function leaveGraphRefresh(){ // scrapped in case users want to copy and paste values
-    //     setHoverValue(null)
-    //     props.setPortfolio({...props.portfolio, totalInvested: props.originalValues.Invested, currentValue: props.originalValues.PortfolioValue, profitLoss: props.originalValues.Profit})
-    // }
-    
     return (
         <>
             <section className="StocksAverageGraph">
@@ -203,37 +192,12 @@ useEffect(() => {
             </section>
             <section className="FilterGraph">
                 <article>
-                    <button aria-label="Fitler graph to this week" className="w" style={props.FilterHistory == "week" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => props.setFilterHistory("week")}>Week</button>
-                    <button aria-label="Fitler graph to this month" className="m" style={props.FilterHistory == "month" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => props.setFilterHistory("month")}>Month</button>
-                    <button aria-label="Fitler graph to this year" className="y" style={props.FilterHistory == "year" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => props.setFilterHistory("year")}>Year</button>
-                    <button aria-label="Fitler graph to this all time" className="a" style={props.FilterHistory == "all" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => props.setFilterHistory("all")}>All</button>
+                    <button aria-label="Fitler graph to this week" className="w" style={filterHistory == "week" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("week")}>Week</button>
+                    <button aria-label="Fitler graph to this month" className="m" style={filterHistory == "month" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("month")}>Month</button>
+                    <button aria-label="Fitler graph to this year" className="y" style={filterHistory == "year" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("year")}>Year</button>
+                    <button aria-label="Fitler graph to this all time" className="a" style={filterHistory == "all" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("all")}>All</button>
                 </article>
             </section>
-
-
-
-
-
-            {/* <section className="QuickStats">
-                <article className="Box1">
-                <h2>Invested</h2>
-                <div className="Values">
-                    <p>£{props.portfolio.totalInvested.toFixed(2)}</p>
-                </div>
-                </article>
-                <article className="Box2" style={{ color: ValueColour, boxShadow: `0px 10px 10px ${ValueColour}`}}>
-                <h2>Current Value</h2>
-                <div className="Values">
-                    <p>£{props.portfolio.currentValue.toFixed(2)}</p>
-                </div>
-                </article>
-                <article className="Box3" style={{ color: ProfitColour, boxShadow: `0px 10px 10px ${ProfitColour}`}}>
-                <h2>{ProfitLossTitle}</h2>
-                <div className="Values">
-                    <p>£{props.portfolio.profitLoss.toFixed(2)}</p>
-                </div>
-                </article>
-            </section> */}
         </>
     )
 }

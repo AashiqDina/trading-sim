@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { useEffect, useRef, useState } from "react"
 import "./StockDetailsOverview.css"
-import GetStockHistory from "../../../api/GetStockHistory"
+import getStockHistory from "../../../api/getStockHistory";
 import formatNumber from "../../../utils/FormatNumber";
 
 ChartJS.register(LineElement, LineController, PointElement, LinearScale, TimeScale, Tooltip, Legend, CategoryScale);
@@ -41,7 +41,7 @@ export default function StockDetailsOverview(props: any){
 
     useEffect(() => {
         var StockHistory = async () => {
-            let GottenHistory = await GetStockHistory(props.symbol)
+            let GottenHistory = await getStockHistory(props.symbol)
             console.log("Stock's History ", GottenHistory)
             if(GottenHistory){
                 let Reverse = GottenHistory.reverse()

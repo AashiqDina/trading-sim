@@ -12,9 +12,9 @@ import buyStock from '../../functions/buyStock';
 import FocusTrap from 'focus-trap-react';
 import Confetti from 'react-confetti';
 import StockDetailsOverview from './StockDetailsComponents/StockDetailsOverview';
-import getStockImage from '../../functions/getStockImage';
+import getStockImage from '../../api/getStockImage';
 import Error from '../../error/Error';
-import getStockName from '../../functions/getStockName';
+import getStockName from '../../api/getStockName';
 import getStockPrice from '../../api/getStockPrice';
 
 interface AxiosErrorType {
@@ -23,6 +23,8 @@ interface AxiosErrorType {
   }
 
 const StockDetail: React.FC = () => {
+
+
     const { user } = useAuth();
     const { symbol } = useParams();
     const [WinWidth, setWinWidth] = useState(window.innerWidth);
@@ -46,9 +48,9 @@ const StockDetail: React.FC = () => {
         const GetData = async () => {
           try{
               const [stockName, stockPrice, stockImage] = await Promise.all([
-                getStockName({symbol: stockSymbol, setDisplayError: setDisplayError}),
+                getStockName(stockSymbol),
                 getStockPrice(stockSymbol),
-                getStockImage({symbol: stockSymbol, setDisplayError: setDisplayError})
+                getStockImage(stockSymbol)
               ])
               setStockName(stockName);
               setStockPrice(stockPrice)
@@ -122,7 +124,7 @@ const StockDetail: React.FC = () => {
                   <h1 className='StockDetailsTitle' style={StockName && StockName.length > 18 && WinWidth < 600 ? {textAlign: "center"} : undefined} >{StockName}<span className='StockSymbol'>{stockSymbol}</span></h1>
                 </div>
                 {/* <div className='TitleLogo'></div> */}
-                <h2 style={StockName && StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{typeof stockPrice === "number" ? stockPrice.toFixed(2) : "..."}</h2>
+                <h2 style={StockName && StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{typeof stockPrice === "number" ? stockPrice?.toFixed(2) : "..."}</h2>
               </article>
           </section>
           <section className='CompleteSelector'>

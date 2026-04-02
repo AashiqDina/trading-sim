@@ -6,7 +6,7 @@ import getTrendingStocksMock from "../../../api/getTrendingStocks";
 import getStockPriceMock from "../../../api/getStockPrice";
 import getMarketNewsMock from '../../../api/getMarketNews';
 import GetStockListMock from '../../../api/getStockList';
-import GetStockHistoryMock from "../../../api/GetStockHistory";
+import GetStockHistoryMock from "../../../api/getStockHistory";
 import StockDetail from '../../StockDetails/StockDetail';
 import HomeSearch from './HomeSearch';
 import userEvent from "@testing-library/user-event";
@@ -53,7 +53,7 @@ jest.mock("../../../api/GetStockHistory", () => ({
   default: jest.fn().mockResolvedValue([]),
 }));
 
-jest.mock("../../../Functions/getStockName", () => ({
+jest.mock("../../../api/getStockName", () => ({
   __esModule: true,
   default: jest.fn().mockResolvedValue("Apple Inc."),
 }));

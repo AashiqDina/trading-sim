@@ -6,7 +6,7 @@ import getTrendingStocksMock from "../../../api/getTrendingStocks";
 import getStockPriceMock from "../../../api/getStockPrice";
 import getMarketNewsMock from '../../../api/getMarketNews';
 import GetStockListMock from '../../../api/getStockList';
-import GetStockHistoryMock from "../../../api/GetStockHistory";
+import GetStockHistoryMock from "../../../api/getStockHistory";
 import StockDetail from '../../StockDetails/StockDetail';
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';

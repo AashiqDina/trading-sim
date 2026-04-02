@@ -1,7 +1,7 @@
 import axios from "axios"
 import { ApiError } from "../error/ApiError";
 
-export default async function GetStockHistory(symbol: string){
+export default async function getStockHistory(symbol: string){
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetStocksFullHistory/${symbol}`)
 

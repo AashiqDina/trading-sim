@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
 import HomeNews from './HomeNews';
 import { mockMarketNews } from '../../../mocks/Home/mockMarketNews';
-import { marketNews } from '../../../types/types';
+import { MarketNews } from '../../../types/types';
 
 jest.mock('axios'); // mocks axios functions to test with edge cases without backend
 
@@ -14,7 +14,7 @@ jest.mock("../../../api/getMarketNews", () => ({
 
 jest.mock('../../../error/Error', () => () => <div>ErrorMock</div>);
 
-function NewsRenderCheck(newsArray: marketNews[]) {
+function NewsRenderCheck(newsArray: MarketNews[]) {
     newsArray.forEach((article, index) => {
         const formattedDate = new Date(article.datetime * 1000).toLocaleString("en-GB", {
             day: "2-digit",
@@ -32,7 +32,7 @@ function NewsRenderCheck(newsArray: marketNews[]) {
     });
 }
 
-function NewsNotRenderedCheck(newsArray: marketNews[]){
+function NewsNotRenderedCheck(newsArray: MarketNews[]){
         newsArray.forEach(article => {
         expect(screen.queryByText(article.headline)).toBeNull();
         expect(screen.queryAllByAltText(article.source + " image")).toHaveLength(0);

@@ -202,9 +202,8 @@ html{
   border-radius: 4rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  margin: 0 1rem 0 1rem;
-  border: 1px #45a049 solid;
-  box-shadow: 0px 0px 10px 1px #3e91444c;
+  margin: 0 2rem 0 2rem;
+  padding: 1rem;
   width: 95%;
 }
 
@@ -963,7 +962,7 @@ table tbody tr:last-child td:last-child {
   align-items: center;
   justify-content: center;
   height: 350px;
-  max-width: 90vw;
+  max-width: 93vw;
   margin: 0 auto; 
   margin-bottom: 3rem;
   display: block;

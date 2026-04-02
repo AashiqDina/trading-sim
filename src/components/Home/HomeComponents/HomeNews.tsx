@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { marketNews } from "../../../types/types";
+import { MarketNews } from "../../../types/types";
 import './HomeNews.css'
 // import SponsoredAd from "../../Ads/SponsoredAd";
 
 type Props = {
-    marketNews: marketNews[]
+    marketNews: MarketNews[]
 }
 
 const HomeNews = ({ marketNews }: Props) => {

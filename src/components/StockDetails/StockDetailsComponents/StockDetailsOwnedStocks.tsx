@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import getPortfolio from "../../../functions/GetPortfolio";
+import getPortfolio from "../../../api/getPortfolio";
 import axios from "axios";
 import AiLoading from "../../Loading/AiLoading";
 
@@ -14,39 +14,40 @@ export default function StockDetailsOwnedStocks(props: any){
 
     console.log(FilteredPortfolio)
 
+    return <></>
 
-    const GetData = useCallback( async() => {
-        const result = await getPortfolio({ user });
-        let FilteredStocks = []
+    // const GetData = useCallback( async() => {
+    //     const result = await getPortfolio({ user });
+    //     let FilteredStocks = []
 
-        console.log(result)
-        if(result && result.stocks){
-          setPortfolio(result)
+    //     console.log(result)
+    //     if(result && result.stocks){
+    //       setPortfolio(result)
       
-        for(let i = 0; i<(result.stocks.length); i++){
-          if(result.stocks[i].symbol == props.symbol){
-            console.log(i)
-            FilteredStocks.push(result.stocks[i]);
-            }
-          }
-          setFilteredPortfolio({currentValue: undefined, id: result.id, profitLoss: undefined, stocks: FilteredStocks, totalInvested: undefined, user: result.user, userId: result.userId})
-          setLoading(false)
-        }
-    }, [user, props.symbol])
+    //     for(let i = 0; i<(result.stocks.length); i++){
+    //       if(result.stocks[i].symbol == props.symbol){
+    //         console.log(i)
+    //         FilteredStocks.push(result.stocks[i]);
+    //         }
+    //       }
+    //       setFilteredPortfolio({currentValue: undefined, id: result.id, profitLoss: undefined, stocks: FilteredStocks, totalInvested: undefined, user: result.user, userId: result.userId})
+    //       setLoading(false)
+    //     }
+    // }, [user, props.symbol])
 
-    useEffect(() => {
-      GetData();
-    },[GetData])
+    // useEffect(() => {
+    //   GetData();
+    // },[GetData])
 
-    useEffect(() => {
-    const getLastUpdated = async () => {
-      let LastUpdatedDictionary = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetAllStockLastUpdated`)
-      const map = new Map<string, Date>(
-      Object.entries(LastUpdatedDictionary.data.data).map(([key, value]) => [key, new Date(value as string)]));
-      setLastUpdatedDictionary(map);
-      }
-      getLastUpdated()
-    }, [Portfolio])
+    // useEffect(() => {
+    // const getLastUpdated = async () => {
+    //   let LastUpdatedDictionary = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetAllStockLastUpdated`)
+    //   const map = new Map<string, Date>(
+    //   Object.entries(LastUpdatedDictionary.data.data).map(([key, value]) => [key, new Date(value as string)]));
+    //   setLastUpdatedDictionary(map);
+    //   }
+    //   getLastUpdated()
+    // }, [Portfolio])
 
     function getHoursAgo(date?: string | Date | null): string {
       if (!date) return "N/A";

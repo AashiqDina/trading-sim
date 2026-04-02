@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import AiLoading from "../../Loading/AiLoading";
 import React from "react";
 import './HomeSearch.css'
-import { Suggestion, stockList } from "../../../types/types";
+import { Suggestion, StockList } from "../../../types/types";
 
 type Props = {
-    stockList: stockList
+    stockList: StockList
     searchStock: (symbol: string) => void;
 };
 

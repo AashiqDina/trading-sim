@@ -1,10 +1,10 @@
 import React from "react";
 import './HomeTrending.css'
-import { stockList, trendingStocksList } from "../../../types/types";
+import { StockList, TrendingStocksList } from "../../../types/types";
 
 type props = {
-    stockList: stockList; 
-    trendingStocksList: trendingStocksList
+    stockList: StockList; 
+    trendingStocksList: TrendingStocksList
     searchStock: (symbol: string) => void
 }
 
