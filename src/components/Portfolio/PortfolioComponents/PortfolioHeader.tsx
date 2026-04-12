@@ -28,7 +28,9 @@ export default function PortfolioHeader({ username, totalInvested, currentValue,
                 </h5>
                 <div>
                   <span style={profitLoss >= 0 ? {color: '#45a049'} : {color: '#bb1515'}}>
-                    {profitLoss >= 0 ? "+" : ""}{(currentValue && totalInvested) ? (((currentValue/totalInvested)*100-100).toFixed(2)) : ""}{(currentValue != null && totalInvested != null) ? "%" : ""}
+                    {profitLoss >= 0 ? "+" : ""}{totalInvested !== 0
+                        ? ((((currentValue / totalInvested) * 100) - 100).toFixed(2))
+                        : "0.00"}%
                   </span>
                 </div>
               </div>

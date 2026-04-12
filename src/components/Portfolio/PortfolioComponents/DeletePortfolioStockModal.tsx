@@ -9,13 +9,12 @@ type props = {
 }
 
 export default function DeletePortfolioStockModal({stocks, toDelete, cancelDelete, handleTrueDelete}: props){
-
     if(!stocks || !toDelete) return null
 
     const delStock = stocks.find(s => s.id === toDelete.id);
     if (!delStock) return null
 
-    const profitPct = ((delStock.currentPrice / delStock.purchasePrice) * 100) - 100;
+    const profitPct = ((delStock.currentPrice / delStock.purchasePrice)*100) -100;
 
     return(
         <FocusTrap>
@@ -42,7 +41,7 @@ export default function DeletePortfolioStockModal({stocks, toDelete, cancelDelet
                             <td className="tdCompanies" ><div><div><p style={{fontWeight: 400}}>{delStock.name}</p><span>Quantity: {delStock.quantity}</span></div></div></td>
                             <td className="tdBoughtPrice">£{(delStock.purchasePrice * delStock.quantity).toFixed(2)}</td>
                             <td className="tdCurrentValue">£{(delStock.quantity * delStock.currentPrice).toFixed(2)}</td>
-                            <td className="tdProfit"><div><div>£{profitPct.toFixed(2)}<span style={{color: ((((profitPct)-100) >= 0) ? "#45a049" : "#bb1515")}}>{((profitPct-100) > 0) ? "+" : null}{(profitPct-100).toFixed(1)}%</span></div></div></td>
+                            <td className="tdProfit"><div><div>£{delStock.profitLoss.toFixed(2)}<span style={{color: ((((profitPct)) >= 0) ? "#45a049" : "#bb1515")}}>{((profitPct) > 0) ? "+" : null}{(profitPct).toFixed(1)}%</span></div></div></td>
                         </tr>
                     </tbody>
                 </table>

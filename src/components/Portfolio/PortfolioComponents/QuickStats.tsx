@@ -183,6 +183,14 @@ function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilt
 
     }, [graphData, setHoverValues]);
 
+    if (!fullHistory || !history || visibleStocks.length === 0) {
+        return (
+            <section className="StocksAverageGraph">
+                <h2>No Graphing Data Available</h2>
+            </section>
+        );
+    }
+
 
     return (
         <>

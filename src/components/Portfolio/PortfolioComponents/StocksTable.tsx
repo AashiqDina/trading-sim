@@ -1,11 +1,9 @@
-import { FocusTrap } from 'focus-trap-react';
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getHoursAgo } from '../../../utils/getHoursAgo';
 import { getGreatestProfitLoss } from '../../../functions/getGreatestProfitLoss';
-import { PortfolioStock, PortfolioTableStock, Transaction } from '../../../types/types';
-import DeletePortfolioStockModal from './DeletePortfolioStockModal';
+import { PortfolioTableStock, Transaction } from '../../../types/types';
 
 type props = {
   LastUpdatedDictionary: Map<string, Date> | null,
@@ -119,7 +117,7 @@ function StocksTable({LastUpdatedDictionary, tableStocks, owner, handleDelete, s
                         <td className="tdCurrentValue">£{(stock.quantity * stock.currentPrice).toFixed(2)}</td>
                         <td className="tdProfit"><div><div>£{((stock.currentPrice - stock.purchasePrice)*stock.quantity).toFixed(2)}<span style={{color: (((((stock.currentPrice/stock.purchasePrice)*100)-100) >= 0) ? "#45a049" : "#bb1515")}}>{((((stock.currentPrice/stock.purchasePrice)*100)-100) > 0) ? "+" : null}{(((stock.currentPrice/stock.purchasePrice)*100)-100).toFixed(1)}%</span></div></div></td>
                         {owner && <td className="DeleteButton">
-                          <button aria-label='DeleteStock' className="CrossContainer" onClick={() => {
+                          <button aria-label='Delete Stock' className="CrossContainer" onClick={() => {
                             handleDelete(stock)
                           }}>
                             <div className="Cross1"></div>

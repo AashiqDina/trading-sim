@@ -37,6 +37,7 @@ const Portfolio = () => {
 
 
   function handleDelete(stock: Transaction){
+    console.log("calls fn")
     setToDelete(stock)
     setModalVisibility(true);
   }
@@ -48,7 +49,6 @@ const Portfolio = () => {
 
   const handleTrueDelete = async () => {
     if (!toDelete || !user || !owner) return;
-
     const result = await handleDeleteStock(user.id, toDelete.id);
     if (!result) return;
 
@@ -110,12 +110,11 @@ const Portfolio = () => {
 
           {errorCode &&
             <FocusTrap>
-              <div className="ToBuyModal" aria-labelledby="RegistrationError" role='dialog' aria-modal="true">
+              <h1>etst</h1>
                 <ErrorPopup 
                   ErrorCode={errorCode}
                   Confirm={() => {resetError()}}
                   />
-              </div>
             </FocusTrap>
           }
           

@@ -154,7 +154,7 @@ export default function Friends(){
                         }
                         else if(friendsList?.some((user: { friendsUserId: number, profitLoss: number, userId: number, username: string}) => user.friendsUserId === OtherUser.id)){
                           return (
-                            <div key={OtherUser.id} onClick={() => navigate(`/user/${OtherUser.id}/${OtherUser.username}`)} style={{cursor: "pointer"}}>
+                            <div key={OtherUser.id} onClick={() => navigate(`/portfolio/${OtherUser.username}/${OtherUser.id}`)} style={{cursor: "pointer"}}>
                                 <h3>{OtherUser.username}</h3>
                                 <div>
                                   <h4>Friend</h4>
@@ -178,7 +178,7 @@ export default function Friends(){
             </section>}
             {!loading && <section className='FriendsList'>
               {friendsList?.map((friend: any, index: number) => (
-                <article key={friend.id + "-" + friend.username} onClick={() => navigate(`/user/${friend.friendsUserId}/${friend.username}`)}>
+                <article key={friend.id + "-" + friend.username} onClick={() => navigate(`/portfolio/${friend.username}/${friend.friendsUserId}`)}>
                   <div className='FriendNameAndProfit'>
                     <h3>{friend.username}</h3>
                   </div>
