@@ -17,9 +17,7 @@ export default function CompanyInformation({ infoLoading, companyInformation, sy
   }, [fetchStocksInfo])
 
   if(infoLoading) return <Loading scale={0.8}/>
-
-
-
+  
   let modArray = undefined
   if(companyInformation){
     modArray = companyInformation.description.slice(0, 250)

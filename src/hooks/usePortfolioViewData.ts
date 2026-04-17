@@ -61,20 +61,20 @@ export function usePortfolioViewData({portfolio, searchInput, FilteredOption, fu
 
             switch (filterHistory) {
             case "week":
-                filtered = stock.history.filter(tx =>
-                (now.getTime() - new Date(tx.timestamp).getTime()) <= 7 * 24 * 60 * 60 * 1000
+                filtered = stock.history.filter(inst =>
+                (now.getTime() - new Date(inst.timestamp).getTime()) <= 7 * 24 * 60 * 60 * 1000
                 );
                 break;
 
             case "month":
-                filtered = stock.history.filter(tx =>
-                (now.getTime() - new Date(tx.timestamp).getTime()) <= 30 * 24 * 60 * 60 * 1000
+                filtered = stock.history.filter(inst =>
+                (now.getTime() - new Date(inst.timestamp).getTime()) <= 30 * 24 * 60 * 60 * 1000
                 );
                 break;
 
             case "year":
-                filtered = stock.history.filter(tx =>
-                (now.getTime() - new Date(tx.timestamp).getTime()) <= 365 * 24 * 60 * 60 * 1000
+                filtered = stock.history.filter(inst =>
+                (now.getTime() - new Date(inst.timestamp).getTime()) <= 365 * 24 * 60 * 60 * 1000
                 );
                 break;
 

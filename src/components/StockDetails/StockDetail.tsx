@@ -17,6 +17,7 @@ import { useStockDetailsOwnedStocks } from '../../hooks/useStockDetailsOwnedStoc
 import { useStockDetailsData } from '../../hooks/useStockDetailsData';
 import { useStockDetailsInfo } from '../../hooks/useStockDetailsInfo';
 import ErrorPopup from '../../error/ErrorPopup';
+import { useStockDetailsOverview } from '../../hooks/useStockDetailsOverview';
 
 type DisplayedDataType = "Overview" | "CompanyInformation" | "StockData" | "OwnedStocks" | "News";
 
@@ -43,15 +44,18 @@ const StockDetail: React.FC = () => {
   const { ownedStocksLoading, ownedStocks, lastUpdated, fetchOwnedStocks} = useStockDetailsOwnedStocks({symbol: stockSymbol, user: user?.id, setErrorCode: setErrorCode})
   const { dataLoading, stockData, stockDataLastUpdated, fetchStocksData } = useStockDetailsData({symbol: stockSymbol, setErrorCode: setErrorCode})
   const { infoLoading, companyInformation, fetchStocksInfo } = useStockDetailsInfo({symbol: stockSymbol, setErrorCode: setErrorCode})
+  const { overviewLoading, history, getHistory, filterHistory } = useStockDetailsOverview({symbol: stockSymbol, setErrorCode: setErrorCode})
+
 
 
 
   const componentObj = {
     Overview: (
       <StockDetailsOverview
-        StockName={stockName}
-        symbol={stockSymbol}
-        setDisplayError={setDisplayError}
+        overviewLoading={overviewLoading}
+        history={history}
+        getHistory={getHistory}
+        filterHistory={filterHistory}
       />
     ),
     CompanyInformation: (
