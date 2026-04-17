@@ -1,63 +1,58 @@
 import { useEffect, useState } from "react"
-import getStockNews from "../../../functions/getStockNews"
 import "./StockDetailsNews.css"
-import AiLoading from "../../Loading/AiLoading"
+import { MarketNews } from "../../../types/types"
+import Loading from "../../Loading/Loading"
 
-export default function StockDetailsNews(props: any){
+type props = {
+  marketNews: MarketNews[],
+  fetchStockNews: () => void,
+  loading: boolean,
+}
 
-  const [NewsArray, setNewsArray] = useState<any | null>(null)
+export default function StockDetailsNews({loading, marketNews, fetchStockNews}: props){
+
   const [amountNewsDisplay, setAmountNewsDisplay] = useState<number>(5)
-  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    const getNews = async () => {
-      let response = await getStockNews({symbol: props.symbol, setDisplayError: props.setDisplayError});
-      setNewsArray(response)
-      setLoading(false)
-      console.log(response);
-    }
-    getNews()
-  }, [])
+    fetchStockNews()
+  }, [fetchStockNews])
+
+  if(loading) return ( <Loading scale={0.8}/> )
 
   return(
-    <>
-    {!loading && <section>
-      <article className="ArticleCollection">
-        {NewsArray?.slice(0, amountNewsDisplay).map((article: any, index: number) => {
-            return(
-              <a key={index} className="NewsArticle" href={article.url}>
-                <img src={article.image} alt="" />
-                <div>
-                  <h2>{article.headline}</h2>
-                  <p>{article.summary}</p>
+      <section>
+        <article className="ArticleCollection">
+          {marketNews?.slice(0, amountNewsDisplay).map((article: MarketNews, index: number) => {
+              return(
+                <a key={index} className="NewsArticle" href={article.url}>
+                  <img src={article.image} alt="" />
                   <div>
-                    <p className="Source">Source: {article.source}</p>
-                    <p className="Date">{new Date(article.datetime * 1000).toLocaleString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}</p>
+                    <h2>{article.headline}</h2>
+                    <p>{article.summary}</p>
+                    <div>
+                      <p className="Source">Source: {article.source}</p>
+                      <p className="Date">{new Date(article.datetime * 1000).toLocaleString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}</p>
+                    </div>
                   </div>
-                </div>
-              </a>
-            )
-        })
-        }
-      </article>
+                </a>
+              )
+          })}
+        </article>
 
-      <article className="MoreNewsArticles">
-        {amountNewsDisplay < NewsArray?.length ?
-        <button className="SeeMoreNews" onClick={() => {setAmountNewsDisplay(amountNewsDisplay+5)}}>
-          View More
-        </button> : 
-        NewsArray?.length == 0 ? <h2>No Articles</h2> :<h2>No more Articles.</h2>
-        }
-      </article>
-    </section>}
-
-    { loading && <AiLoading/>}
-    </>
+        <article className="MoreNewsArticles">
+          {amountNewsDisplay < marketNews.length ?
+            <button className="SeeMoreNews" onClick={() => {setAmountNewsDisplay(amountNewsDisplay+5)}}>
+              View More
+            </button> : 
+            marketNews?.length == 0 ? <h2>No Articles</h2> : <h2>No more Articles.</h2>
+          }
+        </article>
+      </section>
   )
 }

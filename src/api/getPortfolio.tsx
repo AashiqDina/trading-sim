@@ -2,12 +2,12 @@ import axios from "axios";
 import getStockImage from "./getStockImage";
 import getStockName from "./getStockName";
 import { ApiError } from "../error/ApiError";
-import { IncompleteStock } from "../types/types";
+import { IncompleteStock, UserPortfolio } from "../types/types";
 
 const imageMap = new Map()
 const nameMap = new Map()
 
-export default async function getPortfolio(userid: number) {
+export default async function getPortfolio(userid: number): Promise<UserPortfolio> {
 
   try {
     const response = await axios.get(`https://tradingsim-backend.onrender.com/api/portfolio/${userid}`);

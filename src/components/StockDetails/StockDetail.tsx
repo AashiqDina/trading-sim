@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from "axios";
+import React, { useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import './StockDetail.css';
 import { StockApiInfo, CompanyProfile } from "../../interfaces/interfaces";
 import { useAuth } from "../../auth/AuthContext";
@@ -8,135 +7,137 @@ import CompanyInformation from './StockDetailsComponents/StockDetailsCompanyInfo
 import StockDetails from './StockDetailsComponents/StockDetailsStockData'
 import StockDetailsOwnedStocks from './StockDetailsComponents/StockDetailsOwnedStocks';
 import StockDetailsNews from './StockDetailsComponents/StockDetailsNews';
-import buyStock from '../../functions/buyStock';
-import FocusTrap from 'focus-trap-react';
+import { FocusTrap } from 'focus-trap-react';
 import Confetti from 'react-confetti';
 import StockDetailsOverview from './StockDetailsComponents/StockDetailsOverview';
-import getStockImage from '../../api/getStockImage';
 import Error from '../../error/Error';
-import getStockName from '../../api/getStockName';
-import getStockPrice from '../../api/getStockPrice';
+import { useStockDetails } from '../../hooks/useStockDetails';
+import { useStockDetailsNews } from '../../hooks/useStockDetailsNews';
+import { useStockDetailsOwnedStocks } from '../../hooks/useStockDetailsOwnedStocks';
+import { useStockDetailsData } from '../../hooks/useStockDetailsData';
+import { useStockDetailsInfo } from '../../hooks/useStockDetailsInfo';
+import ErrorPopup from '../../error/ErrorPopup';
 
-interface AxiosErrorType {
-    response?: { data: string; status: number; statusText: string };
-    message: string;
-  }
+type DisplayedDataType = "Overview" | "CompanyInformation" | "StockData" | "OwnedStocks" | "News";
+
 
 const StockDetail: React.FC = () => {
 
+  const { user } = useAuth();
+  const { symbol } = useParams();
+  const { state } = useLocation()
+  const stockSymbol = decodeURIComponent(symbol ?? '');
 
-    const { user } = useAuth();
-    const { symbol } = useParams();
-    const [WinWidth, setWinWidth] = useState(window.innerWidth);
-    const stockSymbol = decodeURIComponent(symbol ?? '');
-    const [StockName, setStockName] = useState("Unknown")
-    const [stockLogo, setStockLogo] = useState<string>('');
-    const [BasicStockData, setStockBasicData] = useState<StockApiInfo | null>(null);
-    const [StockCompanyDetails, setCompanyDetails] = useState<CompanyProfile | null | undefined>(undefined);
-    const [DisplayedData, setDisplayedData] = useState<any | null>("Overview")
-    const [UserPrompts, setUserPrompts] = useState<string[]>([])
-    const [AiResponses, setAiResponses] = useState<string[]>([])
-    const [AIAssistantSearchInput,setSearchInput] = useState<string>("")
-    const [stockPrice, setStockPrice] = useState<number | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [quantity, setQuantity] = useState<string>("0");
-    const [cost, setCost] = useState<string | null>(null);
-    const [showConfetti, setShowConfetti] = useState(false);
-    const [displayError, setDisplayError] = useState<{display: boolean, warning: boolean, title: string, bodyText: string, buttonText: string}>({display: false, title: "", bodyText: "", warning: false, buttonText: ""});
-    
-    useEffect(() => {
-        const GetData = async () => {
-          try{
-              const [stockName, stockPrice, stockImage] = await Promise.all([
-                getStockName(stockSymbol),
-                getStockPrice(stockSymbol),
-                getStockImage(stockSymbol)
-              ])
-              setStockName(stockName);
-              setStockPrice(stockPrice)
-              setStockLogo(stockImage);
-          }
-          catch(error){
-              console.log(error)
-          }
-        }
-        GetData()
-    }, [])
 
-    useEffect(() => {
-      const handleResize = () => setWinWidth(window.innerWidth);
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
+  const [DisplayedData, setDisplayedData] = useState<DisplayedDataType>("Overview")
+  const [quantity, setQuantity] = useState<string>("0");
+  const [cost, setCost] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<number | null>(null)
 
-    const handleAxiosError = (error: unknown) => {
-        if (axios.isAxiosError(error)) {
-          const axiosError = error as AxiosErrorType;
-          const message = axiosError.response ? axiosError.response.data : axiosError.message;
-          console.error("Error:", message);
-        } else {
-          console.error("Unknown error:", error);
-        }
-      };
 
-    const handleBuyStock = async () => {
-        await buyStock({stockPrice: stockPrice, stockSymbol: stockSymbol, quantity: quantity, setDisplayError: setDisplayError, setShowConfetti: setShowConfetti, setIsModalOpen: setIsModalOpen, user: user})
-    };
 
-      function SwitchSection(Section: string){
-        switch(Section){
-          case "Overview":
-            setDisplayedData("Overview")
-            break
-          case "CompanyInformation":
-            setDisplayedData("CompanyInformation")
-            break
-          case "StockData":
-            setDisplayedData("StockData")
-            break
-          case "OwnedStocks":
-            setDisplayedData("OwnedStocks")
-            break
-          case "News":
-            setDisplayedData("News")
-            break
-          case "AIAssistant":
-            setDisplayedData("AIAssistant")
-            break
-          default:
-            setDisplayedData("Overview")
-            break
-        }
-      }
+  const [displayError, setDisplayError] = useState<{display: boolean, warning: boolean, title: string, bodyText: string, buttonText: string}>({display: false, title: "", bodyText: "", warning: false, buttonText: ""});
+  
+  const { stockName, stockLogo, showConfetti, buyModalOpen, handlebuyStock, changeBuyModal } = useStockDetails({userId: user?.id, stockSymbol: stockSymbol, setErrorCode: setErrorCode})
+  const { newsLoading, marketNews, fetchStockNews} = useStockDetailsNews({symbol: stockSymbol, setErrorCode: setErrorCode})
+  const { ownedStocksLoading, ownedStocks, lastUpdated, fetchOwnedStocks} = useStockDetailsOwnedStocks({symbol: stockSymbol, user: user?.id, setErrorCode: setErrorCode})
+  const { dataLoading, stockData, stockDataLastUpdated, fetchStocksData } = useStockDetailsData({symbol: stockSymbol, setErrorCode: setErrorCode})
+  const { infoLoading, companyInformation, fetchStocksInfo } = useStockDetailsInfo({symbol: stockSymbol, setErrorCode: setErrorCode})
+
+
+
+  const componentObj = {
+    Overview: (
+      <StockDetailsOverview
+        StockName={stockName}
+        symbol={stockSymbol}
+        setDisplayError={setDisplayError}
+      />
+    ),
+    CompanyInformation: (
+      <CompanyInformation
+        infoLoading={infoLoading}
+        companyInformation={companyInformation}
+        fetchStocksInfo={fetchStocksInfo}
+        symbol={stockSymbol}
+      />
+    ),
+    StockData: (
+      <StockDetails
+        dataLoading={dataLoading}
+        stockData={stockData}
+        stockDataLastUpdated={stockDataLastUpdated}
+        fetchStocksData={fetchStocksData}
+        stockPrice={state?.stockPrice}
+      />
+    ),
+    OwnedStocks: (
+      <StockDetailsOwnedStocks 
+        ownedStocks={ownedStocks}
+        fetchOwnedStocks={fetchOwnedStocks}
+        lastUpdated={lastUpdated}
+        loading={ownedStocksLoading}
+      />
+    ),
+    News: (
+      <StockDetailsNews 
+        marketNews={marketNews}
+        fetchStockNews={fetchStockNews}
+        loading={newsLoading}
+      />
+    ),
+  };
+
+  function SwitchSection(Section: string){
+    switch(Section){
+      case "Overview":
+        setDisplayedData("Overview")
+        break
+      case "CompanyInformation":
+        setDisplayedData("CompanyInformation")
+        break
+      case "StockData":
+        setDisplayedData("StockData")
+        break
+      case "OwnedStocks":
+        setDisplayedData("OwnedStocks")
+        break
+      case "News":
+        setDisplayedData("News")
+        break
+      default:
+        setDisplayedData("Overview")
+        break
+    }
+  }
 
   return (
     <>
       {showConfetti && 
         <Confetti
-        numberOfPieces={(Number(quantity) * 20) > 1000 ? 999 : (Number(quantity) * 20)}
-        recycle={false}
-      />}
+          numberOfPieces={(Number(quantity) * 20) > 1000 ? 999 : (Number(quantity) * 20)}
+          recycle={false}
+        />
+        }
         <header className='TitleBox'>
-          <section style={StockName && StockName.length > 18 && WinWidth < 600 ? {justifyContent: "center"} : undefined}>
+          <section className='TitleSec'>
             <img className='TitleLogo' src={stockLogo} alt={`Logo`} />
-              <article className='StockDetailsPrice' style={StockName && StockName.length > 18 && WinWidth < 600 ? {alignItems: "center"} : undefined}>
+              <article className='StockDetailsPrice'>
                 <div className='MiniNameSymbolSection'>
-                  <h1 className='StockDetailsTitle' style={StockName && StockName.length > 18 && WinWidth < 600 ? {textAlign: "center"} : undefined} >{StockName}<span className='StockSymbol'>{stockSymbol}</span></h1>
+                  <h1 className='StockDetailsTitle'>{stockName}<span className='StockSymbol'>{stockSymbol}</span></h1>
                 </div>
-                {/* <div className='TitleLogo'></div> */}
-                <h2 style={StockName && StockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{typeof stockPrice === "number" ? stockPrice?.toFixed(2) : "..."}</h2>
+                <h2 style={stockName && stockName.length > 18 ? {marginTop: "0.5rem"} : undefined}>£{typeof state?.stockPrice === "number" ? state?.stockPrice?.toFixed(2) : "..."}</h2>
               </article>
           </section>
           <section className='CompleteSelector'>
             <section className='SectionSection'>
               <article className='Selector'>
-                {user && <button className='BuyStockButton' aria-label='Buy Stock' onClick={() => setIsModalOpen(true)}>Buy Stock</button>}
+                {user && <button className='BuyStockButton' aria-label='Buy Stock' onClick={changeBuyModal}>Buy Stock</button>}
                 <button aria-pressed={DisplayedData === "Overview"} aria-label="View overview" onClick={() => SwitchSection("Overview")} className={"Overview" + (DisplayedData == "Overview" ? "Selected" : "")}>Overview</button>
                 <button aria-pressed={DisplayedData === "CompanyInformation"} aria-label="View company information" onClick={() => SwitchSection("CompanyInformation")} className={"CompanyInformation" + (DisplayedData == "CompanyInformation" ? "Selected" : "")}>About</button>
                 <button aria-pressed={DisplayedData === "StockData"} aria-label="View stock data" onClick={() => SwitchSection("StockData")} className={"StockData" + (DisplayedData == "StockData" ? "Selected" : "")}>Stock Data</button>
                 {user && <button aria-pressed={DisplayedData === "OwnedStocks"} aria-label="View owned stocks" onClick={() => SwitchSection("OwnedStocks")} className={"OwnedStocks" + (DisplayedData == "OwnedStocks" ? "Selected" : "")}>Owned Stocks</button>}
                 <button aria-pressed={DisplayedData === "News"} aria-label="View stock related news" onClick={() => SwitchSection("News")} className={"News" + (DisplayedData == "News" ? "Selected" : "")}>News</button>
-                <button aria-pressed={DisplayedData === "AIAssistant"} aria-label="View AI assistant" onClick={() => SwitchSection("AIAssistant")} className={"AIAssistant" + (DisplayedData == "AIAssistant" ? "Selected" : "")}>AI Assistant</button>
               </article>
             </section>
           </section>
@@ -144,38 +145,25 @@ const StockDetail: React.FC = () => {
 
         <section className='MainBody'>
             <div className='StockDetails'>
-              {
-                (DisplayedData == "Overview") && <StockDetailsOverview StockName={StockName} symbol={stockSymbol} setDisplayError={setDisplayError}/>
-              }
-              {
-                (DisplayedData == "CompanyInformation") && <CompanyInformation StockCompanyDetails={StockCompanyDetails} setCompanyDetails={setCompanyDetails} DisplayedData={DisplayedData} symbol={stockSymbol} setDisplayError={setDisplayError}/>
-              }
-              {
-                (DisplayedData == "StockData") && <StockDetails symbol={stockSymbol} setStockBasicData={setStockBasicData} BasicStockData={BasicStockData} stockPrice={stockPrice} setDisplayError={setDisplayError}/>
-              }      
-              {
-                (DisplayedData == "OwnedStocks") && <StockDetailsOwnedStocks user={user} symbol={stockSymbol}/>
-              } 
-              {
-                (DisplayedData == "News") && <StockDetailsNews symbol={stockSymbol} setDisplayError={setDisplayError}/>
-              }       
+              {componentObj[DisplayedData] ?? null}    
             </div>
         </section>
-        {isModalOpen && (
+        {buyModalOpen && (
             <FocusTrap>
               <div className="ToBuyModal" aria-labelledby="BuyStockTile" role='dialog' aria-modal="true">
                 <div className="ToBuyContent">
                   <header>
                     <div className='BuyStockTitle'>
-                      <h2>Purchase {StockName} <span className='StockSymbol'>{stockSymbol}</span></h2>
+                      <h2>Purchase {stockName} <span className='StockSymbol'>{stockSymbol}</span></h2>
                     </div>
                     <div className='BuyStockLogo'>
                       <img className='StockLogo' style={{margin: "0"}} src={stockLogo} alt="Logo" />
                     </div>
                   </header>
                   <form onSubmit={(e) => {
-                    e.preventDefault();
-                    handleBuyStock();
+                    e.preventDefault()
+                    console.log("called")
+                    handlebuyStock(state?.stockPrice, quantity);
                     }}>
                     <div className='toBuyBody'>
                       <label htmlFor="quantity">Number of Shares:</label>
@@ -184,7 +172,7 @@ const StockDetail: React.FC = () => {
                           id="quantity"
                           type="number"
                           value={quantity}
-                          onChange={(e) => {setQuantity(e.target.value); setCost((Number(e.target.value)*(stockPrice || 0)).toFixed(2))}}
+                          onChange={(e) => {setQuantity(e.target.value); setCost((Number(e.target.value)*(state?.stockPrice || 0)).toFixed(2))}}
                           className="QuantityInput"
                           onBlur={() => {
                             if (quantity === "" || Number(quantity) < 1) {
@@ -198,11 +186,11 @@ const StockDetail: React.FC = () => {
                           aria-label="Enter the Price here (or leave it blank if you wish to buy a specific amount of stocks)"
                           id="cost"
                           type="number"
-                          value={(cost || String(Number(quantity)*(stockPrice || 0)))}
+                          value={(cost || String(Number(quantity)*(state?.stockPrice || 0)))}
                           onChange={(e) => {
-                            let q = (Number(e.target.value)/(stockPrice || 0))
+                            let q = (Number(e.target.value)/(state?.stockPrice || 0))
                             setQuantity(q.toFixed(2)); 
-                            setCost((Number(q)*(stockPrice || 0)).toFixed(2))}}
+                            setCost((Number(q)*(state?.stockPrice || 0)).toFixed(2))}}
                           className="QuantityInput"
                           onBlur={() => {
                             if (cost) setCost(Number(cost).toFixed(2));
@@ -211,7 +199,7 @@ const StockDetail: React.FC = () => {
                           /> 
                     </div>
                     <footer className="ToBuyFooter">
-                        <button type='button' onClick={() => setIsModalOpen(false)}>Cancel</button>
+                        <button type='button' onClick={changeBuyModal}>Cancel</button>
                         <button type='submit'>Confirm Purchase</button>
                     </footer>
                   </form>
@@ -219,6 +207,15 @@ const StockDetail: React.FC = () => {
               </div>
             </FocusTrap>
           )}    
+
+        {errorCode &&
+          <FocusTrap>
+              <ErrorPopup 
+                ErrorCode={errorCode}
+                Confirm={() => {setErrorCode(null)}}
+                />
+          </FocusTrap>
+        }
 
         {displayError.display && 
         <FocusTrap>

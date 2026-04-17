@@ -41,7 +41,7 @@ html{
 
   .PortfolioSummary{
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-around;
     gap: 1rem;
     flex-direction: row;

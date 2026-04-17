@@ -85,12 +85,11 @@ const HomeSearch = ({ stockList, searchStock}: Props) => {
         
                 onKeyDown={(e) => {
                 if(e.key === "Enter") {
-                // Search whatever is typed
-                searchStock(stockSymbol);
-                } else if (e.key === "ArrowDown") {
-                e.preventDefault();
-                // Move focus to first suggestion
-                if(suggestionRefs.current[0]) suggestionRefs.current[0].focus();
+                    searchStock(stockSymbol);
+                } 
+                else if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    if(suggestionRefs.current[0]) suggestionRefs.current[0].focus();
                 }
             }}
               />
@@ -103,7 +102,7 @@ const HomeSearch = ({ stockList, searchStock}: Props) => {
                         key={suggestion.symbol} 
                         onClick={() => {searchStock(suggestion.symbol)}} 
                         style={(suggestions.length == 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index == suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index == 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}
-                        ref={(el) => {suggestionRefs.current[index] = el;}}
+                        ref={(e) => {suggestionRefs.current[index] = e;}}
                         role="option"
                         onKeyDown={(e) => {
                         if (e.key === "ArrowDown") {

@@ -169,9 +169,21 @@ function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilt
                     }
                 },
                 interaction: { mode: "index", intersect: false },
-                scales: { x: { display: false }, y: { display: true } },
+                scales: { 
+                    x: { 
+                        display: false,
+                        grid: {
+                            color: "rgba(32, 41, 35, 0.11)"
+                        }
+                     }, 
+                    y: { 
+                        display: true,
+                        grid: {
+                            color: "rgba(194, 200, 196, 0.0)"
+                    }
+                 } },
                 layout: {
-                    padding: 0
+                    padding: 0,
                     },
                 elements: {
                     line: {

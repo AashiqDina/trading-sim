@@ -1,28 +1,28 @@
-import axios from "axios";
 import { useEffect, useState } from "react"
 import { CompanyProfile } from "../../../interfaces/interfaces";
-import AiLoading from "../../Loading/AiLoading";
-import getCompanyInformation from "../../../functions/getCompanyInformation";
+import Loading from "../../Loading/Loading";
 
-export default function CompanyInformation(props: any){
-    const StockCompanyDetails = props.StockCompanyDetails
+type Props = {
+    infoLoading: boolean;
+    companyInformation: CompanyProfile | null;
+    symbol: string;
+    fetchStocksInfo: () => Promise<void>;
+}
+
+export default function CompanyInformation({ infoLoading, companyInformation, symbol, fetchStocksInfo }: Props){
     const [descSeeMore, setdescSeeMore] = useState(false)
 
   useEffect(() => {
-    async function GetCompanyDetailsfromApi(){
-      if(props.DisplayedData == "CompanyInformation" && StockCompanyDetails == null){
-        const response = await getCompanyInformation({symbol: props.symbol, setDisplayError: props.setDisplayError});
-        console.log("Company Details:", response)
-        props.setCompanyDetails(response)
-      }
-    }
-    GetCompanyDetailsfromApi()
-  }, [props.DisplayedData])
+    fetchStocksInfo()
+  }, [fetchStocksInfo])
 
-  const loading = props.DisplayedData == "CompanyInformation" && !StockCompanyDetails;
+  if(infoLoading) return <Loading scale={0.8}/>
+
+
+
   let modArray = undefined
-  if(StockCompanyDetails){
-    modArray = StockCompanyDetails.description.slice(0, 250)
+  if(companyInformation){
+    modArray = companyInformation.description.slice(0, 250)
   } 
 
   const companyFields: { label: string; value?: keyof CompanyProfile; custom?: (c: CompanyProfile) => string }[] = [
@@ -41,17 +41,19 @@ export default function CompanyInformation(props: any){
     },
   ];
 
-      return (
+  
+
+    return (
       <>
-      {!loading || StockCompanyDetails == null ? <article className='CompanyInfoDisplayed'>
+      <article className='CompanyInfoDisplayed'>
         <div className="Desc">
-            {StockCompanyDetails && <h2>Description</h2>}
-            {StockCompanyDetails ? (
+            {companyInformation && <h2>Description</h2>}
+            {companyInformation ? (
               <>
                 {descSeeMore 
-                  ? StockCompanyDetails.description 
+                  ? companyInformation.description 
                   : `${modArray}...`}
-                {StockCompanyDetails.description.length > 250 && (
+                {companyInformation.description.length > 250 && (
                   <span
                     style={{color: '#45a049', cursor: 'pointer', marginLeft: '4px'}}
                     onClick={() => setdescSeeMore(!descSeeMore)}
@@ -60,7 +62,7 @@ export default function CompanyInformation(props: any){
                   </span>
                 )}
               </>
-            ) : props.symbol === "AAPL" ? (
+            ) : symbol === "AAPL" ? (
               "An Error has Occurred"
             ) : (
               "Due to restrictions in the Twelve Data API’s free tier, this section’s data is only available for Apple."
@@ -72,35 +74,16 @@ export default function CompanyInformation(props: any){
                 <h4>{field.label}</h4>
                 {field.label != "Website" && <p>
                   {field.value
-                    ? StockCompanyDetails?.[field.value] ?? "—"
-                    : StockCompanyDetails ? field.custom?.(StockCompanyDetails) : "—"}
+                    ? companyInformation?.[field.value] ?? "—"
+                    : companyInformation ? field.custom?.(companyInformation) : "—"}
                 </p>}
-                {field.label == "Website" && <a href={field.value ? StockCompanyDetails?.[field.value] : undefined}>
-                    {field.value ? StockCompanyDetails?.[field.value] : undefined}
+                {field.label == "Website" && <a>
+                    {field.value ? companyInformation?.[field.value] : undefined}
                 </a>}
               </div>
             ))}
           </div>
-      </article> : <AiLoading/>}
-      </>
-       //       {!Loading || StockCompanyDetails == null ? <article className='CompanyInfoDisplayed'>
-        //   <div className="Description">
-        //     <h2>Description</h2>
-        //     <div>{(StockCompanyDetails != null) ? 
-        //       descSeeMore ? StockCompanyDetails.description 
-        //       : modArray + "... seem" 
-        //       : props.symbol == "AAPL" ? "An Error has Occured" 
-        //       :  "Due to restrictions in the Twelve Data API’s free tier, this section’s data is only available for Apple."}
-        //     </div>
-        //   </div>
-        //   <div>
-        //     <table>
-        //       <td></td>
-        //     </table>
-        //     <table>
-        //       <td></td>
-        //     </table>
-        //   </div>               
-        // </article> : <AiLoading/>}
+      </article>
+    </>
     )
 }

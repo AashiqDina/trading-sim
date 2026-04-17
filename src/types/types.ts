@@ -135,3 +135,70 @@ export type PortfolioOverview = {
   greatestProfit: StockSummaryItem;
   greatestLoss: StockSummaryItem;
 };
+
+export type StockDetailsHistoryItem = {
+  datetime: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+};
+
+export type StockQuoteData = {
+  symbol: string;
+  name: string;
+  exchange: string;
+  micCode: string;
+  currency: string;
+  datetime: string;
+  timestamp: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  change: number;
+  percentChange: number;
+  averageVolume: number;
+  volume: number;
+  previousClose: number;
+  isMarketOpen: boolean;
+  extendedChange: number;
+  extendedPercentChange: number;
+  extendedPrice: number;
+  extendedTimestamp: number;
+  rolling1DChange: number;
+  rolling7DChange: number;
+  rollingPeriodChange: number;
+
+  fiftyTwoWeek: {
+    low: number;
+    high: number;
+    lowChange: number;
+    highChange: number;
+    lowChangePercent: number;
+    highChangePercent: number;
+    range: string;
+  };
+};
+
+export type CompanyProfile = {
+  symbol: string;
+  name: string;
+  address: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  phone: string;
+  website: string;
+  ceo: string;
+  employees: number;
+  exchange: string;
+  micCode: string;
+  industry: string;
+  sector: string;
+  type: string;
+  description: string;
+};

@@ -10,7 +10,7 @@ export default async function checkUsername(username: string){
             body: JSON.stringify({ username }),
         });
 
-          if (!checkResponse.ok) {
+        if (!checkResponse.ok) {
             throw new ApiError(1002); // Error Checking Usernmae Availabilty
         }
 

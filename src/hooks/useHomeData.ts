@@ -54,7 +54,10 @@ export function useHomeData() {
     const searchStock = useCallback(async (symbol: string) => {
         try{
           const stockPrice = await getStockPrice(symbol)
-          if(stockPrice) navigate(`/stock/${encodeURIComponent(String(symbol ?? ''))}`)
+          if(stockPrice) navigate(`/stock/${encodeURIComponent(String(symbol ?? ''))}`, {
+            state: {
+                stockPrice: stockPrice
+          }})
         }
         catch (err) {
           if (err instanceof ApiError) {

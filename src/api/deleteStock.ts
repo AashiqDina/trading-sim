@@ -1,7 +1,8 @@
 import axios from "axios"
 import { ApiError } from "../error/ApiError";
+import { PortfolioStock } from "../types/types";
 
-export default async function deleteStock(userId: number, stockId: number){
+export default async function deleteStock(userId: number, stockId: number): Promise<PortfolioStock>{
     try{
         const result = await axios.delete(`https://tradingsim-backend.onrender.com/api/portfolio/${userId}/stocks/delete/${stockId}`)
         return result.data
@@ -9,7 +10,6 @@ export default async function deleteStock(userId: number, stockId: number){
     catch(err){
         if(axios.isAxiosError(err)){
             if(err.response) throw new ApiError(err.response.status)
-            
         }
 
         if(err instanceof ApiError) throw err

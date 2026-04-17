@@ -711,6 +711,18 @@ a{
 
 @media (max-width: 600px) {
 
+    .TitleSec{
+        justify-content: center;
+    }
+
+    .TitleSec > img > .StockDetailsPrice{
+        align-items: center;
+    }
+
+    .TitleSec > img > .StockDetailsPrice > div > h1{
+        text-align: center;
+    }
+
     .StockData{
         display: flex;
         align-items: center;

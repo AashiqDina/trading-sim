@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getHoursAgo } from '../../../utils/getHoursAgo';
-import { getGreatestProfitLoss } from '../../../functions/getGreatestProfitLoss';
+import { getGreatestProfitLoss } from '../../../utils/getGreatestProfitLoss';
 import { PortfolioTableStock, Transaction } from '../../../types/types';
 
 type props = {

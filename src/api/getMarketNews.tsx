@@ -1,7 +1,8 @@
 import axios from "axios"
 import { ApiError } from "../error/ApiError";
+import { MarketNews } from "../types/types";
 
-export default async function getMarketNews(){
+export default async function getMarketNews(): Promise<MarketNews[]> {
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetMarketNews`)
 

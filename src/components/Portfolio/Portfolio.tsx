@@ -110,7 +110,6 @@ const Portfolio = () => {
 
           {errorCode &&
             <FocusTrap>
-              <h1>etst</h1>
                 <ErrorPopup 
                   ErrorCode={errorCode}
                   Confirm={() => {resetError()}}

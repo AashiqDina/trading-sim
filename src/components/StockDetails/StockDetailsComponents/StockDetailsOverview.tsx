@@ -85,19 +85,6 @@ export default function StockDetailsOverview(props: any){
                         fill: false,
                         pointRadius: 0,
                     },
-                    // {
-                    //     label: "Open",
-                    //     data: history.map((entry: StockDataPoint) => ({
-                    //         x: entry.datetime,
-                    //         y: entry.open,
-                    //         full: entry,
-                    //     })),
-                    //     borderColor: "#458ba0ff",
-                    //     backgroundColor: "#458ba0ff",
-                    //     fill: false,
-                    //     pointRadius: 0,
-                    //     hidden: true,
-                    // },
                     {
                         label: "Volume",
                         data: history.map((entry: StockDataPoint) => ({
@@ -111,41 +98,12 @@ export default function StockDetailsOverview(props: any){
                         pointRadius: 0,
                         hidden: true,
                     },
-                    //{
-                    //     label: "Low",
-                    //     data: history.map((entry: StockDataPoint) => ({
-                    //         x: entry.datetime,
-                    //         y: entry.low,
-                    //         full: entry,
-                    //     })),
-                    //     borderColor: "#a09a45ff",
-                    //     backgroundColor: "#a09a45ff",
-                    //     fill: false,
-                    //     pointRadius: 0,
-                    //     hidden: true,
-                    // },
-                    //{
-                    //     label: "High",
-                    //     data: history.map((entry: StockDataPoint) => ({
-                    //         x: entry.datetime,
-                    //         y: entry.high,
-                    //         full: entry,
-                    //     })),
-                    //     borderColor: "#6345a0ff",
-                    //     backgroundColor: "#6345a0ff",
-                    //     fill: false,
-                    //     pointRadius: 0,
-                    //     hidden: true,
-                    // },
                 ],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    // legend: {
-                    //     display: false
-                    // },
                     tooltip: {
                         mode: "index",
                         enabled: false,

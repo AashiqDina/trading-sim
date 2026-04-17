@@ -1,10 +1,6 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { ApiError } from "../error/ApiError";
 import deleteStock from "../api/deleteStock";
-
-type Props = {
-  setErrorCode: Dispatch<SetStateAction<number | null>>;
-}
 
 export function usePortfolioActions(){
     const [actionsErrorCode, setErrorCode] = useState<number | null>(null)

@@ -54,7 +54,15 @@ export function handleErrorMessages(ErrorCode: number | string | null){
             warning: false,
             buttonText: "Retry"
         };
-    } 
+    }
+    else if (ErrorCode === 1000){
+        return {
+            title: "You don't seem to be logged in",
+            bodyText: "Double check you are logged in before completing any actions",
+            warning: false,
+            buttonText: "Back to Reality"
+        }
+    }
     else if (ErrorCode === 1001) {
         return {
             title: "Hmm… couldn’t find that stock.",
@@ -62,7 +70,47 @@ export function handleErrorMessages(ErrorCode: number | string | null){
             warning: false,
             buttonText: "Retry"
         };
-    } 
+    }
+    else if (ErrorCode === 1499){
+        return {
+            title: "Quantity Is Out Of This World",
+            bodyText: "Our System wasn't able to process the quantity...",
+            warning: false,
+            buttonText: "Retry"
+        }
+    }    
+    else if (ErrorCode === 1500){
+        return {
+            title: "Where did it go?",
+            bodyText: "This Stock's Price Seems To Have Been Lost...",
+            warning: false,
+            buttonText: "Retry"
+        }
+    }    
+    else if (ErrorCode === 1501){
+        return {
+            title: "Zero Stocks, Zero Problems",
+            bodyText: "Investing in nothing is technically risk-free, but also profit-free",
+            warning: false,
+            buttonText: "Got it"
+        }
+    }
+    else if (ErrorCode === 1502){
+        return {
+            title: "Mirror Trading Attempt",
+            bodyText: "You’ve invented mirror trading. Unfortunately, we only support normal trading here.",
+            warning: false,
+            buttonText: "Okay Fine..."
+        }
+    }     
+    else if (ErrorCode === 1503){
+        return {
+            title: "Wolf of Sim Street",
+            bodyText: "That's not a bit much, let's take it down a notch",
+            warning: false,
+            buttonText: "Back to Reality"
+        }
+    }
     else {
         return {
             title: "Unknown API Error",
