@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
 import { CompanyProfile } from "../../../interfaces/interfaces";
 import Loading from "../../Loading/Loading";
+import { useStockDetailsInfo } from "../../../hooks/useStockDetailsInfo";
 
 type Props = {
-    infoLoading: boolean;
-    companyInformation: CompanyProfile | null;
-    symbol: string;
-    fetchStocksInfo: () => Promise<void>;
+  symbol: string
+  handleError: (err: unknown) => void
 }
 
-export default function CompanyInformation({ infoLoading, companyInformation, symbol, fetchStocksInfo }: Props){
-    const [descSeeMore, setdescSeeMore] = useState(false)
+export default function CompanyInformation({ symbol, handleError }: Props){
+  
+  const [descSeeMore, setdescSeeMore] = useState(false)
+  const { infoLoading, companyInformation, fetchStocksInfo } = useStockDetailsInfo({symbol: symbol, handleError: handleError})
 
   useEffect(() => {
     fetchStocksInfo()

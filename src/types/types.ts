@@ -202,3 +202,5 @@ export type CompanyProfile = {
   type: string;
   description: string;
 };
+
+export type DisplayedDataType = "Overview" | "CompanyInformation" | "StockData" | "OwnedStocks" | "News";

@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import formatNumber from '../../../utils/FormatNumber';
-import { StockQuoteData } from '../../../types/types';
 import Loading from '../../Loading/Loading';
+import { useStockDetailsData } from '../../../hooks/useStockDetailsData';
 
 type Props = {
-  dataLoading: boolean;
-  stockData: StockQuoteData | null;
-  stockDataLastUpdated: string | null;
-  fetchStocksData: () => Promise<void>;
-  stockPrice: number
+    symbol: string
+    stockPrice: number
+    handleError: (err: unknown) => void
 }
 
-export default function StockDetails({ dataLoading, stockData, stockDataLastUpdated, fetchStocksData, stockPrice }: Props){
+export default function StockDetails({ symbol, handleError, stockPrice }: Props){
+
+  const { dataLoading, stockData, stockDataLastUpdated, fetchStocksData } = useStockDetailsData({symbol: symbol, handleError: handleError})
 
   useEffect(() => {
     fetchStocksData()

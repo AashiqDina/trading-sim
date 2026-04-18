@@ -2,14 +2,16 @@ import { useEffect, useState } from "react"
 import "./StockDetailsNews.css"
 import { MarketNews } from "../../../types/types"
 import Loading from "../../Loading/Loading"
+import { useStockDetailsNews } from "../../../hooks/useStockDetailsNews"
 
 type props = {
-  marketNews: MarketNews[],
-  fetchStockNews: () => void,
-  loading: boolean,
+    symbol: string
+    handleError: (err: unknown) => void
 }
 
-export default function StockDetailsNews({loading, marketNews, fetchStockNews}: props){
+export default function StockDetailsNews({symbol, handleError}: props){
+
+  const { newsLoading, marketNews, fetchStockNews} = useStockDetailsNews({symbol: symbol, handleError: handleError})
 
   const [amountNewsDisplay, setAmountNewsDisplay] = useState<number>(5)
 
@@ -17,7 +19,7 @@ export default function StockDetailsNews({loading, marketNews, fetchStockNews}: 
     fetchStockNews()
   }, [fetchStockNews])
 
-  if(loading) return ( <Loading scale={0.8}/> )
+  if(newsLoading) return ( <Loading scale={0.8}/> )
 
   return(
       <section>

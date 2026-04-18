@@ -2,21 +2,24 @@ import { useEffect } from "react";
 import { PortfolioStock } from "../../../types/types";
 import Loading from "../../Loading/Loading";
 import { getHoursAgo } from "../../../utils/getHoursAgo";
+import { useStockDetailsOwnedStocks } from "../../../hooks/useStockDetailsOwnedStocks";
 
 type Props = {
-  ownedStocks: PortfolioStock[],
-  fetchOwnedStocks: () => Promise<void>,
-  lastUpdated: Map<string, Date>
-  loading: boolean
+    user: number | undefined
+    symbol: string
+    handleError: (err: unknown) => void
 }
 
-export default function StockDetailsOwnedStocks({ownedStocks, fetchOwnedStocks, lastUpdated, loading}: Props){
+export default function StockDetailsOwnedStocks({user, symbol, handleError}: Props){
+
+  const { ownedStocksLoading, ownedStocks, lastUpdated, fetchOwnedStocks} = useStockDetailsOwnedStocks({symbol: symbol, user: user, handleError: handleError})
+
 
   useEffect(() => {
     fetchOwnedStocks()
   }, [fetchOwnedStocks])
 
-  if(loading) return <Loading scale={0.8}/>
+  if(ownedStocksLoading) return <Loading scale={0.8}/>
 
   if(ownedStocks.length === 0) return (
     <div>

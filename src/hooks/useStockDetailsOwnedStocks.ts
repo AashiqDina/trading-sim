@@ -7,10 +7,10 @@ import getAllStocksLastUpdated from "../api/getAllStocksLastUpdated"
 type props = {
     user: number | undefined
     symbol: string
-    setErrorCode: (code: number | null) => void
+    handleError: (err: unknown) => void
 }
 
-export function useStockDetailsOwnedStocks({symbol, user, setErrorCode}: props){
+export function useStockDetailsOwnedStocks({symbol, user, handleError}: props){
     const [ownedStocksLoading, setLoading] = useState<boolean>(false)
     const [ownedStocks, setOwnedStocks] = useState<PortfolioStock[]>([])
     const [lastUpdated, setLastUpdated] = useState<Map<string, Date>>(new Map())
@@ -34,8 +34,7 @@ export function useStockDetailsOwnedStocks({symbol, user, setErrorCode}: props){
             setLastUpdated(map)
         }
         catch(err){
-            if (err instanceof ApiError) setErrorCode(err.code)
-            else setErrorCode(-1)
+            handleError(err)
         }
         finally{
             setLoading(false)

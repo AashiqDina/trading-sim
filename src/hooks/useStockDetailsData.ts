@@ -7,10 +7,10 @@ import { StockQuoteData } from "../types/types"
 
 type props = {
     symbol: string
-    setErrorCode: (code: number | null) => void
+    handleError: (err: unknown) => void
 }
 
-export function useStockDetailsData({symbol, setErrorCode}: props){
+export function useStockDetailsData({symbol, handleError}: props){
     const [dataLoading, setLoading] = useState<boolean>(false)
     const [stockData, setStockData] = useState<StockQuoteData | null>(null)
     const [stockDataLastUpdated, setStockDataLastUpdated] = useState<string | null>(null)
@@ -26,8 +26,7 @@ export function useStockDetailsData({symbol, setErrorCode}: props){
             setStockDataLastUpdated(lastUpdated)
         }
         catch(err){
-            if (err instanceof ApiError) setErrorCode(err.code)
-            else setErrorCode(-1)
+            handleError(err)
         }
         finally{
             setLoading(false)

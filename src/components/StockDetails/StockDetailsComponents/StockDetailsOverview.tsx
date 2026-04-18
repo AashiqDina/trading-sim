@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react"
 import "./StockDetailsOverview.css"
 import FormatNumber from "../../../utils/FormatNumber";
 import Loading from "../../Loading/Loading";
+import { useStockDetailsOverview } from "../../../hooks/useStockDetailsOverview";
 
 ChartJS.register(LineElement, LineController, PointElement, LinearScale, TimeScale, Tooltip, Legend, CategoryScale);
 
@@ -26,13 +27,13 @@ type StockDataPoint = {
 };
 
 type props = {
-    overviewLoading: boolean
-    history: StockDataPoint[]
-    getHistory: () => Promise<void>
-    filterHistory: (range: "all" | "threeYears" | "year" | "threeMonths" | "month" | "week") => void
+    symbol: string | undefined
+    handleError: (err: unknown) => void
 }
 
-export default function StockDetailsOverview({ overviewLoading, history, getHistory, filterHistory }: props){
+export default function StockDetailsOverview({ symbol, handleError }: props){
+    
+    const { overviewLoading, history, getHistory, filterHistory } = useStockDetailsOverview({symbol: symbol, handleError: handleError})
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const chartRef = useRef<ChartJS | null>(null);

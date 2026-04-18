@@ -5,10 +5,10 @@ import { ApiError } from "../error/ApiError";
 
 type  props = {
     symbol: string | undefined
-    setErrorCode: (code: number | null) => void
+    handleError: (err: unknown) => void
 }
 
-export function useStockDetailsOverview({ symbol, setErrorCode }: props){
+export function useStockDetailsOverview({ symbol, handleError }: props){
     const [fullHistory, setFullHistory] = useState<StockDetailsHistoryItem[]>([])
     const [history, setHistory] = useState<StockDetailsHistoryItem[]>([])
     const [overviewLoading, setOverviewLoading] = useState(false)
@@ -23,8 +23,7 @@ export function useStockDetailsOverview({ symbol, setErrorCode }: props){
             setHistory(reversedResult)
         }
         catch(error){
-            if (error instanceof ApiError) setErrorCode(error.code)
-            else setErrorCode(-1)
+            handleError(error)
         }
         finally{
             setOverviewLoading(false)

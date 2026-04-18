@@ -5,10 +5,10 @@ import getStockNews from "../api/getStockNews"
 
 type props = {
     symbol: string
-    setErrorCode: (code: number | null) => void
+    handleError: (err: unknown) => void
 }
 
-export function useStockDetailsNews({symbol, setErrorCode}: props){
+export function useStockDetailsNews({symbol, handleError}: props){
     const [newsLoading, setLoading] = useState<boolean>(false)
     const [marketNews, setMarketNews] = useState<MarketNews[]>([])
 
@@ -19,8 +19,7 @@ export function useStockDetailsNews({symbol, setErrorCode}: props){
             setMarketNews(response)
         }
         catch(err){
-            if (err instanceof ApiError) setErrorCode(err.code)
-            else setErrorCode(-1)
+            handleError(err)
         }
         finally{
             setLoading(false)

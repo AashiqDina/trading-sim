@@ -7,10 +7,11 @@ import buyStockService from "../services/buyStockService";
 type props = {
     userId: number | undefined,
     stockSymbol: string
-    setErrorCode: (code: number | null) => void
+    handleError: (err: unknown) => void
 }
 
-export function useStockDetails({ userId, stockSymbol, setErrorCode }: props){
+export function useStockDetails({ userId, stockSymbol, handleError }: props){
+    const [baseLoading , setBaseLoading] = useState(false)
     const [stockName, setStockName] = useState<string>("")
     const [stockLogo, setStockLogo] = useState<string>("")
     const [showConfetti, setShowConfetti] = useState(false);
@@ -19,18 +20,21 @@ export function useStockDetails({ userId, stockSymbol, setErrorCode }: props){
     useEffect(() => {
         const GetData = async () => {
             try{
+                setBaseLoading(true)
                 console.log("SS: ", stockSymbol)
                 const [stockName, stockImage] = await Promise.all([
                     getStockName(stockSymbol),
                     getStockImage(stockSymbol)
                 ])
 
-
                 setStockName(stockName);
                 setStockLogo(stockImage);
             }
             catch(error){
-                console.log(error)
+                handleError(error)
+            }
+            finally{
+                setBaseLoading(false)
             }
         }
         GetData()
@@ -53,13 +57,9 @@ export function useStockDetails({ userId, stockSymbol, setErrorCode }: props){
             setBuyModalOpen(false)
         }
         catch(err){
-            if (err instanceof ApiError) {
-            setErrorCode(err.code);
-            } else {
-            setErrorCode(-1);
-            }
+            handleError(err)
         }
     }
 
-    return { stockName, stockLogo, showConfetti, buyModalOpen, handlebuyStock, changeBuyModal }
+    return { baseLoading, stockName, stockLogo, showConfetti, buyModalOpen, handlebuyStock, changeBuyModal }
 }

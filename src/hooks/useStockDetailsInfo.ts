@@ -6,10 +6,10 @@ import getCompanyInformation from "../api/getCompanyInformation"
 
 type props = {
     symbol: string
-    setErrorCode: (code: number | null) => void
+    handleError: (err: unknown) => void
 }
 
-export function useStockDetailsInfo({symbol, setErrorCode}: props){
+export function useStockDetailsInfo({symbol, handleError}: props){
     const [infoLoading, setLoading] = useState<boolean>(false)
     const [companyInformation, setCompanyInformation] = useState<CompanyProfile | null>(null)
 
@@ -21,8 +21,7 @@ export function useStockDetailsInfo({symbol, setErrorCode}: props){
             setCompanyInformation(data)
         }
         catch(err){
-            if (err instanceof ApiError) setErrorCode(err.code)
-            else setErrorCode(-1)
+            handleError(err)
         }
         finally{
             setLoading(false)
