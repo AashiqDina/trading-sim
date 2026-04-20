@@ -132,6 +132,12 @@ export default function StockDetailsOverview({ symbol, handleError }: props){
 
     if(overviewLoading) return <Loading scale={0.8}/>
 
+    if(!history || history.length === 0) return (
+        <div>
+            <h2>Historical data not available</h2>
+        </div>
+    )
+
     return (
         <>
             <article  aria-live="polite" aria-label={`Stock Data from Graph Point`} className='StocksGraph'>

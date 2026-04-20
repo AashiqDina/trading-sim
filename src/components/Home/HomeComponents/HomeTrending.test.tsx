@@ -23,9 +23,9 @@ const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
 
 jest.mock('axios'); // mocks axios functions to test with edge cases without backend
 
-jest.mock("focus-trap-react", () => {
-  return ({ children }: any) => <div>{children}</div>;
-});
+jest.mock("focus-trap-react", () => ({
+    FocusTrap: ({ children }: any) => <div>{children}</div>
+}));
 
 jest.mock("../../../api/getMarketNews", () => ({ 
   __esModule: true,

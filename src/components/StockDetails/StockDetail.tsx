@@ -11,7 +11,6 @@ import Confetti from 'react-confetti';
 import StockDetailsOverview from './StockDetailsComponents/StockDetailsOverview';
 import { useStockDetails } from '../../hooks/useStockDetails';
 import ErrorPopup from '../../error/ErrorPopup';
-import { useStockDetailsOverview } from '../../hooks/useStockDetailsOverview';
 import { DisplayedDataType } from '../../types/types';
 import StockDetailsHeader from './StockDetailsComponents/StockDetailsHeader';
 import BuyStockModal from './StockDetailsComponents/BuyStockModal';
@@ -102,7 +101,7 @@ const StockDetail: React.FC = () => {
             </div>
         </section>
 
-        {buyModalOpen && <BuyStockModal
+        {!errorCode && buyModalOpen && <BuyStockModal
           stockName={stockName}
           stockLogo={stockLogo}
           stockSymbol={stockSymbol}

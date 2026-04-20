@@ -1,3 +1,5 @@
+// just had an idea, I could use an object to map error codes to messages instead of a long if/else chain. But this works for now, so I'll stick with it for the time being.
+
 export function handleErrorMessages(ErrorCode: number | string | null){
     if(ErrorCode == 400){
         return {
@@ -67,6 +69,14 @@ export function handleErrorMessages(ErrorCode: number | string | null){
         return {
             title: "Hmm… couldn’t find that stock.",
             bodyText: "Please double-check that the symbol you entered is correct.",
+            warning: false,
+            buttonText: "Retry"
+        };
+    }
+    else if (ErrorCode === 1002) {
+        return {
+            title: "Very Funny... that's not a quantity!",
+            bodyText: "Please enter a valid quantity.",
             warning: false,
             buttonText: "Retry"
         };

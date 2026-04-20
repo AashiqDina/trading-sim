@@ -21,7 +21,6 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
         const GetData = async () => {
             try{
                 setBaseLoading(true)
-                console.log("SS: ", stockSymbol)
                 const [stockName, stockImage] = await Promise.all([
                     getStockName(stockSymbol),
                     getStockImage(stockSymbol)
@@ -45,6 +44,7 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
     const handlebuyStock = async (stockPrice: number, quantity: string) => {
 
         try{
+            if(isNaN(Number(quantity))) throw new ApiError(1002)
             if(!userId) throw new ApiError(1000)
 
             await buyStockService({

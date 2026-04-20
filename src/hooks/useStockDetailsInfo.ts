@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react"
-import { ApiError } from "../error/ApiError"
 import { CompanyProfile } from "../types/types"
 import getCompanyInformation from "../api/getCompanyInformation"
 

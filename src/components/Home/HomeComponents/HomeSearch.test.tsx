@@ -14,9 +14,9 @@ import '@testing-library/jest-dom';
 import { mockStockList } from '../../../mocks/Home/mockStockList';
 import { mockHistory } from '../../../mocks/StockDetails/mockHistory';
 
-const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock; // for typescript compile time we manually tell typescript these are of type jest.mock so we can change the returned value later
+const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock;
 const mockedGetStockPrice = getStockPriceMock as jest.Mock;
-const mockedGetStockList = GetStockListMock as jest.Mock; // use .default for ES module default export
+const mockedGetStockList = GetStockListMock as jest.Mock; 
 const mockedGetMarketNews = getMarketNewsMock as jest.Mock;
 const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
 
@@ -24,9 +24,8 @@ const mockedGetStockHistory = GetStockHistoryMock as jest.Mock;
 jest.mock('axios');
 
 jest.mock("focus-trap-react", () => ({
-  __esModule: true,
-  default: ({ children }: any) => <div>{children}</div>,
-}))
+    FocusTrap: ({ children }: any) => <div>{children}</div>
+}));
 
 jest.mock("../../../api/getTrendingStocks", () => ({
   __esModule: true,

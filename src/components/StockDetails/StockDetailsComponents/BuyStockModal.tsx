@@ -12,7 +12,17 @@ type props = {
 
 export default function BuyStockModal({ stockName, stockLogo, stockSymbol, stockPrice, handlebuyStock, changeBuyModal }: props){
     const [quantity, setQuantity] = useState<string>("0");
-    const [cost, setCost] = useState<string | null>(null);
+    const [cost, setCost] = useState<string>("");
+
+    const formatValues = () => {
+        if (quantity !== "") {
+            setQuantity(Number(quantity).toFixed(2));
+        }
+        if (cost !== "") {
+            setCost(Number(cost).toFixed(2));
+        }
+        };
+
 
     return (
         <FocusTrap>
@@ -28,40 +38,55 @@ export default function BuyStockModal({ stockName, stockLogo, stockSymbol, stock
                 </header>
                 <form onSubmit={(e) => {
                     e.preventDefault()
-                    if (stockPrice) handlebuyStock(stockPrice, quantity);
+                    if (stockPrice && isFinite(Number(quantity))) handlebuyStock(stockPrice, quantity);        
                 }}>
                 <div className='toBuyBody'>
                     <label htmlFor="quantity">Number of Shares:</label>
-                    <input                         
+                    <input
+                        className="QuantityInput"
                         aria-label="Enter the quantity here (or leave it blank if you wish to spend a specific amount)"
                         id="quantity"
                         type="number"
                         value={quantity}
-                        onChange={(e) => {setQuantity(e.target.value); setCost((Number(e.target.value)*(stockPrice || 0)).toFixed(2))}}
-                        className="QuantityInput"
-                        onBlur={() => {
-                        if (quantity === "" || Number(quantity) < 1) {
-                            setQuantity("0")
-                        }
-                        if (cost) setCost(Number(cost).toFixed(2));
-                        if (quantity) setQuantity(Number(quantity).toFixed(2));
-                        }}/>
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setQuantity(value);
+
+                            if (value === "") {
+                                setCost("");
+                                return;
+                            }
+
+                            const quantity = Number(value);
+                                if (!isNaN(quantity)) {
+                                setCost((quantity * (stockPrice || 0)).toString());
+                            }
+                        }}
+                        onBlur={formatValues}
+                        />
                     <label htmlFor="cost">Estimated Cost:</label>
-                    <input                         
+                    <input
+                        className="QuantityInput"
                         aria-label="Enter the Price here (or leave it blank if you wish to buy a specific amount of stocks)"
                         id="cost"
                         type="number"
-                        value={(cost || String(Number(quantity)*(stockPrice || 0)))}
+                        value={cost}
                         onChange={(e) => {
-                        let q = (Number(e.target.value)/(stockPrice || 0))
-                        setQuantity(q.toFixed(2)); 
-                        setCost((Number(q)*(stockPrice || 0)).toFixed(2))}}
-                        className="QuantityInput"
-                        onBlur={() => {
-                        if (cost) setCost(Number(cost).toFixed(2));
-                        if (quantity) setQuantity(Number(quantity).toFixed(2));
+                            const value = e.target.value;
+                            setCost(value);
+
+                            if (value === "") {
+                                setQuantity("");
+                                return;
+                            }
+
+                            const c = Number(value);
+                                if (!isNaN(c) && stockPrice) {
+                                setQuantity((c / stockPrice).toString());
+                            }
                         }}
-                        /> 
+                        onBlur={formatValues}
+                    />
                 </div>
                 <footer className="ToBuyFooter">
                     <button type='button' onClick={changeBuyModal}>Cancel</button>
