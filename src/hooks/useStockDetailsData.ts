@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react"
-import { ApiError } from "../error/ApiError"
 import getStockApiInfo from "../api/getStockApiInfo"
 import getStockInfoLastUpdated from "../api/getStockInfoLastUpdated"
 import { StockQuoteData } from "../types/types"

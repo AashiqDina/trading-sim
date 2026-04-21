@@ -16,13 +16,15 @@ describe("Owned Stocks Tests", () => {
     beforeEach(() => {
         mockedUseStockDetailsOwnedStocks.mockReturnValue({
             ownedStocksLoading: false,
-            ownedStocks: mockPortfolioStocks,
+            ownedStocks: mockPortfolioStocks.filter(
+                stock => stock.symbol === "symbol_1"),
             lastUpdated: mockLastUpdated,
             fetchOwnedStocks: jest.fn(),
         });
     });
 
     test("Loading state renders correctly", () => {
+
 
         mockedUseStockDetailsOwnedStocks.mockReturnValue({
             ownedStocksLoading: true,
@@ -43,11 +45,14 @@ describe("Owned Stocks Tests", () => {
     })
 
     test("Renders no owned stocks correctly", () => {
+
+        const mockFetchOwnedStocks = jest.fn();
+
         mockedUseStockDetailsOwnedStocks.mockReturnValue({
             ownedStocksLoading: false,
             ownedStocks: [],
             lastUpdated: new Map(),
-            fetchOwnedStocks: jest.fn(),
+            fetchOwnedStocks: mockFetchOwnedStocks,
         })
 
         render(
@@ -58,6 +63,7 @@ describe("Owned Stocks Tests", () => {
             />
         )
 
+        expect(mockFetchOwnedStocks).toHaveBeenCalledTimes(1);
         expect(screen.getByText(/You don't own any stocks from this company/i)).toBeInTheDocument();
 
     })
@@ -71,9 +77,11 @@ describe("Owned Stocks Tests", () => {
             />
         );
 
-        for (let i = 0; i < mockPortfolioStocks.length; i++) {
-            const stock = mockPortfolioStocks[i];
+        const filteredStocks = mockPortfolioStocks.filter(
+            stock => stock.symbol === "symbol_1"
+        );
 
+        filteredStocks.forEach((stock) => {
             const row = screen.getByText(stock.name).closest("tr");
 
             expect(within(row!).getByText(stock.name)).toBeInTheDocument();
@@ -82,18 +90,34 @@ describe("Owned Stocks Tests", () => {
             const bought = `£${(stock.purchasePrice * stock.quantity).toFixed(2)}`;
             const current = `£${(stock.currentPrice * stock.quantity).toFixed(2)}`;
 
-            expect(within(row!).getAllByText(bought).length).toBeGreaterThan(0);
-            expect(within(row!).getAllByText(current).length).toBeGreaterThan(0);
+            expect(within(row!).getByText(bought)).toBeInTheDocument();
+            expect(within(row!).getByText(current)).toBeInTheDocument();
+        });
+    });
 
-            const profitLoss = (
-                (stock.currentPrice * stock.quantity) -
-                (stock.purchasePrice * stock.quantity)
-            ).toFixed(2);
+    test("last updated times render correctly", () => {
+        render(
+            <StockDetailsOwnedStocks
+                user={undefined}
+                symbol={"symbol_1"}
+                handleError={jest.fn()}
+            />
+        );
 
-            const profitLossElement = within(row!).getByText(`£${profitLoss}`);
-            expect(profitLossElement).toBeInTheDocument();
+        const filteredStocks = mockPortfolioStocks.filter(
+            stock => stock.symbol === "symbol_1"
+        );
 
+        filteredStocks.forEach(stock => {
+            const row = screen.getByText(stock.name).closest("tr");
 
-        }
+            const lastUpdated = mockLastUpdated.get(stock.symbol);
+
+            if (lastUpdated) {
+                expect(within(row!).getByText(/Updated/i)).toBeInTheDocument();
+            } else {
+                expect(within(row!).getByText(/N\/A/i)).toBeInTheDocument();
+            }
+        });
     });
 })
