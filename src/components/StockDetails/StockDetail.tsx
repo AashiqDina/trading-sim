@@ -32,7 +32,7 @@ const StockDetail: React.FC = () => {
     else setErrorCode(-1)
   }, []);
 
-  const { baseLoading, stockName, stockLogo, showConfetti, buyModalOpen, handlebuyStock, changeBuyModal } = useStockDetails({userId: user?.id, stockSymbol: stockSymbol, handleError: handleError})
+  const { baseLoading, stockName, stockLogo, showConfetti, buyModalOpen, handleBuyStock, changeBuyModal } = useStockDetails({userId: user?.id, stockSymbol: stockSymbol, handleError: handleError})
 
   const componentObj = {
     Overview: (
@@ -106,7 +106,7 @@ const StockDetail: React.FC = () => {
           stockLogo={stockLogo}
           stockSymbol={stockSymbol}
           stockPrice={state?.stockPrice}
-          handlebuyStock={handlebuyStock}
+          handlebuyStock={handleBuyStock}
           changeBuyModal={changeBuyModal}
         />    
         }

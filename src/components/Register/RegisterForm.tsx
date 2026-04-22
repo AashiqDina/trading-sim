@@ -67,7 +67,7 @@ export default function RegisterForm({error, CompleteRegister}: props ){
 
         <button aria-label="Submit and Create account" className="SubmitButton" type="submit">Register</button>
       </form>
-      <a className="HaveALook" href="#/user/1/AashiqD">
+      <a className="HaveALook" href="#/portfolio/AashiqD/1" aria-label="View a sample portfolio">
         See my profile for a preview.
       </a>
       <p className="noAccount" style={{marginTop: "0.8rem"}}>

@@ -41,7 +41,7 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
 
     const changeBuyModal = () => {setBuyModalOpen(!buyModalOpen)}
 
-    const handlebuyStock = async (stockPrice: number, quantity: string) => {
+    const handleBuyStock = async (stockPrice: number, quantity: string) => {
 
         try{
             if(isNaN(Number(quantity))) throw new ApiError(1002)
@@ -61,5 +61,5 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
         }
     }
 
-    return { baseLoading, stockName, stockLogo, showConfetti, buyModalOpen, handlebuyStock, changeBuyModal }
+    return { baseLoading, stockName, stockLogo, showConfetti, buyModalOpen, handleBuyStock, changeBuyModal }
 }

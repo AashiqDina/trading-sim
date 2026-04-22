@@ -14,7 +14,6 @@ import getReceivedRequests from '../../functions/getReceivedRequests';
 import AcceptFriendRequest from '../../functions/AcceptFriendRequest';
 import DeclineFriendRequest from '../../functions/DeclineFriendRequest';
 import DeleteFriend from '../../functions/DeleteFriend';
-import React from 'react';
 import Loading from '../Loading/Loading';
 
 export default function Friends(){

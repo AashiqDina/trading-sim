@@ -26,7 +26,7 @@ export default function BuyStockModal({ stockName, stockLogo, stockSymbol, stock
 
     return (
         <FocusTrap>
-            <div className="ToBuyModal" aria-labelledby="BuyStockTile" role='dialog' aria-modal="true">
+            <div className="ToBuyModal" aria-labelledby="BuyStockTile" role='dialog' aria-modal="true" data-testid="BuyModal">
             <div className="ToBuyContent">
                 <header>
                 <div className='BuyStockTitle'>
