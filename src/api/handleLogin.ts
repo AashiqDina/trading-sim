@@ -27,6 +27,6 @@ export default async function handleLogin(username: string, password: string){
     catch(err){
         if(err instanceof ApiError) throw err
 
-        throw new ApiError(0)
+        throw new ApiError(-1)
     }
 }

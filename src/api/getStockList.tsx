@@ -11,15 +11,13 @@ export default async function GetStockList(): Promise<Record<string, {logo: stri
     
     }
     catch (error) {
+        if (error instanceof ApiError) throw error;
+
         if (axios.isAxiosError(error)) {
             if (error.response) {
                 throw new ApiError(error.response.status);
-            } else {
-                throw new ApiError(-1);
-            }
+            } 
         }
-
-        if (error instanceof ApiError) throw error;
 
         throw new ApiError(-1);
     }

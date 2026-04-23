@@ -16,14 +16,11 @@ export default async function handleRegister(username: string, password: string)
 
         const data = await response.json();
 
-
         if(!response.ok || !data.success) throw new ApiError(-1) 
 
     } 
     catch (err) {
-        if(err instanceof ApiError){
-            throw err
-        }
+        if(err instanceof ApiError) throw err
 
         throw new ApiError(-1)
     }

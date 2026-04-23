@@ -7,12 +7,12 @@ export default async function getAllStocksLastUpdated(): Promise<Record<string, 
         return result.data
     }
     catch(err){
-        if(axios.isAxiosError(err)){
-            if(err.response) throw new ApiError(err.response.status)
-            
-        }
 
         if(err instanceof ApiError) throw err
+
+        if(axios.isAxiosError(err)){
+            if(err.response) throw new ApiError(err.response.status)   
+        }
 
         throw new ApiError(-1)
     }

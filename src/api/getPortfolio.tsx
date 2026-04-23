@@ -53,10 +53,12 @@ export default async function getPortfolio(userid: number): Promise<UserPortfoli
   };
   } 
   catch (err) {
+    
+    if(err instanceof ApiError) throw err
+
     if(axios.isAxiosError(err)){
       if(err.response) throw new ApiError(err.response.status)
     }
-    if(err instanceof ApiError) throw err
 
     throw new ApiError(-1)
       

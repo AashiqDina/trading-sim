@@ -203,4 +203,11 @@ export type CompanyProfile = {
   description: string;
 };
 
+export type friendListMember = {
+  friendsUserId: number;
+  username: string;
+  userId: number;
+  profitLoss: number;
+}
+
 export type DisplayedDataType = "Overview" | "CompanyInformation" | "StockData" | "OwnedStocks" | "News";

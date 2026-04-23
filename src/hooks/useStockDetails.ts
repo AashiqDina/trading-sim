@@ -18,7 +18,7 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
     const [buyModalOpen, setBuyModalOpen] = useState(false)
 
     useEffect(() => {
-        const GetData = async () => {
+        const getData = async () => {
             try{
                 setBaseLoading(true)
                 const [stockName, stockImage] = await Promise.all([
@@ -36,7 +36,7 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
                 setBaseLoading(false)
             }
         }
-        GetData()
+        getData()
     }, [stockSymbol])
 
     const changeBuyModal = () => {setBuyModalOpen(!buyModalOpen)}

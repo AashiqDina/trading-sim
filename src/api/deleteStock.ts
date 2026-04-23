@@ -8,11 +8,11 @@ export default async function deleteStock(userId: number, stockId: number): Prom
         return result.data
     }
     catch(err){
+        if(err instanceof ApiError) throw err
+
         if(axios.isAxiosError(err)){
             if(err.response) throw new ApiError(err.response.status)
         }
-
-        if(err instanceof ApiError) throw err
 
         throw new ApiError(-1)
     }

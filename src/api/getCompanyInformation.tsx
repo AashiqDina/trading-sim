@@ -21,6 +21,11 @@ export default async function getCompanyInformation({symbol}: props): Promise<Co
 
     }
     catch(error){
+
+        if(axios.isAxiosError(error)){
+            if(error.response) throw new ApiError(error.response.status)    
+        }
+
         if(error instanceof ApiError) throw error
 
         throw new ApiError(-1)

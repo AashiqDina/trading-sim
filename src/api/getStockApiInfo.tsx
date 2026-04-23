@@ -18,6 +18,10 @@ export default async function getStockApiInfo({symbol}: props): Promise<StockQuo
     catch(error){
         if ((error instanceof ApiError)) throw error
 
+        if(axios.isAxiosError(error)){
+        if(error.response) throw new ApiError(error.response.status)
+        }
+
         throw new ApiError(-1)
     }
 

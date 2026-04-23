@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { MarketNews } from "../types/types"
-import { ApiError } from "../error/ApiError"
 import getStockNews from "../api/getStockNews"
 
 type props = {

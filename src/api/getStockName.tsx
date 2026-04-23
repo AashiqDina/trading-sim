@@ -10,12 +10,12 @@ export default async function getStockName(symbol: string): Promise<string>{
 
     }
     catch(err){
-        if(axios.isAxiosError(err)){
-            if(err.response) throw new ApiError(err.response.status)
-            
-        }
 
         if(err instanceof ApiError) throw err
+
+        if(axios.isAxiosError(err)){
+            if(err.response) throw new ApiError(err.response.status)    
+        }
 
         throw new ApiError(-1)
     }
