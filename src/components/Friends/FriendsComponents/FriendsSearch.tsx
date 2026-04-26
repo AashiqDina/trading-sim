@@ -36,14 +36,14 @@ export default function FriendsSearch({userList, userId, friendsList, sentReqLis
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-        if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-            setInput("")
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+                setInput("")
+            }
         }
-        }
-    
+        
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
 
@@ -52,10 +52,10 @@ export default function FriendsSearch({userList, userId, friendsList, sentReqLis
             <article className='InputSection'>
                 <input aria-label='Search for a friend' placeholder='Search a name... (e.g. AashiqD)' type="text"  onChange={(e) => {setInput(e.target.value)}} value={input}/>
             </article>
-            {(searchList.length > 0) && (input.length > 0) && <article className='UserFriendSuggestions'>
+            {(searchList.length > 0) && (input.length > 0) && <article className='UserFriendSuggestions' data-testid="FriendSearchSuggestions">
                 {searchList.map((OtherUser) => {
                     if(OtherUser.id === userId){
-                    return null
+                        return null
                     }
                     else{
                     if(sentIds.has(OtherUser.id)){
@@ -79,7 +79,7 @@ export default function FriendsSearch({userList, userId, friendsList, sentReqLis
                     }
                     else if(friendIds.has(OtherUser.id)){
                         return (
-                        <div key={OtherUser.id} onClick={() => navigate(`/portfolio/${OtherUser.username}/${OtherUser.id}`)} style={{cursor: "pointer"}}>
+                        <div key={OtherUser.id} onClick={() => navigate(`/portfolio/${OtherUser.username}/${OtherUser.id}`)} style={{cursor: "pointer"}} data-testid="FriendForSearchSugg">
                             <h3>{OtherUser.username}</h3>
                             <div>
                                 <h4>Friend</h4>

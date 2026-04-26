@@ -5,17 +5,16 @@ import HomeNews from './HomeNews';
 import { mockMarketNews } from '../../../mocks/Home/mockMarketNews';
 import { MarketNews } from '../../../types/types';
 
-jest.mock('axios'); // mocks axios functions to test with edge cases without backend
+jest.mock('axios'); 
 
 jest.mock("../../../api/getMarketNews", () => ({
   __esModule: true,
   default: jest.fn()
 }))
 
-jest.mock('../../../error/Error', () => () => <div>ErrorMock</div>);
 
 function NewsRenderCheck(newsArray: MarketNews[]) {
-    newsArray.forEach((article, index) => {
+    newsArray.forEach((article) => {
         const formattedDate = new Date(article.datetime * 1000).toLocaleString("en-GB", {
             day: "2-digit",
             month: "2-digit",

@@ -57,8 +57,6 @@ jest.mock("../../../api/getStockName", () => ({
   default: jest.fn().mockResolvedValue("Apple Inc."),
 }));
 
-jest.mock('../../../error/Error', () => () => <div>ErrorMock</div>);
-
 describe("Renders Search input and Button", () => {
 
     test("Render Input and Button", () => {

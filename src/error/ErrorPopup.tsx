@@ -1,4 +1,4 @@
-import "./Error.css";
+import "./ErrorPopup.css";
 import { handleErrorMessages } from "../utils/HandleErrorMessages";
 
 type props = {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import getHistory from "../api/getHistory";
 import getPortfolio from "../api/getPortfolio";
 import { ApiError } from "../error/ApiError";
-import updateAllStocksInPortfolio from "../functions/UpdateStocksInPortfolio";
+import updateAllStocksInPortfolio from "../api/UpdateStocksInPortfolio";
 import { UserPortfolio, StockHistoryItem } from "../types/types";
 import getAllStocksLastUpdated from "../api/getAllStocksLastUpdated";
 
@@ -28,7 +28,7 @@ export function usePortfolioData({ userId }: Props) {
             try {
                 setLoading(true);
 
-                await updateAllStocksInPortfolio({ user: { id: userId } });
+                await updateAllStocksInPortfolio({userId: userId});
 
                 const [portfolioResult, historyResult, LastUpdatedResult] = await Promise.all([
                     getPortfolio(userId),

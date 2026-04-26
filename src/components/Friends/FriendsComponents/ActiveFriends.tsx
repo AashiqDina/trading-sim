@@ -28,7 +28,7 @@ export default function ActiveFriends({friendsList, profitLossMap, handleDeleteF
                     const profit = profitLossMap.get(friend.friendsUserId)
 
                     return(
-                        <article key={friend.friendsUserId} onClick={() => navigate(`/portfolio/${friend.username}/${friend.friendsUserId}`)}>
+                        <article key={friend.friendsUserId} data-testid="friendInstance" onClick={() => navigate(`/portfolio/${friend.username}/${friend.friendsUserId}`)}>
                         <div className='FriendNameAndProfit'>
                             <h3>{friend.username}</h3>
                         </div>
