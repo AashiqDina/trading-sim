@@ -77,7 +77,7 @@ export function handleErrorMessages(ErrorCode: number | string | null){
         return {
             title: "Very Funny... that's not a quantity!",
             bodyText: "Please enter a valid quantity.",
-            warning: false,
+            warning: true,
             buttonText: "Retry"
         };
     }
@@ -85,7 +85,7 @@ export function handleErrorMessages(ErrorCode: number | string | null){
         return {
             title: "Quantity Is Out Of This World",
             bodyText: "Our System wasn't able to process the quantity...",
-            warning: false,
+            warning: true,
             buttonText: "Retry"
         }
     }    
@@ -101,7 +101,7 @@ export function handleErrorMessages(ErrorCode: number | string | null){
         return {
             title: "Zero Stocks, Zero Problems",
             bodyText: "Investing in nothing is technically risk-free, but also profit-free",
-            warning: false,
+            warning: true,
             buttonText: "Got it"
         }
     }

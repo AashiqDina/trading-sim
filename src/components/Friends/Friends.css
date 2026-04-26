@@ -98,7 +98,7 @@
     animation-iteration-count: infinite;
     animation-direction: alternate;
     position: fixed;
-    top: 9rem;
+    top: 8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,7 +111,7 @@
     border-radius: 2rem;
 }
 
-.UserFriendSuggestions > div{
+.UserFriendSuggestions > button{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -119,19 +119,22 @@
     padding: 0.3rem;
     width: 100%;
     border-radius: 1.5rem;
+    background-color: #00000000;
+    outline: none;
+    border: none;
 }
 
-.UserFriendSuggestions > div:hover{
+.UserFriendSuggestions > button:hover, .UserFriendSuggestions > button:focus{
     background-color: #1b3f25;
 }
 
-.UserFriendSuggestions > div > h3{
+.UserFriendSuggestions > button > h3{
     margin: 1rem 0 1rem 1rem;
     font-size: 1.3rem;
     font-weight: 350;
 }
 
-.UserFriendSuggestions > div > button, .UserFriendSuggestions > div > div > button{
+.UserFriendSuggestions > button > button, .UserFriendSuggestions > button > div > button{
     background-color: #00000000;
     color: white;
     border: 1px #45a049 solid;
@@ -146,13 +149,13 @@
     width: 6rem;
 }
 
-.UserFriendSuggestions > div > button:hover, .UserFriendSuggestions > div > div > button:hover{
+.UserFriendSuggestions > button > button:hover, .UserFriendSuggestions > button > div > button:hover{
     border: 1px #45a049 solid;
     background-color: #45a0497f;
     box-shadow: 0px 0px 10px 1px #3e91444c;
 }
 
-.UserFriendSuggestions > div > div{
+.UserFriendSuggestions > button > div{
     width: 15rem;
 }
 
@@ -202,7 +205,7 @@
     padding: 0.5rem 0 0.5rem 0;
 }
 
-.FriendRequestsList > article > div > h4, .UserFriendSuggestions > div > div > h4{
+.FriendRequestsList > article > div > h4, .UserFriendSuggestions > button > div > h4{
     margin: 0 1rem 0 0;
     font-weight: 300;
     padding: 1rem 0 1rem 0;

@@ -27,8 +27,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={jest.fn()}
                 />
             </MemoryRouter>
@@ -47,8 +45,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={jest.fn()}
                 />
             </MemoryRouter>
@@ -75,8 +71,7 @@ describe("Friend Search Tests", () => {
 
         await userEvent.type(input, mockRecReqList[0].username.slice(0,2))
         expect(screen.getByText(mockRecReqList[0].username))
-        expect(screen.getByRole("button", { name: /Accept/i}))
-        expect(screen.getByRole("button", { name: /Decline/i}))
+        expect(screen.getByText(/Pending Accept\/Decline/i))
 
         await userEvent.clear(input)
 
@@ -96,8 +91,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={jest.fn()}
                 />
             </MemoryRouter>
@@ -116,8 +109,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={jest.fn()}
                 />
             </MemoryRouter>
@@ -142,8 +133,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={sendReq}
                 />
             </MemoryRouter>
@@ -157,37 +146,6 @@ describe("Friend Search Tests", () => {
         expect(sendReq).toHaveBeenCalledWith(mockUserList[1].id)
     })
 
-    test("Accept and Decline call the correct functions", async () => {
-
-        const acc = jest.fn()
-        const dec = jest.fn()
-
-        render(
-            <MemoryRouter>
-                <FriendsSearch
-                    userList={mockUserList}
-                    userId={1}
-                    friendsList={mockFriendList}
-                    sentReqList={mockSentRequLis}
-                    recReqList={mockRecReqList}
-                    handleAcceptRequest={acc}
-                    handleDeclineRequest={dec}
-                    sendFriendRequest={jest.fn()}
-                />
-            </MemoryRouter>
-        )
-
-        const input = screen.getByLabelText(/search for a friend/i)
-
-        await userEvent.type(input, mockRecReqList[0].username.slice(0,2))
-        await userEvent.click(screen.getByRole("button", { name: /Accept/i}))
-        expect(acc).toHaveBeenCalledWith(mockRecReqList[0].friendsUserId)
-
-        await userEvent.click(screen.getByRole("button", { name: /Decline/i}))
-        expect(dec).toHaveBeenCalledWith(mockRecReqList[0].friendsUserId)
-
-    })
-
     test("Navigates on clicking friend", async () => {
   
         render(
@@ -198,8 +156,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={jest.fn()}
                 />
             </MemoryRouter>
@@ -224,8 +180,6 @@ describe("Friend Search Tests", () => {
                     friendsList={mockFriendList}
                     sentReqList={mockSentRequLis}
                     recReqList={mockRecReqList}
-                    handleAcceptRequest={jest.fn()}
-                    handleDeclineRequest={jest.fn()}
                     sendFriendRequest={jest.fn()}
                 />
             </MemoryRouter>

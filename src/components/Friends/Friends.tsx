@@ -35,8 +35,6 @@ export default function Friends(){
           friendsList={friendsList} 
           sentReqList={sentReqList}
           recReqList={recReqList}
-          handleAcceptRequest={handleAcceptRequest} 
-          handleDeclineRequest={handleDeclineRequest} 
           sendFriendRequest={sendFriendRequest}
         />
 
