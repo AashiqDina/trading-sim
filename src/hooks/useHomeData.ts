@@ -36,7 +36,10 @@ export function useHomeData() {
                 setData({stockList: StockList, marketNews: MarketNews, trendingList: TrendingList})
             }
             catch (err) {
-                if (typeof err === "number") {
+                if(err instanceof ApiError){
+                    setErrorCode(err.code)
+                }
+                else if (typeof err === "number") {
                     setErrorCode(err);
                 } 
                 else {
