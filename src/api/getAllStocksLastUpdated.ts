@@ -4,7 +4,8 @@ import { ApiError } from "../error/ApiError";
 export default async function getAllStocksLastUpdated(): Promise<Record<string, string>>{
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetAllStockLastUpdated`)
-        return result.data
+        console.log(result)
+        return result.data.data
     }
     catch(err){
 

@@ -36,10 +36,10 @@ export function usePortfolioData({ userId }: Props) {
                     getAllStocksLastUpdated(),
                 ]);
 
-                console.log(portfolioResult)
+                console.log(LastUpdatedResult)
                 setPortfolio(portfolioResult);
                 setFullHistory(historyResult || []);
-                const map = new Map<string, Date>(Object.entries(LastUpdatedResult.data).map(([key, value]) => [key, new Date(value as string)]));
+                const map = new Map<string, Date>(Object.entries(LastUpdatedResult).map(([key, value]) => [key, new Date(value as string)]));
                 setLastUpdatedDictionary(map);
             }
             catch(err){
@@ -63,8 +63,8 @@ export function usePortfolioData({ userId }: Props) {
 
         try {
             const [portfolioResult, historyResult] = await Promise.all([
-            getPortfolio(userId),
-            getHistory({ id: userId, filterHistory: "all" }),
+                getPortfolio(userId),
+                getHistory({ id: userId, filterHistory: "all" }),
             ]);
 
             setPortfolio(portfolioResult);
