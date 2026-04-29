@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { useStockDetailsOverview } from "../../../hooks/useStockDetailsOverview";
+import { useStockDetailsOverview } from "../../../hooks/stockDetails/useStockDetailsOverview";
 import "@testing-library/jest-dom"
 import StockDetailsOverview from "./StockDetailsOverview";
 import { mockHistory } from "../../../mocks/StockDetails/mockHistory";
 import { userEvent } from "@testing-library/user-event";
 
-jest.mock("../../../hooks/useStockDetailsOverview", () => ({
+jest.mock("../../../hooks/stockDetails/useStockDetailsOverview", () => ({
     useStockDetailsOverview: jest.fn(),
 }));
 

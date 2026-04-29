@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react"
-import { PortfolioStock } from "../types/types"
-import { ApiError } from "../error/ApiError"
-import getPortfolio from "../api/getPortfolio"
-import getAllStocksLastUpdated from "../api/getAllStocksLastUpdated"
+import { PortfolioStock } from "../../types/types"
+import { ApiError } from "../../error/ApiError"
+import getPortfolio from "../../api/getPortfolio"
+import getAllStocksLastUpdated from "../../api/getAllStocksLastUpdated"
 
 type props = {
     user: number | undefined
@@ -28,7 +28,7 @@ export function useStockDetailsOwnedStocks({symbol, user, handleError}: props){
                 stock.symbol === symbol
             )
             const map = new Map<string, Date>(
-                Object.entries(LastUpdated.data).map(([key, value]) => [key, new Date(value as string)
+                Object.entries(LastUpdated).map(([key, value]) => [key, new Date(value as string)
             ]));
             setOwnedStocks(userOwnedStocks)
             setLastUpdated(map)

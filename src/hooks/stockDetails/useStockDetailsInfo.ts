@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
-import { CompanyProfile } from "../types/types"
-import getCompanyInformation from "../api/getCompanyInformation"
+import { CompanyProfile } from "../../types/types"
+import getCompanyInformation from "../../api/getCompanyInformation"
 
 
 type props = {

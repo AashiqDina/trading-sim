@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import formatNumber from '../../../utils/FormatNumber';
 import Loading from '../../Loading/Loading';
-import { useStockDetailsData } from '../../../hooks/useStockDetailsData';
+import { useStockDetailsData } from '../../../hooks/stockDetails/useStockDetailsData';
 
 type Props = {
     symbol: string

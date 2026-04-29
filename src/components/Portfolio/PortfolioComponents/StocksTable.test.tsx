@@ -1,4 +1,4 @@
-import { getByLabelText, render, screen, within } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import '@testing-library/jest-dom';
 import StocksTable from "./StocksTable"
 import { mockLastUpdatedPortfolioDictionary, mockTableStocks } from "../../../mocks/Portfolio/mockTableStocks"

@@ -1,11 +1,11 @@
 import { act, render, renderHook } from "@testing-library/react";
-import handleLogin from "../api/handleLogin";
+import handleLogin from "../../api/handleLogin";
 import { useLogin } from "./useLogin";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { ApiError } from "../error/ApiError";
+import { ApiError } from "../../error/ApiError";
 
-jest.mock("../auth/AuthContext", () => ({
+jest.mock("../../auth/AuthContext", () => ({
   useAuth: jest.fn(),
 }));
 
@@ -13,7 +13,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-jest.mock("../api/handleLogin");
+jest.mock("../../api/handleLogin");
 
 const mockHandleLogin = handleLogin as jest.Mock;
 const mockNavigate = jest.fn();

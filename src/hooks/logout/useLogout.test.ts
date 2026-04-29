@@ -1,9 +1,9 @@
 import { renderHook, act } from "@testing-library/react";
 import { useLogout } from "./useLogout";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 import { useNavigate } from "react-router";
 
-jest.mock("../auth/AuthContext", () => ({
+jest.mock("../../auth/AuthContext", () => ({
   useAuth: jest.fn(),
 }));
 

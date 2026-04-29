@@ -1,5 +1,5 @@
 import "./Register.css";
-import { useRegister } from "../../hooks/useRegister";
+import { useRegister } from "../../hooks/register/useRegister";
 import RegisterForm from "./RegisterForm";
 import { FocusTrap } from "focus-trap-react";
 import ErrorPopup from "../../error/ErrorPopup";

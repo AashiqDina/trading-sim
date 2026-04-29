@@ -15,11 +15,11 @@ jest.mock("../../auth/AuthContext", () => ({
   useAuth: jest.fn(),
 }));
 
-jest.mock("../../hooks/useFriends", () => ({
+jest.mock("../../hooks/friends/useFriends", () => ({
   useFriends: (args: any) => mockUseFriends(args),
 }));
 
-jest.mock("../../hooks/useFriendsActions", () => ({
+jest.mock("../../hooks/friends/useFriendsActions", () => ({
   useFriendsActions: (args: any) => mockUseFriendsActions(args),
 }));
 

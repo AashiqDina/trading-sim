@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react"
 import "./StockDetailsOverview.css"
 import FormatNumber from "../../../utils/FormatNumber";
 import Loading from "../../Loading/Loading";
-import { useStockDetailsOverview } from "../../../hooks/useStockDetailsOverview";
+import { useStockDetailsOverview } from "../../../hooks/stockDetails/useStockDetailsOverview";
 
 ChartJS.register(LineElement, LineController, PointElement, LinearScale, TimeScale, Tooltip, Legend, CategoryScale);
 

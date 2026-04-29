@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { useAuth } from "../../auth/AuthContext"
 import { mockedUser } from "../../mocks/Global/mockedUser";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { useLogin } from "../../hooks/useLogin";
+import { useLogin } from "../../hooks/login/useLogin";
 import Login from "./Login";
 import '@testing-library/jest-dom';
 import userEvent from "@testing-library/user-event";
@@ -11,7 +11,7 @@ jest.mock("../../auth/AuthContext", () => ({
     useAuth: jest.fn(),
 }));
 
-jest.mock("../../hooks/useLogin", () => ({
+jest.mock("../../hooks/login/useLogin", () => ({
     useLogin: jest.fn()
 }))
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 
 export function useLogout(){
     const { logout } = useAuth();

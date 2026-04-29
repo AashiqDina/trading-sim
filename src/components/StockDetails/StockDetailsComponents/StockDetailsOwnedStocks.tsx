@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { PortfolioStock } from "../../../types/types";
 import Loading from "../../Loading/Loading";
 import { getHoursAgo } from "../../../utils/getHoursAgo";
-import { useStockDetailsOwnedStocks } from "../../../hooks/useStockDetailsOwnedStocks";
+import { useStockDetailsOwnedStocks } from "../../../hooks/stockDetails/useStockDetailsOwnedStocks";
 
 type Props = {
     user: number | undefined

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
-import { MarketNews } from "../types/types"
-import getStockNews from "../api/getStockNews"
+import { MarketNews } from "../../types/types"
+import getStockNews from "../../api/getStockNews"
 
 type props = {
     symbol: string

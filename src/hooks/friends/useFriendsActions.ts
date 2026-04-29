@@ -1,9 +1,9 @@
 import { useState } from "react"
-import AddFriend from "../api/AddFriend"
-import { ApiError } from "../error/ApiError"
-import AcceptFriendRequest from "../api/AcceptFriendRequest"
-import DeclineFriendRequest from "../api/DeclineFriendRequest"
-import DeleteFriend from "../api/DeleteFriend"
+import AddFriend from "../../api/AddFriend"
+import { ApiError } from "../../error/ApiError"
+import AcceptFriendRequest from "../../api/AcceptFriendRequest"
+import DeclineFriendRequest from "../../api/DeclineFriendRequest"
+import DeleteFriend from "../../api/DeleteFriend"
 
 type props = {
     userId: number | undefined,

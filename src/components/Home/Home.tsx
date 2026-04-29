@@ -5,7 +5,7 @@ import Loading from '../Loading/Loading';
 import HomeSearch from './HomeComponents/HomeSearch';
 import HomeTrending from './HomeComponents/HomeTrending';
 import HomeNews from './HomeComponents/HomeNews';
-import { useHomeData } from '../../hooks/useHomeData'
+import { useHomeData } from '../../hooks/home/useHomeData'
 
 const Home: React.FC = () => {
   const { data, isLoading, ErrorCode, searchStock, clearErrCode } = useHomeData()

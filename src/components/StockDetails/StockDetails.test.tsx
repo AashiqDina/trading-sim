@@ -21,7 +21,7 @@ jest.mock("react-router-dom", () => ({
   useLocation: () => ({ state: { stockPrice: 150 } }),
 }));
 
-jest.mock("../../hooks/useStockDetails", () => ({
+jest.mock("../../hooks/stockDetails/useStockDetails", () => ({
   useStockDetails: (args: any) => mockUseStockDetails(args),
 }));
 

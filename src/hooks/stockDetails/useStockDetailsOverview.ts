@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import { StockDetailsHistoryItem } from "../types/types";
-import getStockHistory from "../api/getStockHistory";
-import { ApiError } from "../error/ApiError";
+import { StockDetailsHistoryItem } from "../../types/types";
+import getStockHistory from "../../api/getStockHistory";
+import { ApiError } from "../../error/ApiError";
 
 type  props = {
     symbol: string | undefined

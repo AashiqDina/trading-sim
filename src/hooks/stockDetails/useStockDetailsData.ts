@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
-import getStockApiInfo from "../api/getStockApiInfo"
-import getStockInfoLastUpdated from "../api/getStockInfoLastUpdated"
-import { StockQuoteData } from "../types/types"
+import getStockApiInfo from "../../api/getStockApiInfo"
+import getStockInfoLastUpdated from "../../api/getStockInfoLastUpdated"
+import { StockQuoteData } from "../../types/types"
 
 
 type props = {

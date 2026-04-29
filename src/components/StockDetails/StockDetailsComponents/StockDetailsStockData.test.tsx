@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import StockDetailsStockData from "./StockDetailsStockData";
 import "@testing-library/jest-dom";
-import { useStockDetailsData } from "../../../hooks/useStockDetailsData";
+import { useStockDetailsData } from "../../../hooks/stockDetails/useStockDetailsData";
 import { mockStockQuoteData } from "../../../mocks/StockDetails/mockStockQuoteData";
 
-jest.mock("../../../hooks/useStockDetailsData", () => ({
+jest.mock("../../../hooks/stockDetails/useStockDetailsData", () => ({
     useStockDetailsData: jest.fn(),
 }));
 

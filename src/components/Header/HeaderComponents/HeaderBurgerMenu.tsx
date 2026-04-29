@@ -1,5 +1,5 @@
 import { useAuth } from "../../../auth/AuthContext";
-import { useLogout } from "../../../hooks/useLogout";
+import { useLogout } from "../../../hooks/logout/useLogout";
 
 type props = {
     setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;

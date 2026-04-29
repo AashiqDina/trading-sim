@@ -6,12 +6,12 @@ import QuickStats from "./PortfolioComponents/QuickStats";
 import StocksTable from "./PortfolioComponents/StocksTable";
 import { FocusTrap } from 'focus-trap-react';
 import { Transaction } from "../../types/types";
-import { usePortfolio } from "../../hooks/usePortfolio";
+import { usePortfolio } from "../../hooks/portfolio/usePortfolio";
 import ErrorPopup from "../../error/ErrorPopup";
 import { useParams } from "react-router-dom";
 import PortfolioHeader from "./PortfolioComponents/PortfolioHeader";
 import DeletePortfolioStockModal from "./PortfolioComponents/DeletePortfolioStockModal";
-import { usePortfolioViewData } from "../../hooks/usePortfolioViewData";
+import { usePortfolioViewData } from "../../hooks/portfolio/usePortfolioViewData";
 
 const Portfolio = () => {
   const { userId, username} = useParams();

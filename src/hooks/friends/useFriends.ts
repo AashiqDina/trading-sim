@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react"
-import { UserObj } from "../interfaces/interfaces"
-import { ApiError } from "../error/ApiError"
-import getAllUsers from "../api/getAllUsers"
-import getFriends from "../api/getFriends"
-import { friendListMember } from "../types/types"
-import getSentRequests from "../api/getSentRequests"
-import getReceivedRequests from "../api/getReceivedRequests"
+import { UserObj } from "../../interfaces/interfaces"
+import { ApiError } from "../../error/ApiError"
+import getAllUsers from "../../api/getAllUsers"
+import getFriends from "../../api/getFriends"
+import { friendListMember } from "../../types/types"
+import getSentRequests from "../../api/getSentRequests"
+import getReceivedRequests from "../../api/getReceivedRequests"
 
 type props = {
     userId: number | undefined

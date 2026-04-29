@@ -1,24 +1,24 @@
-import getHistory from "../api/getHistory"
-import getPortfolio from "../api/getPortfolio"
-import getAllStocksLastUpdated from "../api/getAllStocksLastUpdated"
-import { mockedFullHistory } from "../mocks/Portfolio/mockedFullHistory"
-import { mockedPortfolio } from "../mocks/Portfolio/mockedPortfolio"
+import getHistory from "../../api/getHistory"
+import getPortfolio from "../../api/getPortfolio"
+import getAllStocksLastUpdated from "../../api/getAllStocksLastUpdated"
+import { mockedFullHistory } from "../../mocks/Portfolio/mockedFullHistory"
+import { mockedPortfolio } from "../../mocks/Portfolio/mockedPortfolio"
 import { act, renderHook, waitFor } from "@testing-library/react"
 import { usePortfolioData } from "./usePortfolioData"
-import updateAllStocksInPortfolio from "../api/UpdateStocksInPortfolio"
-import { ApiError } from "../error/ApiError"
+import updateAllStocksInPortfolio from "../../api/UpdateStocksInPortfolio"
+import { ApiError } from "../../error/ApiError"
 
 
-jest.mock("../api/getPortfolio")
+jest.mock("../../api/getPortfolio")
 const mockedGetPortfolio = jest.mocked(getPortfolio)
 
-jest.mock("../api/getHistory")
+jest.mock("../../api/getHistory")
 const mockedGetHistory = jest.mocked(getHistory)
 
-jest.mock("../api/getAllStocksLastUpdated")
+jest.mock("../../api/getAllStocksLastUpdated")
 const mockedGetUpdateStocksList = jest.mocked(getAllStocksLastUpdated)
 
-jest.mock("../api/UpdateStocksInPortfolio")
+jest.mock("../../api/UpdateStocksInPortfolio")
 const mockedUpdateStocks = jest.mocked(updateAllStocksInPortfolio)
 
 const mockedPortLastUpdated = {

@@ -1,19 +1,19 @@
 import { renderHook, waitFor } from "@testing-library/react"
 import { useFriends } from "./useFriends"
-import getAllUsers from "../api/getAllUsers"
-import getFriends from "../api/getFriends"
-import getSentRequests from "../api/getSentRequests"
-import getReceivedRequests from "../api/getReceivedRequests"
-import { mockUserList } from "../mocks/Friends/mockUserList"
-import { mockFriendList } from "../mocks/Friends/mockFriendList"
-import { mockSentRequLis } from "../mocks/Friends/mockSentReqList"
-import { mockRecReqList } from "../mocks/Friends/mockRecReqList"
-import { ApiError } from "../error/ApiError"
+import getAllUsers from "../../api/getAllUsers"
+import getFriends from "../../api/getFriends"
+import getSentRequests from "../../api/getSentRequests"
+import getReceivedRequests from "../../api/getReceivedRequests"
+import { mockUserList } from "../../mocks/Friends/mockUserList"
+import { mockFriendList } from "../../mocks/Friends/mockFriendList"
+import { mockSentRequLis } from "../../mocks/Friends/mockSentReqList"
+import { mockRecReqList } from "../../mocks/Friends/mockRecReqList"
+import { ApiError } from "../../error/ApiError"
 
-jest.mock("../api/getAllUsers")
-jest.mock("../api/getFriends")
-jest.mock("../api/getSentRequests")
-jest.mock("../api/getReceivedRequests")
+jest.mock("../../api/getAllUsers")
+jest.mock("../../api/getFriends")
+jest.mock("../../api/getSentRequests")
+jest.mock("../../api/getReceivedRequests")
 
 const mockedGetAllUsers = jest.mocked(getAllUsers)
 const mockedGetFriends = jest.mocked(getFriends)

@@ -3,8 +3,8 @@ import { FocusTrap } from 'focus-trap-react';
 import '../../interfaces/interfaces'
 import { useAuth } from '../../auth/AuthContext';
 import Loading from '../Loading/Loading';
-import { useFriends } from '../../hooks/useFriends';
-import { useFriendsActions } from '../../hooks/useFriendsActions';
+import { useFriends } from '../../hooks/friends/useFriends';
+import { useFriendsActions } from '../../hooks/friends/useFriendsActions';
 import FriendsSearch from './FriendsComponents/FriendsSearch';
 import ActiveFriends from './FriendsComponents/ActiveFriends';
 import RequestsList from './FriendsComponents/RequestsList';

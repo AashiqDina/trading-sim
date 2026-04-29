@@ -1,7 +1,7 @@
 import { useState } from "react";
-import handleRegister from "../api/handleRegister";
-import checkUsername from "../api/checkUsername";
-import { ApiError } from "../error/ApiError";
+import handleRegister from "../../api/handleRegister";
+import checkUsername from "../../api/checkUsername";
+import { ApiError } from "../../error/ApiError";
 import { useNavigate } from "react-router-dom";
 
 export function useRegister(){
@@ -18,17 +18,15 @@ export function useRegister(){
 
     const toRegister = async (username: string, password: string, confirmPassword: string) => {
 
-        // e.preventDefault();
         setError("");
     
         try {
 
-            if(username.length < 3) throw new ApiError(1006) // Usernames need to be at least 3 characters 
-            await checkUsername(username)
-        
+            if(username.length < 3) throw new ApiError(1006) // Usernames need to be at least 3 characters      
             if (password !== confirmPassword) throw new ApiError(1004) // Passwords do not match
             else if(password.length < 8) throw new ApiError(1005) // Passwords need to be at least 8 characters
-            
+
+            await checkUsername(username) // maybe I should have combined this and the function below
             await handleRegister(username, password)
             navigate("/login")
         

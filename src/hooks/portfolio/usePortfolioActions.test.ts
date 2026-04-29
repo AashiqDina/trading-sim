@@ -1,10 +1,10 @@
 import { act, renderHook } from "@testing-library/react"
-import deleteStock from "../api/deleteStock"
+import deleteStock from "../../api/deleteStock"
 import { usePortfolioActions } from "./usePortfolioActions"
-import { ApiError } from "../error/ApiError"
+import { ApiError } from "../../error/ApiError"
 
 
-jest.mock("../api/deleteStock")
+jest.mock("../../api/deleteStock")
 const mockedDeleteStock = deleteStock as jest.Mock
 
 describe("usePortfolioActions tests", () => {

@@ -3,12 +3,12 @@ jest.mock("../../auth/AuthContext", () => ({
   useAuth: jest.fn(),
 }));
 
-jest.mock("../../hooks/usePortfolio");
-jest.mock("../../hooks/usePortfolioViewData");
+jest.mock("../../hooks/portfolio/usePortfolio");
+jest.mock("../../hooks/portfolio/usePortfolioViewData");
 
 import { render, screen, within } from "@testing-library/react";
-import { usePortfolio } from "../../hooks/usePortfolio";
-import { usePortfolioViewData } from "../../hooks/usePortfolioViewData";
+import { usePortfolio } from "../../hooks/portfolio/usePortfolio";
+import { usePortfolioViewData } from "../../hooks/portfolio/usePortfolioViewData";
 import { mockedFullHistory } from "../../mocks/Portfolio/mockedFullHistory";
 import { mockedPortfolio } from "../../mocks/Portfolio/mockedPortfolio";
 import { mockPortfolioStocks } from "../../mocks/Portfolio/mockPortfolioStocks";

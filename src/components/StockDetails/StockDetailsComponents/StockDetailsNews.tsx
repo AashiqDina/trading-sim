@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import "./StockDetailsNews.css"
 import { MarketNews } from "../../../types/types"
 import Loading from "../../Loading/Loading"
-import { useStockDetailsNews } from "../../../hooks/useStockDetailsNews"
+import { useStockDetailsNews } from "../../../hooks/stockDetails/useStockDetailsNews"
 
 type props = {
     symbol: string

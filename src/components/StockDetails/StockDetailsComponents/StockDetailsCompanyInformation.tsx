@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { CompanyProfile } from "../../../interfaces/interfaces";
 import Loading from "../../Loading/Loading";
-import { useStockDetailsInfo } from "../../../hooks/useStockDetailsInfo";
+import { useStockDetailsInfo } from "../../../hooks/stockDetails/useStockDetailsInfo";
 
 type Props = {
   symbol: string

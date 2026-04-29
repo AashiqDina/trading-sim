@@ -1,24 +1,23 @@
 import { act, renderHook } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import { jest } from "@jest/globals"
-import AddFriend from "../api/AddFriend"
+import AddFriend from "../../api/AddFriend"
 import { useFriendsActions } from "./useFriendsActions"
-import AcceptFriendRequest from "../api/AcceptFriendRequest"
-import DeclineFriendRequest from "../api/DeclineFriendRequest"
-import DeleteFriend from "../api/DeleteFriend"
-import { ApiError } from "../error/ApiError"
-import { handleErrorMessages } from "../utils/HandleErrorMessages"
+import AcceptFriendRequest from "../../api/AcceptFriendRequest"
+import DeclineFriendRequest from "../../api/DeclineFriendRequest"
+import DeleteFriend from "../../api/DeleteFriend"
+import { ApiError } from "../../error/ApiError"
 
-jest.mock("../api/AddFriend")    
+jest.mock("../../api/AddFriend")    
 const mockedAddFriend = jest.mocked(AddFriend)
 
-jest.mock("../api/AcceptFriendRequest")
+jest.mock("../../api/AcceptFriendRequest")
 const mockedAcceptFriendRequest = jest.mocked(AcceptFriendRequest)
 
-jest.mock("../api/DeclineFriendRequest")
+jest.mock("../../api/DeclineFriendRequest")
 const mockedDeclineFriendRequest = jest.mocked(DeclineFriendRequest)
 
-jest.mock("../api/DeleteFriend")
+jest.mock("../../api/DeleteFriend")
 const mockedDeleteFriend = jest.mocked(DeleteFriend)
 
 describe("useFriendActionsTests", () => {

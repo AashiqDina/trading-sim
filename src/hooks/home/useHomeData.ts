@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import GetStockList from '../api/getStockList';
-import getMarketNews from '../api/getMarketNews';
-import getTrendingStocks from '../api/getTrendingStocks';
-import { HomeData } from '../types/types';
+import GetStockList from '../../api/getStockList';
+import getMarketNews from '../../api/getMarketNews';
+import getTrendingStocks from '../../api/getTrendingStocks';
+import { HomeData } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
-import getStockPrice from '../api/getStockPrice';
-import { ApiError } from '../error/ApiError';
+import getStockPrice from '../../api/getStockPrice';
+import { ApiError } from '../../error/ApiError';
 
 export function useHomeData() {
     const navigate = useNavigate();

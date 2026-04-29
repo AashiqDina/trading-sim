@@ -9,7 +9,7 @@ import StockDetailsNews from './StockDetailsComponents/StockDetailsNews';
 import { FocusTrap } from 'focus-trap-react';
 import Confetti from 'react-confetti';
 import StockDetailsOverview from './StockDetailsComponents/StockDetailsOverview';
-import { useStockDetails } from '../../hooks/useStockDetails';
+import { useStockDetails } from '../../hooks/stockDetails/useStockDetails';
 import ErrorPopup from '../../error/ErrorPopup';
 import { DisplayedDataType } from '../../types/types';
 import StockDetailsHeader from './StockDetailsComponents/StockDetailsHeader';

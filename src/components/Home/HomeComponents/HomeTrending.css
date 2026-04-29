@@ -126,7 +126,7 @@
             height: 4rem;
             margin-top: 0.2rem;
             width: max-content;
-            animation: Scroll 9s linear infinite;
+            animation: Scroll 30s linear infinite;
         }
 
         .TrendingStockDiv > img{

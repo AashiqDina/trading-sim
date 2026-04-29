@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import getStockImage from "../api/getStockImage";
-import getStockName from "../api/getStockName";
-import { ApiError } from "../error/ApiError";
-import buyStockService from "../services/buyStockService";
+import getStockImage from "../../api/getStockImage";
+import getStockName from "../../api/getStockName";
+import { ApiError } from "../../error/ApiError";
+import buyStockService from "../../services/buyStockService";
 
 type props = {
     userId: number | undefined,

@@ -1,11 +1,11 @@
 import { renderHook } from "@testing-library/react"
 import { usePortfolioViewData } from "./usePortfolioViewData"
-import { mockedPortfolio } from "../mocks/Portfolio/mockedPortfolio"
-import { mockedFullHistory } from "../mocks/Portfolio/mockedFullHistory"
-import { createPortfolioTables } from "../utils/createPortfolioTable";
-import { createRecentHistoryMocks } from "../utils/createRecentHistoryMocks"
+import { mockedPortfolio } from "../../mocks/Portfolio/mockedPortfolio"
+import { mockedFullHistory } from "../../mocks/Portfolio/mockedFullHistory"
+import { createPortfolioTables } from "../../utils/createPortfolioTable";
+import { createRecentHistoryMocks } from "../../utils/createRecentHistoryMocks"
 
-jest.mock("../utils/createPortfolioTable");
+jest.mock("../../utils/createPortfolioTable");
 const mockCreatePortfolioTables = jest.mocked(createPortfolioTables);
 
 describe("usePortfolioViewData Tests", () => {

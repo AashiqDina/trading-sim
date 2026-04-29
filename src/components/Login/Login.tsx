@@ -4,7 +4,7 @@ import { useAuth } from "../../auth/AuthContext";
 import LoginForm from "./LoginForm";
 import { FocusTrap } from "focus-trap-react";
 import ErrorPopup from "../../error/ErrorPopup";
-import { useLogin } from "../../hooks/useLogin";
+import { useLogin } from "../../hooks/login/useLogin";
 
 const Login = () => {
   const { user } = useAuth();

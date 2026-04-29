@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { StockHistoryItem, UserPortfolio } from "../types/types";
-import { createPortfolioTables } from "../utils/createPortfolioTable";
+import { StockHistoryItem, UserPortfolio } from "../../types/types";
+import { createPortfolioTables } from "../../utils/createPortfolioTable";
 
 type props = {
     portfolio: UserPortfolio | null

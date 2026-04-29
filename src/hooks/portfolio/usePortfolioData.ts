@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import getHistory from "../api/getHistory";
-import getPortfolio from "../api/getPortfolio";
-import { ApiError } from "../error/ApiError";
-import updateAllStocksInPortfolio from "../api/UpdateStocksInPortfolio";
-import { UserPortfolio, StockHistoryItem } from "../types/types";
-import getAllStocksLastUpdated from "../api/getAllStocksLastUpdated";
+import getHistory from "../../api/getHistory";
+import getPortfolio from "../../api/getPortfolio";
+import { ApiError } from "../../error/ApiError";
+import updateAllStocksInPortfolio from "../../api/UpdateStocksInPortfolio";
+import { UserPortfolio, StockHistoryItem } from "../../types/types";
+import getAllStocksLastUpdated from "../../api/getAllStocksLastUpdated";
 
 type Props = {
   userId?: number | null;
