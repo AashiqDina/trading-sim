@@ -12,39 +12,6 @@
   width: 39%;
   height: 10rem;
 }
-
-.ToBuyModal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.623);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000; 
-  }
-  
-  .ToBuyBody{
-    padding: 2rem;
-    border-radius: 4rem;
-    text-align: center;
-  }
-
-  .ToBuyContent{
-    animation-name: BodyBackground;
-    animation-duration: 15s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    border: 1px #45a049 solid;
-    box-shadow: 0px 0px 10px 1px #3e91444c;
-    padding: 2rem;
-    border-radius: 3rem;
-    width: 35rem;
-    transition: all 0.5s ease-in-out;
-  }
   
   .ModalBody {
     margin: 10px 0;
@@ -256,31 +223,6 @@
     background-color: #45a0497f;
     box-shadow: 0px 0px 10px 1px #3e91444c;
   }
-
-  .BuyStockTitle{
-    display: flex;
-    justify-content: flex-start;
-    gap: 1rem;
-  }
-
-  .BuyStockTitle > h2{
-    margin: 0;
-    text-align: left;
-    gap: 0.5rem;
-  }
-
-  .toBuyBody > label{
-    margin: 1rem 0 0 0;
-    text-align: left;
-    font-weight: 300;
-  }
-
-  .toBuyBody > input{
-    height: 2.3rem;
-    font-size: 1rem;
-    font-family: Inter, sans-serif;
-  }
-
 
 @media (max-width: 900px) {
 

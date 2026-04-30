@@ -1,5 +1,6 @@
 import { FocusTrap } from "focus-trap-react";
 import { useState } from "react";
+import "./BuyStockModal.css"
 
 type props = {
     stockName: string
@@ -30,7 +31,7 @@ export default function BuyStockModal({ stockName, stockLogo, stockSymbol, stock
             <div className="ToBuyContent">
                 <header>
                 <div className='BuyStockTitle'>
-                    <h2>Purchase {stockName} <span className='StockSymbol'>{stockSymbol}</span></h2>
+                    <h2>Purchase <br/>{stockName} <span className='StockSymbol'>{stockSymbol}</span></h2>
                 </div>
                 <div className='BuyStockLogo'>
                     <img className='StockLogo' style={{margin: "0"}} src={stockLogo} alt="Logo" />
