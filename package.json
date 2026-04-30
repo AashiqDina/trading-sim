@@ -4,15 +4,9 @@
   "private": true,
   "homepage": "https://aashiqdina.github.io/trading-sim",
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@huggingface/inference": "^3.8.1",
-    "@mui/icons-material": "^7.3.7",
-    "@mui/material": "^7.3.7",
-    "@types/react-window": "^1.8.8",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "axios": "^0.27.2",
     "chart.js": "^4.5.0",
-    "cra-template-typescript": "1.2.0",
     "focus-trap-react": "^11.0.3",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
@@ -20,12 +14,7 @@
     "react-dom": "^18.3.1",
     "react-router": "^6.30.3",
     "react-router-dom": "^6.30.3",
-    "react-scripts": "^5.0.1",
-    "react-window": "^1.8.11",
-    "realtime-newsapi": "^1.1.2",
-    "recharts": "^2.15.1",
-    "web-vitals": "^2.1.4",
-    "yahoo-finance2": "^2.13.3"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,23 +43,14 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^29.5.14",
-    "@types/react-dom": "^19.0.3",
-    "@types/react-router-dom": "^5.3.3",
-    "@types/recharts": "^1.8.29",
-    "@types/socket.io-client": "^1.4.36",
-    "@types/testing-library__react": "^10.0.1",
-    "gh-pages": "^6.3.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.5.1"
+    "gh-pages": "^6.3.0"
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(css|scss|sass)$": "identity-obj-proxy",
       "\\.(svg|png|jpg|jpeg|gif)$": "<rootDir>/__mocks__/fileMock.js"
     },
     "transformIgnorePatterns": [

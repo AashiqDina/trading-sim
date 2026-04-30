@@ -151,11 +151,11 @@ export default function StockDetailsOverview({ symbol, handleError }: props){
                     </div>
                     {hoverValue?.open && <div>
                         <h3>Open</h3>
-                        <h2>{hoverValue.open.toFixed(2)}</h2>
+                        <h2>£{hoverValue.open.toFixed(2)}</h2>
                     </div>}
                     {hoverValue?.close && <div>
                         <h3>Close</h3>
-                        <h2>{hoverValue.close}</h2>
+                        <h2>£{hoverValue.close.toFixed(2)}</h2>
                     </div>}
                     {hoverValue?.volume && <div>
                         <h3>Volume</h3>

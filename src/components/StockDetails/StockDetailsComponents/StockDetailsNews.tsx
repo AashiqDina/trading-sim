@@ -49,7 +49,7 @@ export default function StockDetailsNews({symbol, handleError}: props){
 
         <article className="MoreNewsArticles">
           {amountNewsDisplay < marketNews.length ?
-            <button className="SeeMoreNews" onClick={() => {setAmountNewsDisplay(amountNewsDisplay+5)}}>
+            <button className="SeeMoreNews" onClick={() => {setAmountNewsDisplay(amountNewsDisplay+10)}}>
               View More
             </button> : 
             marketNews?.length == 0 ? <h2>No Articles</h2> : <h2>No more Articles.</h2>
