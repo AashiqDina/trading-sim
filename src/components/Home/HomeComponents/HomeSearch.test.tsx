@@ -47,7 +47,7 @@ jest.mock("../../../api/getMarketNews", () => ({
   default: jest.fn()
 }))
 
-jest.mock("../../../api/GetStockHistory", () => ({
+jest.mock("../../../api/getStockHistory", () => ({
   __esModule: true,
   default: jest.fn().mockResolvedValue([]),
 }));
