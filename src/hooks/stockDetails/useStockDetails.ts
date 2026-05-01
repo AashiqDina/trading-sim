@@ -37,7 +37,7 @@ export function useStockDetails({ userId, stockSymbol, handleError }: props){
             }
         }
         getData()
-    }, [stockSymbol])
+    }, [stockSymbol, handleError])
 
     const changeBuyModal = () => {setBuyModalOpen(!buyModalOpen)}
 

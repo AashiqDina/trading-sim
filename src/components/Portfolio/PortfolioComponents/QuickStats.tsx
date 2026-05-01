@@ -107,7 +107,7 @@ function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilt
 
         return { invested, value };
 
-    }, [history, visibleStocks, fullHistory, stockMap]);
+    }, [history, visibleStocks, fullHistory, visibleStockIds, stockMap]);
 
 
     useEffect(() => {
