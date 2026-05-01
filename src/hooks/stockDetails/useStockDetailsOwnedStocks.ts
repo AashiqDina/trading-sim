@@ -39,7 +39,7 @@ export function useStockDetailsOwnedStocks({symbol, user, handleError}: props){
         finally{
             setLoading(false)
         }
-    }, [symbol, user])
+    }, [symbol, user, handleError])
 
 
     return { ownedStocksLoading, ownedStocks, lastUpdated, fetchOwnedStocks}

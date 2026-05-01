@@ -28,7 +28,7 @@ export function useStockDetailsOverview({ symbol, handleError }: props){
         finally{
             setOverviewLoading(false)
         }
-    }, [symbol])
+    }, [symbol, handleError])
 
     const ranges: Record<string, number> = {
         threeYears: 3 * 365,

@@ -107,7 +107,7 @@ function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilt
 
         return { invested, value };
 
-    }, [history, visibleStocks, fullHistory]);
+    }, [history, visibleStocks, fullHistory, stockMap]);
 
 
     useEffect(() => {
@@ -212,10 +212,10 @@ function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilt
             </section>
             <section className="FilterGraph">
                 <article>
-                    <button aria-label="Fitler graph to this week" className="w" style={filterHistory == "week" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("week")}>Week</button>
-                    <button aria-label="Fitler graph to this month" className="m" style={filterHistory == "month" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("month")}>Month</button>
-                    <button aria-label="Fitler graph to this year" className="y" style={filterHistory == "year" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("year")}>Year</button>
-                    <button aria-label="Fitler graph to this all time" className="a" style={filterHistory == "all" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("all")}>All</button>
+                    <button aria-label="Fitler graph to this week" className="w" style={filterHistory === "week" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("week")}>Week</button>
+                    <button aria-label="Fitler graph to this month" className="m" style={filterHistory === "month" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("month")}>Month</button>
+                    <button aria-label="Fitler graph to this year" className="y" style={filterHistory === "year" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("year")}>Year</button>
+                    <button aria-label="Fitler graph to this all time" className="a" style={filterHistory === "all" ? {backgroundColor: "#4CAF50"} : {}} onClick={() => setFilterHistory("all")}>All</button>
                 </article>
             </section>
         </>

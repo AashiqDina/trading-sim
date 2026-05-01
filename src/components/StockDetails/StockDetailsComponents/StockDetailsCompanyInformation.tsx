@@ -71,12 +71,12 @@ export default function CompanyInformation({ symbol, handleError }: Props){
             {companyFields.map((field, i) => (
               <div key={i} className="Row">
                 <h4>{field.label}</h4>
-                {field.label != "Website" && <p>
+                {field.label !== "Website" && <p>
                   {field.value
                     ? companyInformation?.[field.value] ?? "—"
                     : companyInformation ? field.custom?.(companyInformation) : "—"}
                 </p>}
-                {field.label == "Website" && <a>
+                {field.label === "Website" && <a href={(field.value) ? String(companyInformation?.[field.value]) : undefined}>
                     {field.value ? companyInformation?.[field.value] : undefined}
                 </a>}
               </div>

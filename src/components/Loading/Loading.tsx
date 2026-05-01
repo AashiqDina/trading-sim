@@ -20,7 +20,7 @@ export default function Loading({scale, top, marginBottom, height}: props){
         }, 5000);
 
        return () => clearTimeout(timeout)
-    }, [])
+    }, [scale])
 
     useEffect(() => {
         if(!showMessage) return

@@ -21,11 +21,6 @@ export function useFriends({userId}: props){
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setErrorCode] = useState<number | null>(null)
 
-    useEffect(() => {
-        if (!userId) return;
-        getData();
-    }, [userId]);
-
     const resetError = () => {
         setErrorCode(null)
     }
@@ -65,6 +60,11 @@ export function useFriends({userId}: props){
     const refresh = () => {
         getData()
     }
+
+    useEffect(() => {
+        if (!userId) return;
+        getData();
+    }, [userId, getData]);
 
     return {loading, error, userList, profitLossMap, friendsList, sentReqList, recReqList, refresh, resetError}
 }

@@ -2,7 +2,7 @@ import { PortfolioTableStock } from "../types/types"
 
 export function getGreatestProfitLoss(tableStocks: PortfolioTableStock[]){
 
-    if(tableStocks.length == 0) return {
+    if(tableStocks.length === 0) return {
         GreatestProfit: {
             Company: "None",
             Logo: "None",

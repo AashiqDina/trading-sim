@@ -52,7 +52,7 @@ export default function StockDetailsNews({symbol, handleError}: props){
             <button className="SeeMoreNews" onClick={() => {setAmountNewsDisplay(amountNewsDisplay+10)}}>
               View More
             </button> : 
-            marketNews?.length == 0 ? <h2>No Articles</h2> : <h2>No more Articles.</h2>
+            marketNews?.length === 0 ? <h2>No Articles</h2> : <h2>No more Articles.</h2>
           }
         </article>
       </section>

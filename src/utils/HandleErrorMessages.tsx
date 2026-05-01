@@ -1,7 +1,7 @@
 // just had an idea, I could use an object to map error codes to messages instead of a long if/else chain. But this works for now, so I'll stick with it for the time being.
 
 export function handleErrorMessages(ErrorCode: number | string | null){
-    if(ErrorCode == 400){
+    if(ErrorCode === 400){
         return {
             title: "API says 'Nope!'", 
             bodyText: "The backend API returned a 400. Looks like it didn’t understand our message.", 

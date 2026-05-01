@@ -1,4 +1,3 @@
-import { useState, useEffect} from 'react'
 import './AiLoading.css'
 
 export default function AiLoading(){

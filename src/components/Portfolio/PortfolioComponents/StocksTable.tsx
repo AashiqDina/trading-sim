@@ -42,7 +42,7 @@ function StocksTable({LastUpdatedDictionary, tableStocks, owner, handleDelete, s
             </select>
           </article>
 
-          { greatestProfit?.Company != "None" && <article className='QuickPerformance'>
+          { greatestProfit?.Company !== "None" && <article className='QuickPerformance'>
 
               <div className='BestPerformerCard'>
               <div>
@@ -91,7 +91,7 @@ function StocksTable({LastUpdatedDictionary, tableStocks, owner, handleDelete, s
                   {tableStocks.map((stockAvg: PortfolioTableStock, index: number) => { 
                   return (
                     <React.Fragment key={stockAvg.symbol}>                    
-                    <tr onClick={() => IndexExpanded == index ? setIndexExpanded(null) : setIndexExpanded(index)} style={{cursor: "pointer",transition: "all 0.6s ease-in-out"}}>
+                    <tr onClick={() => IndexExpanded === index ? setIndexExpanded(null) : setIndexExpanded(index)} style={{cursor: "pointer",transition: "all 0.6s ease-in-out"}}>
                       <td className="tdLogo"><button aria-label='Visit Stock Details Page' onClick={ () => {navigate(`/stock/${encodeURIComponent(String(stockAvg.symbol ?? ''))}`)}} className='tdLogoButton'><img className="StockLogos" src={stockAvg.logo} alt="Stock Logo" /></button></td>
                       <td className="tdCompanies"><div><div><button aria-label='Expand Stock to see individual stocks bought'><h3>{stockAvg.name}</h3><span>Quantity: {Math.round(stockAvg.totalShares*100)/100}</span></button></div></div></td>
                       <td className="tdBoughtPrice"><div>£{stockAvg.totalCost.toFixed(2)}<span>Average: £{stockAvg.avgBuyPrice.toFixed(2)}</span></div></td>
@@ -105,7 +105,7 @@ function StocksTable({LastUpdatedDictionary, tableStocks, owner, handleDelete, s
                       <td className="tdProfit"><div><div>£{(stockAvg.currentWorth - stockAvg.totalCost).toFixed(2)}<span style={{color: (((((stockAvg.currentWorth/stockAvg.totalCost)*100)-100) >= 0) ? "#45a049" : "#bb1515")}}>{((((stockAvg.currentWorth/stockAvg.totalCost)*100)-100) > 0) ? "+" : null}{(((stockAvg.currentWorth/stockAvg.totalCost)*100)-100).toFixed(1)}%</span></div></div></td>
                       {IndexExpanded != null ? <td style={{padding: 0}}></td> : null}
                     </tr>
-                    {IndexExpanded == index && stockAvg.transactions.map((stock: Transaction, i: number) => (
+                    {IndexExpanded === index && stockAvg.transactions.map((stock: Transaction, i: number) => (
                       <tr key={i}>
                         <td className="tdLogoMore">
                           <div style={{height: "10px", width: "10px", transform: "rotate(-90deg)", marginLeft: "20px", scale: "0.85"}}>

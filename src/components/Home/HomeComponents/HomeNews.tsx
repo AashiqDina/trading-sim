@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { MarketNews } from "../../../types/types";
 import './HomeNews.css'
 // import SponsoredAd from "../../Ads/SponsoredAd";

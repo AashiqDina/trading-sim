@@ -11,7 +11,7 @@ export default function updateAllStocksInPortfolio({userId}: props){
     try{
       if(!userId) throw new ApiError(1000)
       
-      const response = await axios.put(
+      await axios.put(
         `https://tradingsim-backend.onrender.com/api/portfolio/${userId}/stocks/update`
       );   
     }

@@ -30,7 +30,7 @@ export function useStockDetailsData({symbol, handleError}: props){
         finally{
             setLoading(false)
         }
-    }, [symbol])
+    }, [symbol, handleError])
 
 
     return { dataLoading, stockData, stockDataLastUpdated, fetchStocksData }

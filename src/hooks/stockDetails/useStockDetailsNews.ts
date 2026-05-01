@@ -23,7 +23,7 @@ export function useStockDetailsNews({symbol, handleError}: props){
         finally{
             setLoading(false)
         }
-    }, [symbol])
+    }, [symbol, handleError])
 
     return { newsLoading, marketNews, fetchStockNews,}
 }

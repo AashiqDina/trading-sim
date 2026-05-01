@@ -26,9 +26,9 @@ export default function FriendsSearch({userList, userId, friendsList, sentReqLis
         if (!value) return [];
 
         return userList.filter(user =>
-            user.username.toLowerCase().includes(value) && user.id != userId
+            user.username.toLowerCase().includes(value) && user.id !== userId
         );
-    }, [input, userList]);
+    }, [input, userList, userId]);
 
     const sentIds = useMemo(() => new Set(sentReqList.map(u => u.friendsUserId)), [sentReqList]);
     const recIds = useMemo(() => new Set(recReqList.map(u => u.friendsUserId)), [recReqList]);

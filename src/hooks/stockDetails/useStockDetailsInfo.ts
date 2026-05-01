@@ -25,7 +25,7 @@ export function useStockDetailsInfo({symbol, handleError}: props){
         finally{
             setLoading(false)
         }
-    }, [symbol])
+    }, [symbol, handleError])
 
 
     return { infoLoading, companyInformation, fetchStocksInfo }

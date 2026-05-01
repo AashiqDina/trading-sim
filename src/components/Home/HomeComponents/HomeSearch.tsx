@@ -101,9 +101,10 @@ const HomeSearch = ({ stockList, searchStock}: Props) => {
                     <button 
                         key={suggestion.symbol} 
                         onClick={() => {searchStock(suggestion.symbol)}} 
-                        style={(suggestions.length == 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index == suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index == 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}
+                        style={(suggestions.length === 1) ? {margin: "0.5rem 0.5rem 0.5rem 0.5rem"} : (index === suggestions.length-1) ? {margin: "0rem 0.5rem 0.5rem 0.5rem"} : (index === 0) ? {margin: "0.5rem 0.5rem 0rem 0.5rem"} : {}}
                         ref={(e) => {suggestionRefs.current[index] = e;}}
                         role="option"
+                        aria-selected={document.activeElement === suggestionRefs.current[index]}
                         onKeyDown={(e) => {
                         if (e.key === "ArrowDown") {
                             e.preventDefault();

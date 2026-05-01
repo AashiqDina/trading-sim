@@ -103,10 +103,12 @@ const Portfolio = () => {
             LastUpdatedDictionary={LastUpdatedDictionary}
           />
 
-          <a onClick={() => {setJumpTo(JumpTo == "#ToJump" ? "#Top" : "#ToJump"); JumpTo == "#ToJump" ? scrollToSection("Top") : scrollToSection("ToJump");}}><button aria-label="Jump Down to the stock table" className="ViewMore">          
-            <div className={`ArrowOne ${JumpTo == "#ToJump" ? "Top" : ""}`} ></div>
-            <div className={`ArrowTwo ${JumpTo == "#ToJump" ? "Top" : ""}`} ></div></button>
-          </a>
+          <div >
+            <button onClick={() => {setJumpTo(JumpTo === "#ToJump" ? "#Top" : "#ToJump"); JumpTo === "#ToJump" ? scrollToSection("Top") : scrollToSection("ToJump");}} aria-label="Jump Down to the stock table" className="ViewMore">          
+              <div className={`ArrowOne ${JumpTo === "#ToJump" ? "Top" : ""}`} ></div>
+              <div className={`ArrowTwo ${JumpTo === "#ToJump" ? "Top" : ""}`} ></div>
+            </button>
+          </div>
 
           {errorCode &&
             <FocusTrap>

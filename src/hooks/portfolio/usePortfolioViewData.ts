@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { StockHistoryItem, UserPortfolio } from "../../types/types";
 import { createPortfolioTables } from "../../utils/createPortfolioTable";
 

@@ -46,7 +46,7 @@ export default function ActiveFriends({friendsList, profitLossMap, handleDeleteF
                         </article>
                     )
                 })}
-                {(friendsList == null || friendsList.length == 0) && 
+                {(friendsList === null || friendsList.length === 0) && 
                     <h3>No Friends</h3>}
                 </section>
 

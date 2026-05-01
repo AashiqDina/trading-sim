@@ -4,7 +4,7 @@ import { ApiError } from "../error/ApiError"
 export default async function getStockPrice(symbol: string): Promise<number>{
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/${symbol}`)
-        if(result.data.response.hasError && result.data.response.errorCode == 404){ 
+        if(result.data.response.hasError && result.data.response.errorCode === 404){ 
             throw new ApiError(1001)
         }
         if(result.data.response.hasError) throw new ApiError(result.data.response.errorCode)

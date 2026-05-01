@@ -170,12 +170,12 @@ export default function StockDetailsOverview({ symbol, handleError }: props){
                     <canvas ref={canvasRef} tabIndex={0} role="img" aria-label="A line chart showing the stock's performance over time"></canvas>
                 </div>
                 <div className="StockGraphButtonCollection">
-                    <button aria-label="filter to the last week" className="w" onClick={() => {filterHistoryGraph("week")}} style={range == "week" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>Week</button>
-                    <button aria-label="filter to the last month" className="m" onClick={() => {filterHistoryGraph("month")}} style={range == "month" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>Month</button>
-                    <button aria-label="filter to the last three months" className="threem" onClick={() => {filterHistoryGraph("threeMonths")}} style={range == "threeMonths" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>3-Months</button>
-                    <button aria-label="filter to the last year" className="y" onClick={() => {filterHistoryGraph("year")}} style={range == "year" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>Year</button>
-                    <button aria-label="filter to the last three years" className="threey" onClick={() => {filterHistoryGraph("threeYears")}} style={range == "threeYears" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>3-Years</button>
-                    <button aria-label="filter to all time" className="a" onClick={() => {filterHistoryGraph("all")}} style={range == "all" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>All Time</button>
+                    <button aria-label="filter to the last week" className="w" onClick={() => {filterHistoryGraph("week")}} style={range === "week" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>Week</button>
+                    <button aria-label="filter to the last month" className="m" onClick={() => {filterHistoryGraph("month")}} style={range === "month" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>Month</button>
+                    <button aria-label="filter to the last three months" className="threem" onClick={() => {filterHistoryGraph("threeMonths")}} style={range === "threeMonths" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>3-Months</button>
+                    <button aria-label="filter to the last year" className="y" onClick={() => {filterHistoryGraph("year")}} style={range === "year" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>Year</button>
+                    <button aria-label="filter to the last three years" className="threey" onClick={() => {filterHistoryGraph("threeYears")}} style={range === "threeYears" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>3-Years</button>
+                    <button aria-label="filter to all time" className="a" onClick={() => {filterHistoryGraph("all")}} style={range === "all" ? {backgroundColor: "rgb(76, 175, 80)"} : undefined}>All Time</button>
                 </div>
             </article>
         </>
