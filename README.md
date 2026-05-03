@@ -91,9 +91,9 @@ This project places a strong emphasis on reliability and defensive programming.
 ---
 
 ## Challenges & Decisions
-Handling unreliable API responses => implemented defensive error handling with ApiError
-Reducing redundant stock requests => introduced caching (~20% reduction)
-Avoiding excessive re-renders => optimised React state usage
+- Handling unreliable API responses => implemented defensive error handling with ApiError
+- Reducing redundant stock requests => introduced caching (~20% reduction)
+- Avoiding excessive re-renders => optimised React state usage
 
 ---
 
