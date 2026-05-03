@@ -12,6 +12,8 @@ The project focuses on clean architecture, strong data handling, and a wide test
 - Fetches and displays trending stocks from the backend  
 - Handles partial or failed API responses gracefully  
 
+![Home Demo](./assets/Home.gif)
+
 ### Portfolio Management
 - View owned stocks in a sortable and filterable table  
 - Track:
@@ -20,10 +22,14 @@ The project focuses on clean architecture, strong data handling, and a wide test
   - Profit / loss  
 - Delete holdings with confirmation modals  
 
+![Portfolio Demo](./assets/Portfolio.gif)
+
 ### Stock Details
 - View detailed company information  
 - Display stock logos and metadata  
 - Calculate gains/losses dynamically  
+
+![Stock Details](./assets/StockDetails.gif)
 
 ### Authentication-aware UI
 - Reacts to login state  
@@ -33,6 +39,8 @@ The project focuses on clean architecture, strong data handling, and a wide test
 - Loading states for all async operations  
 - Defensive rendering against incomplete or failed API responses  
 - Centralised error handling using custom `ApiError`
+
+![Mobile](./assets/Mobile.gif)
 
 ---
 
