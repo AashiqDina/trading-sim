@@ -10,5 +10,8 @@ export default async function getStockInfoLastUpdated(symbol: string){
         if(axios.isAxiosError(error)){
             if(error.response) throw new ApiError(error.response.status)
         }
+        else{
+            throw new ApiError(-1)
+        }
     }
 }

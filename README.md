@@ -1,53 +1,89 @@
 # Trading Simulator - Frontend
 
-A React-based frontend for a stock trading simulator that allows users to explore trending stocks, manage a virtual portfolio, and track profit and loss in real time. The application focuses on clean UI, predictable state management, and seamless integration with a backend API.
+A React-based frontend for a stock trading simulator that allows users to explore trending stocks, manage a virtual portfolio and track profit and loss in real time.
+
+The project focuses on clean architecture, strong data handling, and a wide test coverage across API and state logic.
 
 ---
 
-##  Features
+## Features
 
-* **Trending Stocks Dashboard**
+### Trending Stocks Dashboard
+- Fetches and displays trending stocks from the backend  
+- Handles partial or failed API responses gracefully  
 
-  * Fetches and displays trending stocks from the backend
-  * Handles partial or failed API responses gracefully
+### Portfolio Management
+- View owned stocks in a sortable and filterable table  
+- Track:
+  - Total invested  
+  - Current value  
+  - Profit / loss  
+- Delete holdings with confirmation modals  
 
-* **Portfolio Management**
+### Stock Details
+- View detailed company information  
+- Display stock logos and metadata  
+- Calculate gains/losses dynamically  
 
-  * View all owned stocks in a sortable, filterable table
-  * See key metrics such as invested amount, current value, and profit/loss
-  * Delete holdings with confirmation modals
+### Authentication-aware UI
+- Reacts to login state  
+- Protected routes for portfolio and user-specific data  
 
-* **Stock Details**
-
-  * View individual stock information, including logos and metadata
-  * Derived calculations for gains/losses based on real-world live prices
-
-* **Authentication-aware UI**
-
-  * Frontend reacts to authentication state
-  * Protected routes for user-specific pages such as Portfolio
-
-* **Resilient UI & UX**
-
-  * Loading and error states for all async operations
-  * Defensive rendering against incomplete backend responses
+### Resilient UX
+- Loading states for all async operations  
+- Defensive rendering against incomplete or failed API responses  
+- Centralised error handling using custom `ApiError`
 
 ---
 
 ## Tech Stack
 
-* **React**
-* **TypeScript**
-* **Axios**
-* **Jest**
-* **HTML/CSS**
+- **React**
+- **TypeScript**
+- **Axios / Fetch API**
+- **Jest**
+- **React Testing Library**
+- **HTML / CSS**
 
 ---
 
-## Design & Engineering Focus
+## Testing & Code Quality
 
-* Clear separation between UI components and data-fetching logic
-* Predictable state updates using React hooks and context
-* Defensive programming to handle unreliable external data
-* Readable, maintainable code over premature optimisation
+This project places a strong emphasis on reliability and defensive programming.
 
+### Test Coverage
+
+Statements: 87.26%
+Branches: 77.83%
+Functions: 83.23%
+Lines: 88.91%
+
+## Architecture & Design Decisions
+
+- Clear separation between:
+  - Data-fetching (API layer)  
+  - UI components  
+  - Hooks (state orchestration)  
+- Emphasis on:
+  - Predictable state management  
+  - Readable and maintainable code  
+  - Defensive programming against unreliable APIs  
+- Caching strategies used for:
+  - Stock names  
+  - Stock images  
+  to reduce redundant API calls  
+
+---
+
+## Key Learning Outcomes
+
+- Designing and testing robust API layers  
+- Handling async errors consistently across an application  
+- Writing meaningful unit tests
+- Structuring scalable React applications  
+
+---
+
+## Live Demo
+
+https://aashiqdina.github.io/ReactCvSiteProject  

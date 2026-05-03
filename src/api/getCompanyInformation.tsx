@@ -10,7 +10,6 @@ type props = {
 export default async function getCompanyInformation({symbol}: props): Promise<CompanyProfile>{
     try{
         const result = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetCompanyDetails/${symbol}`)
-        console.log(result.data)
         console.log(symbol)
 
         if(result.data.profile.hasError){

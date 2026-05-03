@@ -15,14 +15,11 @@ export default async function buyStock({userId, stockSymbol, quantity}: props){
   };
 
   try {
-    console.log("req", stockPurchaseRequest)
-    console.log("userid: ", userId)
+
     const response = await axios.post(
       `https://tradingsim-backend.onrender.com/api/portfolio/${userId}/stocks`,
       stockPurchaseRequest
     );
-
-    console.log(response)
 
     return response.data
 
