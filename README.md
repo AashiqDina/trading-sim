@@ -39,9 +39,7 @@ The project focuses on clean architecture, strong data handling, and a wide test
 - Loading states for all async operations  
 - Defensive rendering against incomplete or failed API responses  
 - Centralised error handling using custom `ApiError`
-
-![Mobile](./assets/Mobile.gif)
-
+  
 ---
 
 ## Tech Stack
