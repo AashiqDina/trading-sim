@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 
-// User data structure
 interface Portfolio {
   investedAmount: number;
   currentValue: number;

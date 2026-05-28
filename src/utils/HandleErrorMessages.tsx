@@ -121,6 +121,14 @@ export function handleErrorMessages(ErrorCode: number | string | null){
             buttonText: "Back to Reality"
         }
     }
+    else if (ErrorCode === 1504){
+        return{
+            title: "Stock Limit Reached",
+            bodyText: "Due to free tier database limitation, only a limited amount of stocks can be simulated",
+            warning: false,
+            buttonText: "Understood"
+        }
+    }
     else {
         return {
             title: "Unknown API Error",

@@ -16,17 +16,17 @@ export default function ErrorPopup({ErrorCode, Confirm}: props ){
                 <div>
                     <div>
                         <div>
-                            {Details.warning ?
+                            {Details?.warning ?
                                 <img src={process.env.PUBLIC_URL + "/Warning.svg"} alt="WARNING SYMBOL" /> : <img src={process.env.PUBLIC_URL + "/Error.svg"} alt="ERROR SYMBOL" />}
                         </div>
                         <div>
-                            <h2>{Details.title}</h2>
-                            <p>{Details.bodyText}</p>
+                            <h2>{Details?.title}</h2>
+                            <p>{Details?.bodyText}</p>
                         </div>
                     </div>
                     <div className="WarningPopUpButton">
                         <div >
-                            <button aria-label="Warning Understood Confirmation" onClick={Confirm}>{Details.buttonText}</button>
+                            <button aria-label="Warning Understood Confirmation" onClick={Confirm}>{Details?.buttonText}</button>
                         </div>
                     </div>
                 </div>

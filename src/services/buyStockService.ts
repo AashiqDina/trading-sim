@@ -1,5 +1,6 @@
 import { ApiError } from "../error/ApiError";
 import buyStock from "../api/buyStock";
+import getPortfolio from "../api/getPortfolio";
 
 enum PurchaseError{
   INVALID_STOCK_QUANTITY = 1499,
@@ -7,6 +8,7 @@ enum PurchaseError{
   ZERO_QUANTITY = 1501,
   QUANTITY_NEGATIVE = 1502,
   COST_TOO_MUCH = 1503,
+  TOO_MANY_STOCKS = 1504
 }
 
 type params = {
@@ -18,6 +20,8 @@ type params = {
 
 export default async function buyStockService({stockPrice, quantity, stockSymbol, userId}: params){
 
+    const maxStocks = 5
+
     if (!Number.isFinite(stockPrice)) throw new ApiError(PurchaseError.INVALID_STOCK_PRICE);
     if (!Number.isFinite(quantity)) throw new ApiError(PurchaseError.INVALID_STOCK_QUANTITY);
     if (quantity === 0) throw new ApiError(PurchaseError.ZERO_QUANTITY);
@@ -25,7 +29,10 @@ export default async function buyStockService({stockPrice, quantity, stockSymbol
     if ((stockPrice*quantity) > 100000) throw new ApiError(PurchaseError.COST_TOO_MUCH);
 
     try{
-        console.log(userId)
+  
+        const portfolio = await getPortfolio(userId)
+        if(portfolio.stocks.length > maxStocks) throw new ApiError(PurchaseError.TOO_MANY_STOCKS)
+
         return await buyStock({stockSymbol: stockSymbol, quantity: quantity, userId: userId})
     }
     catch(err){
