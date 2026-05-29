@@ -20,6 +20,16 @@ function StocksTable({LastUpdatedDictionary, tableStocks, owner, handleDelete, s
   const { greatestProfit, greatestLoss } = getGreatestProfitLoss(tableStocks);
   const navigate = useNavigate();
 
+  console.log(tableStocks)
+  
+  if(tableStocks.length === 0){
+    return(
+      <section className="PortfolioHoldings">
+          <h2 className="NoTableDataLabel" ></h2>
+      </section>
+    )
+  }
+
     return (
         <section className="PortfolioHoldings">
           <article className="genericFlexRow" style={{marginBottom: "4rem"}}>

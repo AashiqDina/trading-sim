@@ -51,7 +51,7 @@ export default function DeletePortfolioStockModal({stocks, toDelete, cancelDelet
                     <button aria-label='Cancel?' className="" onClick={() => {
                     cancelDelete()
                     }}>Cancel</button>
-                    <button aria-label='Delete Stock?' className="" onClick={handleTrueDelete}>Delete</button>
+                    <button aria-label='Delete Stock?' className="DeleteAccountButton" onClick={handleTrueDelete}>Delete</button>
                 </div>
                 </div>
             </div>

@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import PortfolioHeader from "./PortfolioComponents/PortfolioHeader";
 import DeletePortfolioStockModal from "./PortfolioComponents/DeletePortfolioStockModal";
 import { usePortfolioViewData } from "../../hooks/portfolio/usePortfolioViewData";
+import DeleteUserModal from "./PortfolioComponents/DeleteUserModal";
 
 const Portfolio = () => {
   const { userId, username} = useParams();
@@ -20,6 +21,7 @@ const Portfolio = () => {
   const trueUserId = userId && !isNaN(Number(userId)) ? Number(userId) : user?.id ?? null;
   const owner = trueUserId === user?.id;
   
+  const [deleteUser, setDeleteUser] = useState<boolean>(false)
   const [toDelete, setToDelete] = useState<Transaction | null>(null);
   const [modalVisible, setModalVisibility] = useState<boolean>(false);
   const [FilteredOption, setFilteredOption] = useState("");
@@ -32,12 +34,11 @@ const Portfolio = () => {
     profit: number
   } | null>(null);
 
-  const { portfolio, fullHistory, loading, errorCode, resetError, handleDeleteStock, refreshPortfolio, LastUpdatedDictionary } = usePortfolio({ userId: trueUserId })
+  const { portfolio, fullHistory, loading, errorCode, resetError, handleDeleteStock, handleDeleteUser, refreshPortfolio, LastUpdatedDictionary } = usePortfolio({ userId: trueUserId })
   const { visibleStocks, tableStocks, history } = usePortfolioViewData({portfolio, searchInput, FilteredOption, fullHistory, filterHistory})
 
 
   function handleDelete(stock: Transaction){
-    console.log("calls fn")
     setToDelete(stock)
     setModalVisibility(true);
   }
@@ -47,7 +48,7 @@ const Portfolio = () => {
     setModalVisibility(false);
   }
 
-  const handleTrueDelete = async () => {
+  const handleConfirmDelete = async () => {
     if (!toDelete || !user || !owner) return;
     const result = await handleDeleteStock(user.id, toDelete.id);
     if (!result) return;
@@ -124,8 +125,20 @@ const Portfolio = () => {
               stocks={portfolio.stocks}
               toDelete={toDelete}
               cancelDelete={cancelDelete}
-              handleTrueDelete={handleTrueDelete}
+              handleTrueDelete={handleConfirmDelete }
           />}
+
+          {!errorCode && owner && deleteUser && 
+            <DeleteUserModal 
+              userId={trueUserId} 
+              cancelDelete={() => {setDeleteUser(false)}}
+              handleDeleteUser={handleDeleteUser}
+            />
+          }
+
+          <div className="DeleteAccountContainer" onClick={() => setDeleteUser(true)}>
+            <button className="DeleteAccountButton">Delete Account</button>
+          </div>
 
         </>
       )

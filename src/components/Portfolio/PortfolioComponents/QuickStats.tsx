@@ -198,7 +198,7 @@ function QuickStats({history, fullHistory, filterHistory, visibleStocks, setFilt
     if (!fullHistory || !history || visibleStocks.length === 0) {
         return (
             <section className="StocksAverageGraph">
-                <h2>No Graphing Data Available</h2>
+                <h2>Your portfolio is empty - Buy a stock to get started</h2>
             </section>
         );
     }

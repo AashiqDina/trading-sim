@@ -129,6 +129,14 @@ export function handleErrorMessages(ErrorCode: number | string | null){
             buttonText: "Understood"
         }
     }
+    else if (ErrorCode === 9999){
+        return{
+            title: "Invalid Deletion Confimation",
+            bodyText: "Type DELETE ACCOUNT exactly to confirm",
+            warning: false,
+            buttonText: "Try Again"
+        }
+    }
     else {
         return {
             title: "Unknown API Error",

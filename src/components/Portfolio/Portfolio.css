@@ -1035,6 +1035,42 @@ table tbody tr:last-child td:last-child {
   border-radius: 0.8rem;
 }
 
+.DeleteAccountContainer{
+  background-color: #3e91444c;
+  padding: 0rem 2rem 4rem 2rem;
+}
+
+.DeleteAccountButton{
+  width: 20%;
+  min-width: 10rem;
+  border: none;
+  border-radius: 10rem;
+  border: 1px #bb15157f solid;
+  padding: 0.8rem 1rem 0.8rem 1rem;
+  background-color: #bb15157f;
+  font-size: 1.2rem;
+  transition: all 0.5s ease-in-out;
+  font-family: Inter, sans-serif;
+  box-shadow: #bb151565 0px 0px 10px 1px;
+}
+
+.DeleteAccountButton:hover, .ModalFooter > .DeleteAccountButton:hover{
+  background-color: #bb1515c3;
+  box-shadow: #bb15157f 0px 0px 20px 5px;
+}
+
+.DeleteAccountButton:active, .ModalFooter > .DeleteAccountButton:active{
+  background-color: #bb15157f;
+  border: 1px #ff00005e solid;
+  box-shadow: #bb15157f 0px 0px 20px 5px;
+}
+
+.NoTableDataLabel{
+  margin: 0;
+  padding-bottom: 10rem;
+  font-weight: 200;
+}
+
 @media (max-width: 970px) {
   .QuickPerformance{
     gap: 2rem;

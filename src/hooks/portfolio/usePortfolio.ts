@@ -8,7 +8,7 @@ type Props = {
 export function usePortfolio({ userId }: Props){    
 
     const {portfolio, fullHistory, loading, dataErrorCode, resetDatasError, refreshPortfolio, LastUpdatedDictionary} = usePortfolioData({userId})
-    const { handleDeleteStock, actionsErrorCode, resetActionsError } = usePortfolioActions()
+    const { handleDeleteStock, handleDeleteUser, actionsErrorCode, resetActionsError } = usePortfolioActions()
     const errorCode = dataErrorCode ?? actionsErrorCode 
 
     const resetError = () => {
@@ -16,5 +16,5 @@ export function usePortfolio({ userId }: Props){
         resetDatasError()
     };
 
-    return { portfolio, fullHistory, loading, errorCode, resetError, handleDeleteStock, refreshPortfolio, LastUpdatedDictionary };
+    return { portfolio, fullHistory, loading, errorCode, resetError, handleDeleteStock, handleDeleteUser, refreshPortfolio, LastUpdatedDictionary };
 }

@@ -24,6 +24,7 @@ const baseData = {
 
 const baseActions = {
     handleDeleteStock: jest.fn(),
+    handleDeleteUser: jest.fn(),
     actionsErrorCode: null,
     resetActionsError: jest.fn(),
 }

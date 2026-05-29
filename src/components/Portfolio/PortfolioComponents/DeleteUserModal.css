@@ -1,0 +1,29 @@
+.UserDeleteModalContent{
+  animation-name: BodyBackground;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  border-radius: 4rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin: 0 2rem 0 2rem;
+  padding: 4rem 5rem 2rem 5rem;
+}
+
+.ModalFooter > .DeleteAccountButton{
+    border: 1px #bb1515c3 solid;
+    background-color: #bb151500;
+    box-shadow: #bb151565 0px 0px 10px 1px;
+}
+
+.ModalFooter > .DeleteAccountButton:hover{
+    border: 1px #bb15157f solid;
+}
+
+.DeleteConfirmInput{
+    border-radius: 10rem;
+    outline: none;
+    margin-bottom: 2rem;
+    height: 3rem;
+    font-size: 1.5rem;
+}

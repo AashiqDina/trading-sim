@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ApiError } from "../../error/ApiError";
 import deleteStock from "../../api/deleteStock";
+import DeleteAccount from "../../api/DeleteAccount";
 
 export function usePortfolioActions(){
     const [actionsErrorCode, setErrorCode] = useState<number | null>(null)
@@ -26,6 +27,23 @@ export function usePortfolioActions(){
         }
     };
     
+    const handleDeleteUser = async (userId: number, Confirmation: boolean) => {
+        try {
+            await DeleteAccount({userId, Confirmation});
+            setErrorCode(null);
+            return true;
+        } 
+        catch (error) {
+            console.log(error)
+            if (error instanceof ApiError) {
+                setErrorCode(error.code);
+            } 
+            else {
+                setErrorCode(-1);
+            }
+            return false
+        }
+    }
 
-    return { handleDeleteStock, actionsErrorCode, resetActionsError };
+    return { handleDeleteStock, handleDeleteUser, actionsErrorCode, resetActionsError };
 }

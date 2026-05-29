@@ -20,7 +20,7 @@ describe("QuickStats Tests", () => {
         )
 
         expect(screen.queryByText(/Hover to see value/i)).not.toBeInTheDocument()
-        expect(screen.getByText(/No Graphing Data Available/i)).toBeInTheDocument()
+        expect(screen.getByText(/Your portfolio is empty - Buy a stock to get started/i)).toBeInTheDocument()
     })
 
     test("No Graph Rendered When No Stocks in Portfolio", () => {
@@ -36,7 +36,7 @@ describe("QuickStats Tests", () => {
         )
 
         expect(screen.queryByText(/Hover to see value/i)).not.toBeInTheDocument()
-        expect(screen.getByText(/No Graphing Data Available/i)).toBeInTheDocument()
+        expect(screen.getByText(/Your portfolio is empty - Buy a stock to get started/i)).toBeInTheDocument()
     })
 
     test("Renders Correctly", () => {
