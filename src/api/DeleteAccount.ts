@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ApiError } from "../error/ApiError";
-import { useNavigate } from "react-router-dom";
 
 type props = {
     userId: number;

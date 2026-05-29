@@ -25,7 +25,7 @@ function StocksTable({LastUpdatedDictionary, tableStocks, owner, handleDelete, s
   if(tableStocks.length === 0){
     return(
       <section className="PortfolioHoldings">
-          <h2 className="NoTableDataLabel" ></h2>
+          <h2 className="NoTableDataLabel">No Data</h2>
       </section>
     )
   }
