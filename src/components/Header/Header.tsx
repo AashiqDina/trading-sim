@@ -23,7 +23,7 @@ const Header: React.FC = () => {
         menuOpen={menuOpen}
         handleLink={handleLink}
        />
-
+       
         <button aria-label="Home Page" className="Header-logo" onClick={() => handleLink("/")}>
             <Logo/>
         </button>

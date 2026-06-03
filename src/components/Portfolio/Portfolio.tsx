@@ -136,9 +136,10 @@ const Portfolio = () => {
             />
           }
 
-          <div className="DeleteAccountContainer" onClick={() => setDeleteUser(true)}>
-            <button className="DeleteAccountButton">Delete Account</button>
-          </div>
+          {owner && 
+            <div className="DeleteAccountContainer" onClick={() => setDeleteUser(true)}>
+              <button className="DeleteAccountButton">Delete Account</button>
+          </div>}
 
         </>
       )
