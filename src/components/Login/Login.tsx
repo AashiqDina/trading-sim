@@ -5,13 +5,16 @@ import LoginForm from "./LoginForm";
 import { FocusTrap } from "focus-trap-react";
 import ErrorPopup from "../../error/ErrorPopup";
 import { useLogin } from "../../hooks/login/useLogin";
+import Loading from "../Loading/Loading";
 
 const Login = () => {
   const { user } = useAuth();
 
-  const {CompleteLogin, error, errorCode, resetError} = useLogin()
+  const {CompleteLogin, loading, error, errorCode, resetError} = useLogin()
 
   if (user) return <Navigate to="/" replace />
+
+  if(loading) return <Loading/>
 
   return (
     <>

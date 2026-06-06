@@ -191,4 +191,27 @@ describe("Login Renders and functuonality tests", () => {
         expect(screen.queryByTestId("ErrorMessage")).not.toBeInTheDocument();
     });
 
+    test("Renders Loading Component When Login Is In Progress", () => {
+
+        mockedUseAuth.mockReturnValue({
+            user: null
+        })
+
+        mockedUseLogin.mockReturnValue({
+            CompleteLogin: jest.fn(),
+            loading: true,
+            error: "",
+            errorCode: null,
+            resetError: jest.fn()
+        })
+
+        render(
+            <MemoryRouter>
+                <Login />
+            </MemoryRouter>
+        )
+
+        expect(screen.getByTestId("loading")).toBeInTheDocument()
+    })
+
 })

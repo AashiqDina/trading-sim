@@ -119,4 +119,66 @@ describe("useLogin tests", () => {
 
     expect(result.current.errorCode).toBeNull()
   })
+
+  test("loading is true while login is in progress and false when complete", async () => {
+    let resolvePromise: (value: any) => void;
+
+    const loginPromise = new Promise((resolve) => {
+      resolvePromise = resolve;
+    });
+
+    mockHandleLogin.mockReturnValue(loginPromise);
+
+    const { result } = renderHook(() => useLogin());
+
+    act(() => {
+      result.current.CompleteLogin("username", "password");
+    });
+
+    expect(result.current.loading).toBe(true);
+
+    await act(async () => {
+      resolvePromise!({
+        user: {
+          id: 1,
+          username: "username",
+          investedAmount: 100,
+          currentValue: 150,
+          profitLoss: 50,
+        },
+      });
+
+      await loginPromise;
+    });
+
+    expect(result.current.loading).toBe(false);
+  });
+
+  test("loading is false after failed login", async () => {
+    let rejectPromise: (reason?: any) => void;
+
+    const loginPromise = new Promise((_, reject) => {
+      rejectPromise = reject;
+    });
+
+    mockHandleLogin.mockReturnValue(loginPromise);
+
+    const { result } = renderHook(() => useLogin());
+
+    act(() => {
+      result.current.CompleteLogin("username", "password");
+    });
+
+    expect(result.current.loading).toBe(true);
+
+    await act(async () => {
+      rejectPromise!(new ApiError(401));
+
+      try {
+        await loginPromise;
+      } catch {}
+    });
+
+    expect(result.current.loading).toBe(false);
+  });
 });
