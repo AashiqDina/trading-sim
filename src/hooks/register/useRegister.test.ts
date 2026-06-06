@@ -170,4 +170,53 @@ describe("useRegister tests", () => {
         expect(result.current.errorCode).toBe(null)
 
     })
+
+    test("loading is true during registration and false when complete", async () => {
+
+        let resolvePromise!: () => void;
+
+        const pendingPromise = new Promise<void>((resolve) => {
+            resolvePromise = resolve;
+        });
+
+        mockedCheckUsername.mockReturnValue(pendingPromise)
+        mockedHandleRegister.mockResolvedValue(undefined)
+
+        const { result } = renderHook(() => useRegister())
+
+        act(() => {
+            result.current.toRegister(
+                "TestUser",
+                "password123",
+                "password123"
+            )
+        })
+
+        expect(result.current.loading).toBe(true)
+
+        await act(async () => {
+            resolvePromise()
+            await pendingPromise
+        });
+
+        expect(result.current.loading).toBe(false)
+    });
+
+    test("loading returns to false after validation error", async () => {
+
+        const { result } = renderHook(() => useRegister());
+
+        await act(async () => {
+            await result.current.toRegister(
+                "TU",
+                "password123",
+                "password123"
+            );
+        });
+
+        expect(result.current.loading).toBe(false);
+        expect(result.current.error).toBe(
+            "Usernames Need To Be At Least 3 Characters"
+        );
+    });
 })

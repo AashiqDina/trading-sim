@@ -10,6 +10,7 @@ export function useRegister(){
 
     const [error, setError] = useState<string>("");
     const [errorCode, setErrorCode] = useState<number | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     
     const resetError = () => {
         setError("");
@@ -21,7 +22,7 @@ export function useRegister(){
         setError("");
     
         try {
-
+            setLoading(true)
             if(username.length < 3) throw new ApiError(1006) // Usernames need to be at least 3 characters      
             if (password !== confirmPassword) throw new ApiError(1004) // Passwords do not match
             else if(password.length < 8) throw new ApiError(1005) // Passwords need to be at least 8 characters
@@ -44,7 +45,10 @@ export function useRegister(){
                 setErrorCode(-1)
             }
         }
+        finally{
+            setLoading(false)
+        }
     };
 
-    return {toRegister, error,  errorCode, resetError}
+    return {toRegister, loading, error,  errorCode, resetError}
 }

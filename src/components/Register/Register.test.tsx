@@ -192,4 +192,27 @@ describe("Register Renders and functuonality tests", () => {
         expect(screen.queryByTestId("ErrorMessage")).not.toBeInTheDocument();
     });
 
+    test("Renders Loading Component When Register Is In Progress", () => {
+
+        mockedUseAuth.mockReturnValue({
+            user: null
+        })
+
+        mockedUseRegister.mockReturnValue({
+            toRegister: jest.fn(),
+            loading: true,
+            error: "",
+            errorCode: null,
+            resetError: jest.fn()
+        })
+
+        render(
+            <MemoryRouter>
+                <Register />
+            </MemoryRouter>
+        )
+
+        expect(screen.getByTestId("loading")).toBeInTheDocument()
+    })
+
 })

@@ -5,14 +5,15 @@ import { FocusTrap } from "focus-trap-react";
 import ErrorPopup from "../../error/ErrorPopup";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
+import Loading from "../Loading/Loading";
 
 function Register() {
   const { user } = useAuth();
 
-  const {toRegister, error,  errorCode, resetError} = useRegister()
+  const {toRegister, loading, error,  errorCode, resetError} = useRegister()
 
-  if (user) return <Navigate to="/" replace />
-
+  if(user) return <Navigate to="/" replace />
+  if(loading) return <Loading/>
   
   return (
     <>
