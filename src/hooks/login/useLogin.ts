@@ -3,7 +3,6 @@ import { useAuth } from "../../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import handleLogin from "../../api/handleLogin";
 import { ApiError } from "../../error/ApiError";
-import Loading from "../../components/Loading/Loading";
 
 export function useLogin() {
     const [error, setError] = useState<string>("");
