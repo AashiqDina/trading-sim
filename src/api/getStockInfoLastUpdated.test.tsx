@@ -31,6 +31,23 @@ describe("getStockInfoLastUpdated", () => {
         expect(mockedAxios.get).toHaveBeenCalledTimes(1);
     });
 
+    test("throws ApiError when API returns hasError true", async () => {
+
+        const mockErrorResponse = {
+            data: {
+                hasError: true,
+                errorCode: 400,
+                data: null
+            },
+        };
+
+        mockedAxios.get.mockResolvedValue(mockErrorResponse);
+
+        await expect(getStockInfoLastUpdated("SYMB"))
+            .rejects
+            .toEqual(new ApiError(400));
+    });
+
     test("throws ApiError from axios response error", async () => {
 
         (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);

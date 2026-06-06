@@ -4,7 +4,8 @@ import { ApiError } from "../error/ApiError"
 export default async function getStockInfoLastUpdated(symbol: string){
     try{
         let LastUpdatedDictionary = await axios.get(`https://tradingsim-backend.onrender.com/api/stocks/GetStockInfoLastUpdated/${symbol}`)
-        return LastUpdatedDictionary.data.data
+        if(LastUpdatedDictionary.data.hasError) throw new ApiError(LastUpdatedDictionary.data.errorCode)
+        return LastUpdatedDictionary.data.Data
     }
     catch(error){
         if(axios.isAxiosError(error)){
