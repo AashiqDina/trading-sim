@@ -130,7 +130,6 @@ const Portfolio = () => {
 
           {!errorCode && owner && deleteUser && 
             <DeleteUserModal 
-              userId={trueUserId} 
               cancelDelete={() => {setDeleteUser(false)}}
               handleDeleteUser={handleDeleteUser}
             />
