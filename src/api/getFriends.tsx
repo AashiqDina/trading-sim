@@ -13,11 +13,12 @@ export default async function getFriends(): Promise<friendListMember[]> {
         }
       }
     );
-
+    console.log(result)
     if (result.data.hasError) throw new ApiError(result.data.errorCode);
     return result.data.data;
   }
   catch(error){
+    console.log(error)
     if (error instanceof ApiError) throw error;
     if (axios.isAxiosError(error)) {
         if(error.response?.status === 401) throw new ApiError(4010)
