@@ -7,10 +7,13 @@ import { mockFriendList } from "../mocks/Friends/mockFriendList";
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
+
+
 describe("getSentRequests", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+        Storage.prototype.getItem = jest.fn(() => "fake-token");
     });
 
     const mockData: friendListMember[] = mockFriendList
@@ -27,12 +30,20 @@ describe("getSentRequests", () => {
 
         mockedAxios.get.mockResolvedValue(mockResponse)
 
-        const result = await getSentRequests({userId: 1});
+        const result = await getSentRequests();
 
         expect(result).toEqual(mockResponse.data.data);
-        expect(mockedAxios.get).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Get-Sent-Request/${1}`);
+        expect(mockedAxios.get).toHaveBeenCalledWith(
+            "https://tradingsim-backend.onrender.com/api/User/Get-Sent-Request",
+            {
+                headers: {
+                Authorization: "Bearer fake-token"
+                },
+            }
+        );
         expect(mockedAxios.get).toHaveBeenCalledTimes(1);
     });
+
 
     test("throws ApiError when hasErr", async () => {
 
@@ -44,7 +55,7 @@ describe("getSentRequests", () => {
             },
         });
 
-        await expect(getSentRequests({userId: 1})).rejects.toEqual(new ApiError(400));
+        await expect(getSentRequests()).rejects.toEqual(new ApiError(400));
 
     })
 
@@ -56,13 +67,24 @@ describe("getSentRequests", () => {
             response: { status: 500 },
         });
 
-        await expect(getSentRequests({userId: 1})).rejects.toEqual(new ApiError(500));
+        await expect(getSentRequests()).rejects.toEqual(new ApiError(500));
     });
 
     test("throws ApiError(-1) for unknown error", async () => {
 
         mockedAxios.get.mockRejectedValue(getSentRequests);
 
-        await expect(getSentRequests({userId: 1})).rejects.toEqual(new ApiError(-1));
+        await expect(getSentRequests()).rejects.toEqual(new ApiError(-1));
+    });
+
+    test("throws ApiError(4010) when axios returns 401", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.get.mockRejectedValue({
+            isAxiosError: true,
+            response: { status: 401 },
+        });
+
+        await expect(getSentRequests()).rejects.toEqual(new ApiError(4010));
     });
 });

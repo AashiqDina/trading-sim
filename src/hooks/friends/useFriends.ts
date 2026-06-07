@@ -34,8 +34,8 @@ export function useFriends({userId}: props){
             const [allUserList, usersFriendsList, sentRequests, receivedRequests] = await Promise.all([
                 getAllUsers(),
                 getFriends(),
-                getSentRequests({userId}),
-                getReceivedRequests({userId})
+                getSentRequests(),
+                getReceivedRequests()
             ])   
             const ProfitLosses = new Map<number, number>()
             allUserList.forEach((user: UserObj) => {
