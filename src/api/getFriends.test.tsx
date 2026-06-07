@@ -5,10 +5,17 @@ import getFriends from "./getFriends";
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe("getCompanyInformation", () => {
+describe("getFriends", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+
+        Object.defineProperty(window, "localStorage", {
+            value: {
+                getItem: jest.fn(() => "mock-token"),
+            },
+            writable: true,
+        });
     });
 
     const mockData = [
@@ -24,7 +31,7 @@ describe("getCompanyInformation", () => {
             userId: 1,
             profitLoss: 23,
         }
-    ]
+    ];
 
     const mockResponse = {
         data: {
@@ -32,19 +39,29 @@ describe("getCompanyInformation", () => {
             errorCode: null,
             data: mockData,
         },
-    }
-test("returns data on success", async () => {
+    };
 
-    mockedAxios.get.mockResolvedValue(mockResponse)
+    test("returns data on success", async () => {
 
-    const result = await getFriends({ userId: 123 });
+        mockedAxios.get.mockResolvedValue(mockResponse);
 
-    expect(result).toEqual(mockData);
-    expect(mockedAxios.get).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Get-Friends/123`);
-    expect(mockedAxios.get).toHaveBeenCalledTimes(1);
-});
+        const result = await getFriends();
 
-    test("throws ApiError when hasErr", async () => {
+        expect(result).toEqual(mockData);
+
+        expect(mockedAxios.get).toHaveBeenCalledWith(
+            "https://tradingsim-backend.onrender.com/api/User/Get-Friends",
+            {
+                headers: {
+                    Authorization: "Bearer mock-token"
+                }
+            }
+        );
+
+        expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+    });
+
+    test("throws ApiError when hasError", async () => {
 
         mockedAxios.get.mockResolvedValue({
             data: {
@@ -54,9 +71,8 @@ test("returns data on success", async () => {
             },
         });
 
-        await expect(getFriends({userId: 123})).rejects.toEqual(new ApiError(400));
-
-    })
+        await expect(getFriends()).rejects.toEqual(new ApiError(400));
+    });
 
     test("throws ApiError from axios response error", async () => {
 
@@ -66,13 +82,13 @@ test("returns data on success", async () => {
             response: { status: 500 },
         });
 
-        await expect(getFriends({userId: 123})).rejects.toEqual(new ApiError(500));
+        await expect(getFriends()).rejects.toEqual(new ApiError(500));
     });
 
     test("throws ApiError(-1) for unknown error", async () => {
 
         mockedAxios.get.mockRejectedValue(123);
 
-        await expect(getFriends({userId: 123})).rejects.toEqual(new ApiError(-1));
+        await expect(getFriends()).rejects.toEqual(new ApiError(-1));
     });
 });

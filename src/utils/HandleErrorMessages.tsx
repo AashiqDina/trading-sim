@@ -129,6 +129,14 @@ export function handleErrorMessages(ErrorCode: number | string | null){
             buttonText: "Understood"
         }
     }
+    else if (ErrorCode === 4010){
+        return{
+            title: "Invalid User Token",
+            bodyText: "Unable to authenticate you - try logging out and signing back in",
+            warning: false,
+            buttonText: "Understood"
+        }
+    }
     else if (ErrorCode === 9999){
         return{
             title: "Invalid Deletion Confimation",

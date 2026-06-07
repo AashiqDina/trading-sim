@@ -33,7 +33,7 @@ export function useFriends({userId}: props){
 
             const [allUserList, usersFriendsList, sentRequests, receivedRequests] = await Promise.all([
                 getAllUsers(),
-                getFriends({userId}),
+                getFriends(),
                 getSentRequests({userId}),
                 getReceivedRequests({userId})
             ])   
