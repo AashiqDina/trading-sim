@@ -24,12 +24,14 @@ export function useLogin() {
             const data = await handleLogin(username, password);
 
             login({
-                id: data.user.id,
-                username: data.user.username,
-                investedAmount: data.user.investedAmount,
-                currentValue: data.user.currentValue,
-                profitLoss: data.user.profitLoss,
-            });
+                    id: data.user.id,
+                    username: data.user.username,
+                    investedAmount: data.user.investedAmount,
+                    currentValue: data.user.currentValue,
+                    profitLoss: data.user.profitLoss,
+                },
+                data.token
+            );
 
             navigate("/portfolio");
         } 
