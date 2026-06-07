@@ -31,6 +31,7 @@ describe("useLogin tests", () => {
 
   test("Successful Login", async () => {
     mockHandleLogin.mockResolvedValue({
+      token: "fake-token",
       user: {
         id: 1,
         username: "username",
@@ -40,6 +41,7 @@ describe("useLogin tests", () => {
       },
     });
 
+
     const { result } = renderHook(() => useLogin());
 
     await act(async () => {
@@ -47,15 +49,15 @@ describe("useLogin tests", () => {
     });
 
     expect(mockHandleLogin).toHaveBeenCalledWith("username", "password");
-
     expect(mockLogin).toHaveBeenCalledWith({
-      id: 1,
-      username: "username",
-      investedAmount: 100,
-      currentValue: 150,
-      profitLoss: 50,
-    });
-
+        id: 1,
+        username: "username",
+        investedAmount: 100,
+        currentValue: 150,
+        profitLoss: 50,
+      },
+      "fake-token"
+    );
     expect(mockNavigate).toHaveBeenCalledWith("/portfolio");
   });
 
@@ -113,8 +115,8 @@ describe("useLogin tests", () => {
 
     expect(result.current.errorCode).toBe(429)
 
-    await act(() => {
-        result.current.resetError()
+    await act(async () => {
+        await result.current.resetError()
     })
 
     expect(result.current.errorCode).toBeNull()
@@ -147,8 +149,6 @@ describe("useLogin tests", () => {
           profitLoss: 50,
         },
       });
-
-      await loginPromise;
     });
 
     expect(result.current.loading).toBe(false);
@@ -173,10 +173,6 @@ describe("useLogin tests", () => {
 
     await act(async () => {
       rejectPromise!(new ApiError(401));
-
-      try {
-        await loginPromise;
-      } catch {}
     });
 
     expect(result.current.loading).toBe(false);
