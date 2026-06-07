@@ -2,15 +2,19 @@ import axios from "axios";
 import { ApiError } from "../error/ApiError";
 
 type props = {
-    userId: number | undefined,
     friendId: number
 }
 
-export default async function DeclineFriendRequest({userId, friendId}: props){
+export default async function DeclineFriendRequest({friendId}: props){
     try{
-        if(!userId) throw new ApiError(1000)
 
-        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${userId}/${friendId}`)
+        const token = localStorage.getItem("token");
+        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${friendId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        )
         
         if(result.data.hasError) throw new ApiError(result.data.errorCode)
         
@@ -21,7 +25,8 @@ export default async function DeclineFriendRequest({userId, friendId}: props){
         
         if (axios.isAxiosError(error)) {
             if (error.response) {
-                throw new ApiError(error.response.status);
+                if(error.response?.status === 401) throw new ApiError(4010)
+                throw new ApiError(error.response.status ?? -1);
             }
         }
         throw new ApiError(-1)

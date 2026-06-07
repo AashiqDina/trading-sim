@@ -2,14 +2,18 @@ import axios from "axios";
 import { ApiError } from "../error/ApiError";
 
 type props = {
-    userId: number
     friendId: number
 }
 
-export default async function AddFriend({userId, friendId}: props){
+export default async function AddFriend({friendId}: props){
  try{
-        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Send-Friend-Request/${userId}/${friendId}`)
-        console.log("Add Friend: ", result)
+        const token = localStorage.getItem("token");
+        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Send-Friend-Request/${friendId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        )
 
         if(result.data?.hasError) throw new ApiError(result.data.errorCode)
 
@@ -21,7 +25,8 @@ export default async function AddFriend({userId, friendId}: props){
 
         if (axios.isAxiosError(error)) {
             if (error.response) {
-                throw new ApiError(error.response.status);
+                if(error.response?.status === 401) throw new ApiError(4010)
+                throw new ApiError(error.response.status ?? -1);
             }
         }
         throw new ApiError(-1)

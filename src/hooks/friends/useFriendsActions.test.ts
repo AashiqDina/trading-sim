@@ -28,13 +28,13 @@ describe("useFriendActionsTests", () => {
 
         mockedAddFriend.mockResolvedValue(undefined)
 
-        const { result } = renderHook(() => useFriendsActions({ userId: 1, refresh})    )
+        const { result } = renderHook(() => useFriendsActions({ refresh })    )
 
         await act(async () => {
             await result.current.sendFriendRequest(3)
         })
 
-        expect(mockedAddFriend).toHaveBeenCalledWith({userId: 1, friendId: 3})
+        expect(mockedAddFriend).toHaveBeenCalledWith({friendId: 3})
         expect(refresh).toHaveBeenCalled()
 
     })
@@ -43,13 +43,13 @@ describe("useFriendActionsTests", () => {
 
         mockedAcceptFriendRequest.mockResolvedValue(undefined)
 
-        const { result } = renderHook(() => useFriendsActions({ userId: 1, refresh}))
+        const { result } = renderHook(() => useFriendsActions({refresh}))
 
         await act(async () => {
             await result.current.handleAcceptRequest(5)
         })
 
-        expect(mockedAcceptFriendRequest).toHaveBeenCalledWith({userId: 1, friendId: 5})
+        expect(mockedAcceptFriendRequest).toHaveBeenCalledWith({ friendId: 5 })
         expect(refresh).toHaveBeenCalled()
     })
 
@@ -57,13 +57,13 @@ describe("useFriendActionsTests", () => {
 
         mockedDeclineFriendRequest.mockResolvedValue(undefined)
 
-        const { result } = renderHook(() =>  useFriendsActions({ userId: 1, refresh}))
+        const { result } = renderHook(() =>  useFriendsActions({ refresh }))
 
         await act(async () => {
             await result.current.handleDeclineRequest(9)
         })
 
-        expect(mockedDeclineFriendRequest).toHaveBeenCalledWith({userId: 1, friendId: 9})
+        expect(mockedDeclineFriendRequest).toHaveBeenCalledWith({friendId: 9})
         expect(refresh).toHaveBeenCalled()
     })
 
@@ -71,13 +71,13 @@ describe("useFriendActionsTests", () => {
 
         mockedDeleteFriend.mockResolvedValue(undefined)
 
-        const { result } = renderHook(() => useFriendsActions({ userId: 1, refresh}))
+        const { result } = renderHook(() => useFriendsActions({ refresh }))
 
         await act(async () => {
             await result.current.handleDeleteFriend(33)
         })
 
-        expect(mockedDeleteFriend).toHaveBeenCalledWith({userId: 1, friendId: 33})
+        expect(mockedDeleteFriend).toHaveBeenCalledWith({ friendId: 33 })
         expect(refresh).toHaveBeenCalled()
         
     })
@@ -86,7 +86,7 @@ describe("useFriendActionsTests", () => {
 
         mockedAcceptFriendRequest.mockRejectedValue(new ApiError(404))
 
-        const { result } = renderHook(() => useFriendsActions({userId: 1, refresh}))
+        const { result } = renderHook(() => useFriendsActions({ refresh }))
 
         await act(async () => { 
             await result.current.handleAcceptRequest(99)
@@ -99,7 +99,7 @@ describe("useFriendActionsTests", () => {
 
         mockedDeleteFriend.mockRejectedValue(false)
 
-        const { result } = renderHook(() => useFriendsActions({userId: 1, refresh}))
+        const { result } = renderHook(() => useFriendsActions({ refresh }))
 
         await act(async () => {
             await result.current.handleDeleteFriend(20)
@@ -112,7 +112,7 @@ describe("useFriendActionsTests", () => {
 
         mockedDeclineFriendRequest.mockRejectedValue(new ApiError(419))
 
-        const { result } = renderHook(() => useFriendsActions({userId: 1, refresh}))
+        const { result } = renderHook(() => useFriendsActions({ refresh }))
 
         await act(async () => {
             await result.current.handleDeclineRequest(38)
@@ -125,17 +125,6 @@ describe("useFriendActionsTests", () => {
 
         expect(mockedDeclineFriendRequest).not.toHaveBeenCalled()
 
-
     })
 
-    test("does nothing if userId is undefined", async () => {
-        const { result } = renderHook(() => useFriendsActions({ userId: undefined, refresh }));
-
-        await act(async () => {
-            await result.current.sendFriendRequest(3);
-        });
-
-        expect(mockedAddFriend).not.toHaveBeenCalled();
-        expect(refresh).not.toHaveBeenCalled();
-    });
 })

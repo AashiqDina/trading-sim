@@ -32,6 +32,7 @@ export type DisplayError = {
     title: string,
     bodyText: string,
     buttonText: string
+    confirmationFunction?: () => void
 };
 
 export type ErrorMessageDetails = {

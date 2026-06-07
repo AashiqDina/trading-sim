@@ -1,19 +1,32 @@
 import { render, screen } from "@testing-library/react"
-import { useAuth } from "../../auth/AuthContext";
+import { AuthProvider, useAuth } from "../../auth/AuthContext";
 import '@testing-library/jest-dom';
 import { mockedUser } from "../../mocks/Global/mockedUser";
 import StockDetails from "./StockDetail"
 import { MockUseStockDetails } from "../../mocks/StockDetails/mockUseStockDetails";
 import userEvent from "@testing-library/user-event";
 import { ApiError } from "../../error/ApiError";
+import { MemoryRouter } from "react-router-dom";
 
 
-const mockedUseAuth = useAuth as jest.Mock;
 const mockUseStockDetails = jest.fn();
+const mockLogout = jest.fn();
 
-jest.mock("../../auth/AuthContext", () => ({
-  useAuth: jest.fn(),
+jest.mock("../../hooks/logout/useLogout", () => ({
+  useLogout: () => mockLogout,
 }));
+
+jest.mock("../../hooks/stockDetails/useStockDetails", () => ({
+  useStockDetails: (args: any) => mockUseStockDetails(args),
+}));
+
+jest.mock("../../auth/AuthContext", () => {
+  const actual = jest.requireActual("../../auth/AuthContext");
+  return {
+    ...actual,
+    useAuth: jest.fn(),
+  };
+});
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -34,6 +47,8 @@ jest.mock('./StockDetailsComponents/StockDetailsCompanyInformation', () => () =>
 jest.mock('./StockDetailsComponents/StockDetailsStockData', () => () => <div>Stock Data Component</div>);
 jest.mock('./StockDetailsComponents/StockDetailsOwnedStocks', () => () => <div>Owned Stocks Component</div>);
 jest.mock('./StockDetailsComponents/StockDetailsNews', () => () => <div>News Component</div>);
+
+const mockedUseAuth = useAuth as jest.Mock;
 
 describe("StockDetails tests", () => {
 
@@ -111,7 +126,13 @@ describe("StockDetails tests", () => {
             };
         });
 
-        render(<StockDetails />);
+        render(            
+            <MemoryRouter>
+                <AuthProvider>
+                    <StockDetails />
+                </AuthProvider>
+            </MemoryRouter>
+        );
 
         expect(await screen.findByTestId("ErrorMessage")).toBeInTheDocument();
     });
@@ -144,7 +165,13 @@ describe("StockDetails tests", () => {
             };
         });
 
-        render(<StockDetails />);
+        render(
+            <MemoryRouter>
+                <AuthProvider>
+                    <StockDetails />
+                </AuthProvider>
+            </MemoryRouter>
+        );
 
         expect(await screen.findByTestId("ErrorMessage")).toBeInTheDocument();
         expect(screen.queryByTestId("BuyModal")).not.toBeInTheDocument();

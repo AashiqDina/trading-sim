@@ -6,11 +6,10 @@ import DeclineFriendRequest from "../../api/DeclineFriendRequest"
 import DeleteFriend from "../../api/DeleteFriend"
 
 type props = {
-    userId: number | undefined,
     refresh: () => void
 }
 
-export function useFriendsActions({userId, refresh}: props){
+export function useFriendsActions({refresh}: props){
     const [actionsError, setActionsError] = useState<number | null>(null)   
     
     const resetActionError = () => {
@@ -18,8 +17,6 @@ export function useFriendsActions({userId, refresh}: props){
     }
     
     const execute = async (action: () => Promise<void>) => {
-        if (!userId) return;
-
         try{
             await action();
             refresh();
@@ -31,20 +28,20 @@ export function useFriendsActions({userId, refresh}: props){
     };
 
     async function sendFriendRequest(friendId: number){
-        execute(() => AddFriend({ userId: userId!, friendId }));
+        execute(() => AddFriend({ friendId }));
     }
 
     async function handleAcceptRequest(friendId: number){
-        execute(() => AcceptFriendRequest({ userId: userId!, friendId: friendId }))
+        execute(() => AcceptFriendRequest({ friendId: friendId }))
     }
 
     async function handleDeclineRequest(friendId: number){
-        execute(() => DeclineFriendRequest({userId: userId, friendId: friendId}))
+        execute(() => DeclineFriendRequest({friendId: friendId}))
     }
 
     async function handleDeleteFriend(friendId: number){
         console.log(friendId)
-        execute(() => DeleteFriend({userId: userId!, friendId: friendId}))
+        execute(() => DeleteFriend({friendId: friendId}))
     }
 
     return {actionsError, resetActionError, sendFriendRequest, handleAcceptRequest, handleDeclineRequest, handleDeleteFriend}

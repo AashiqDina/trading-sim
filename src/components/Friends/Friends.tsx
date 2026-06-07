@@ -14,7 +14,7 @@ export default function Friends(){
   const { user } = useAuth();
 
   const {loading, error, userList, friendsList, profitLossMap, sentReqList, recReqList, refresh, resetError} = useFriends({userId: user?.id})
-  const {actionsError, resetActionError, sendFriendRequest, handleAcceptRequest, handleDeclineRequest, handleDeleteFriend} = useFriendsActions({userId: user?.id, refresh})
+  const {actionsError, resetActionError, sendFriendRequest, handleAcceptRequest, handleDeclineRequest, handleDeleteFriend} = useFriendsActions({refresh})
 
   if(loading) return ( <Loading/> )
 

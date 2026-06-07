@@ -10,6 +10,17 @@ describe("Decline Friend Request", () => {
     const userId = 1;
     const friendId = 2;
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+        
+        Object.defineProperty(window, "localStorage", {
+            value: {
+                getItem: jest.fn(() => "mock-token"),
+            },
+            writable: true,
+        });
+    });
+
     test("returns data on success", async () => {
 
         mockedAxios.post.mockResolvedValue({
@@ -20,10 +31,15 @@ describe("Decline Friend Request", () => {
             }
         });
 
-        const result = await DeclineFriendRequest({ userId, friendId });
+        const result = await DeclineFriendRequest({ friendId });
 
         expect(result).toEqual({ success: true });
-        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${userId}/${friendId}`);
+        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${friendId}`, {
+                headers: {
+                    Authorization: `Bearer mock-token`
+                }
+            }
+        );
     });
 
     test("throws ApiError when backend returns hasError", async () => {
@@ -36,7 +52,7 @@ describe("Decline Friend Request", () => {
             }
         });
 
-        await expect(DeclineFriendRequest({ userId, friendId })).rejects.toEqual(new ApiError(400));
+        await expect(DeclineFriendRequest({ friendId })).rejects.toEqual(new ApiError(400));
     });
 
     test("throws ApiError from axios response error", async () => {
@@ -47,12 +63,35 @@ describe("Decline Friend Request", () => {
             response: { status: 500 },
         });
 
-        await expect(DeclineFriendRequest({ userId, friendId })).rejects.toEqual(new ApiError(500));
+        await expect(DeclineFriendRequest({ friendId })).rejects.toEqual(new ApiError(500));
+    });
+
+    test("throws ApiError -1 from axios response broken error", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.delete.mockRejectedValue({
+            response: null,
+        });
+
+        await expect(DeclineFriendRequest({ friendId })).rejects.toEqual(new ApiError(-1));
+
     });
 
     test("throws ApiError(-1) for unknown error", async () => {
         mockedAxios.post.mockRejectedValue({});
 
-        await expect(DeclineFriendRequest({ userId, friendId })).rejects.toEqual(new ApiError(-1));
+        await expect(DeclineFriendRequest({ friendId })).rejects.toEqual(new ApiError(-1));
+    });
+
+    test("throws ApiError(4010) when axios returns 401", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.post.mockRejectedValue({
+            isAxiosError: true,
+            response: { status: 401 },
+        });
+
+        await expect(DeclineFriendRequest({ friendId})).rejects.toEqual(new ApiError(4010));
     });
 });

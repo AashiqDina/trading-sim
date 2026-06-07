@@ -7,11 +7,17 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe("DeleteFriend", () => {
 
-    const userId = 1;
     const friendId = 2;
 
     beforeEach(() => {
         jest.resetAllMocks();
+        
+        Object.defineProperty(window, "localStorage", {
+            value: {
+                getItem: jest.fn(() => "mock-token"),
+            },
+            writable: true,
+        });
     });
 
     test("returns data on success", async () => {
@@ -24,11 +30,16 @@ describe("DeleteFriend", () => {
             },
         });
 
-        const result = await DeleteFriend({ userId, friendId });
+        const result = await DeleteFriend({ friendId });
 
         expect(result).toEqual({ success: true });
 
-        expect(mockedAxios.delete).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Delete-Friend/${userId}/${friendId}`);
+        expect(mockedAxios.delete).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Delete-Friend/${friendId}`, {
+                headers: {
+                    Authorization: `Bearer mock-token`
+                }
+            }
+        );
 
     });
 
@@ -42,7 +53,7 @@ describe("DeleteFriend", () => {
             },
         });
 
-        await expect(DeleteFriend({ userId, friendId })).rejects.toEqual(new ApiError(400));
+        await expect(DeleteFriend({ friendId })).rejects.toEqual(new ApiError(400));
 
     });
 
@@ -54,7 +65,19 @@ describe("DeleteFriend", () => {
             response: { status: 500 },
         });
 
-        await expect(DeleteFriend({ userId, friendId })).rejects.toEqual(new ApiError(500));
+        await expect(DeleteFriend({ friendId })).rejects.toEqual(new ApiError(500));
+
+    });
+
+    test("throws ApiError -1 from axios response broken error", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.delete.mockRejectedValue({
+            response: null,
+        });
+
+        await expect(DeleteFriend({ friendId })).rejects.toEqual(new ApiError(-1));
 
     });
 
@@ -62,7 +85,18 @@ describe("DeleteFriend", () => {
 
         mockedAxios.delete.mockRejectedValue(1.23);
 
-        await expect(DeleteFriend({ userId, friendId })).rejects.toEqual(new ApiError(-1));
+        await expect(DeleteFriend({ friendId })).rejects.toEqual(new ApiError(-1));
 
+    });
+
+    test("throws ApiError(4010) when axios returns 401", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.delete.mockRejectedValue({
+            isAxiosError: true,
+            response: { status: 401 },
+        });
+
+        await expect(DeleteFriend({ friendId })).rejects.toEqual(new ApiError(4010));
     });
 });

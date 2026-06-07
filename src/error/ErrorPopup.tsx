@@ -1,5 +1,6 @@
 import "./ErrorPopup.css";
 import { handleErrorMessages } from "../utils/HandleErrorMessages";
+import { useLogout } from "../hooks/logout/useLogout";
 
 type props = {
     ErrorCode: number | string | null
@@ -7,8 +8,13 @@ type props = {
 }
 
 export default function ErrorPopup({ErrorCode, Confirm}: props ){
-
     const Details = handleErrorMessages(ErrorCode)
+    const logout = useLogout()
+
+    const handleAction = () => {
+        if(ErrorCode === 4010) logout()
+        Confirm();
+    }
     
     return (
         <>
@@ -26,7 +32,7 @@ export default function ErrorPopup({ErrorCode, Confirm}: props ){
                     </div>
                     <div className="WarningPopUpButton">
                         <div >
-                            <button aria-label="Warning Understood Confirmation" onClick={Confirm}>{Details?.buttonText}</button>
+                            <button aria-label="Warning Understood Confirmation" onClick={handleAction}>{Details?.buttonText}</button>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ import { mockMarketNews } from '../../mocks/Home/mockMarketNews';
 import { mockStockList } from '../../mocks/Home/mockStockList';
 import { mockTrendingStocks } from '../../mocks/Home/mockTrendingStocks';
 import userEvent from '@testing-library/user-event';
+import { AuthProvider } from '../../auth/AuthContext';
 
 const mockedGetTrendingStocks = getTrendingStocksMock as jest.Mock;
 const mockedGetStockList = GetStockListMock as jest.Mock;
@@ -128,7 +129,9 @@ describe("Home - Render", () => {
 
         render(
             <MemoryRouter>
-                <Home/>
+                <AuthProvider>
+                    <Home/>
+                </AuthProvider>
             </MemoryRouter>
         )
         expect(await screen.findByTestId(/ErrorMessage/i)).toBeInTheDocument()
