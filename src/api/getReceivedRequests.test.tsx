@@ -72,6 +72,16 @@ describe("getReceivedRequests", () => {
         (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
 
         mockedAxios.get.mockRejectedValue({
+            response: null,
+        });
+
+        await expect(getReceivedRequests()).rejects.toEqual(new ApiError(-1));
+    });
+
+    test("uses error.response.status ?? -1 branch", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.get.mockRejectedValue({
             response: { status: null },
         });
 

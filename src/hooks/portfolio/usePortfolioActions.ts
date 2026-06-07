@@ -27,9 +27,9 @@ export function usePortfolioActions(){
         }
     };
     
-    const handleDeleteUser = async (userId: number, Confirmation: boolean) => {
+    const handleDeleteUser = async (Confirmation: boolean) => {
         try {
-            await DeleteAccount({userId, Confirmation});
+            await DeleteAccount({Confirmation});
             setErrorCode(null);
             return true;
         } 

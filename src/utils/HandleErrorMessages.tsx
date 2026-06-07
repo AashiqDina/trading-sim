@@ -132,7 +132,7 @@ export function handleErrorMessages(ErrorCode: number | string | null){
     else if (ErrorCode === 4010){
         return{
             title: "Invalid User Token",
-            bodyText: "Unable to authenticate you - try logging out and signing back in",
+            bodyText: "Unable to authenticate you - try signing out and signing back in",
             warning: false,
             buttonText: "Understood"
         }

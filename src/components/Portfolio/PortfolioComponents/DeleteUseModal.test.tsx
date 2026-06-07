@@ -35,7 +35,6 @@ describe("DeleteUserModal", () => {
         render(
             <BrowserRouter>
                 <DeleteUserModal
-                    userId={1}
                     cancelDelete={mockCancelDelete}
                     handleDeleteUser={mockHandleDeleteUser}
                 />
@@ -53,7 +52,6 @@ describe("DeleteUserModal", () => {
         render(
             <BrowserRouter>
                 <DeleteUserModal
-                    userId={1}
                     cancelDelete={mockCancelDelete}
                     handleDeleteUser={mockHandleDeleteUser}
                 />
@@ -72,7 +70,6 @@ describe("DeleteUserModal", () => {
         render(
             <BrowserRouter>
                 <DeleteUserModal
-                    userId={1}
                     cancelDelete={mockCancelDelete}
                     handleDeleteUser={mockHandleDeleteUser}
                 />
@@ -83,7 +80,7 @@ describe("DeleteUserModal", () => {
         await userEvent.click(screen.getByRole("button", { name: /delete stock/i }));
 
         await waitFor(() => {
-            expect(mockHandleDeleteUser).toHaveBeenCalledWith(1, false);
+            expect(mockHandleDeleteUser).toHaveBeenCalledWith(false);
         });
 
         expect(mockNavigate).not.toHaveBeenCalled();
@@ -99,7 +96,6 @@ describe("DeleteUserModal", () => {
         render(
             <BrowserRouter>
                 <DeleteUserModal
-                    userId={1}
                     cancelDelete={mockCancelDelete}
                     handleDeleteUser={mockHandleDeleteUser}
                 />
@@ -110,7 +106,7 @@ describe("DeleteUserModal", () => {
         await user.click(screen.getByRole("button", { name: /delete stock/i }));
 
         await waitFor(() => {
-            expect(mockHandleDeleteUser).toHaveBeenCalledWith(1, true);
+            expect(mockHandleDeleteUser).toHaveBeenCalledWith(true);
         });
 
         expect(mockNavigate).toHaveBeenCalledWith("/");
@@ -126,7 +122,6 @@ describe("DeleteUserModal", () => {
         render(
             <BrowserRouter>
                 <DeleteUserModal
-                    userId={1}
                     cancelDelete={mockCancelDelete}
                     handleDeleteUser={mockHandleDeleteUser}
                 />

@@ -5,20 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../../hooks/logout/useLogout";
 
 type props = {
-    userId: number,
     cancelDelete: () => void,
-    handleDeleteUser: (userId: number, Confirmation: boolean) => Promise<boolean>
+    handleDeleteUser: (Confirmation: boolean) => Promise<boolean>
 
 }
 
-export default function DeleteUserModal({userId, cancelDelete, handleDeleteUser}: props){
+export default function DeleteUserModal({cancelDelete, handleDeleteUser}: props){
     const navigate = useNavigate();
     const logout = useLogout()
     const [input, setInput] = useState("")
 
     const handleDeleteConfirm = async () => {
         try {
-            const result = await handleDeleteUser(userId, input==="DELETE ACCOUNT")
+            const result = await handleDeleteUser(input==="DELETE ACCOUNT")
             if(result){
                 navigate(`/`)
                 logout()

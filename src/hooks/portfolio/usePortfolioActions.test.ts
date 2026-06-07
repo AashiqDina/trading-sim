@@ -2,10 +2,14 @@ import { act, renderHook } from "@testing-library/react"
 import deleteStock from "../../api/deleteStock"
 import { usePortfolioActions } from "./usePortfolioActions"
 import { ApiError } from "../../error/ApiError"
+import DeleteAccount from "../../api/DeleteAccount"
 
 
 jest.mock("../../api/deleteStock")
 const mockedDeleteStock = deleteStock as jest.Mock
+
+jest.mock("../../api/DeleteAccount")
+const mockedDeleteAccount = DeleteAccount as jest.Mock
 
 describe("usePortfolioActions tests", () => {
 
@@ -74,5 +78,27 @@ describe("usePortfolioActions tests", () => {
 
         expect(result.current.actionsErrorCode).toBeNull()
     })
+
+    test("handleDeleteUser success path works correctly", async () => {
+
+        mockedDeleteAccount.mockResolvedValue(true);
+
+        const { result } = renderHook(() => usePortfolioActions());
+
+        let response;
+
+        await act(async () => {
+            response = await result.current.handleDeleteUser(true);
+        });
+
+        expect(mockedDeleteAccount).toHaveBeenCalledWith({
+            Confirmation: true
+        });
+
+        expect(response).toBe(true);
+        expect(result.current.actionsErrorCode).toBeNull();
+    });
+
+
 
 })

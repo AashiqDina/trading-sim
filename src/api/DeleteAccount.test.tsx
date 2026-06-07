@@ -7,11 +7,15 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe("DeleteAccount", () => {
 
-    const userId = 1;
-    const friendId = 2;
-
     beforeEach(() => {
         jest.resetAllMocks();
+
+        Object.defineProperty(window, "localStorage", {
+            value: {
+                getItem: jest.fn(() => "mock-token"),
+            },
+            writable: true,
+        });
     });
 
     test("returns data on success", async () => {
@@ -24,11 +28,17 @@ describe("DeleteAccount", () => {
             },
         });
 
-        const result = await DeleteAccount({ userId, Confirmation: true});
+        const result = await DeleteAccount({ Confirmation: true});
 
         expect(result).toEqual(true);
 
-        expect(mockedAxios.delete).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/${userId}`);
+        expect(mockedAxios.delete).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User`,
+            {
+                headers: {
+                    Authorization: "Bearer mock-token"
+                }
+            }
+        );
 
     });
 
@@ -42,7 +52,7 @@ describe("DeleteAccount", () => {
             },
         });
 
-        await expect(DeleteAccount({ userId, Confirmation: true})).rejects.toEqual(new ApiError(400));
+        await expect(DeleteAccount({ Confirmation: true})).rejects.toEqual(new ApiError(400));
 
     });
 
@@ -54,19 +64,52 @@ describe("DeleteAccount", () => {
             response: { status: 500 },
         });
 
-        await expect(DeleteAccount({ userId, Confirmation: true})).rejects.toEqual(new ApiError(500));
+        await expect(DeleteAccount({ Confirmation: true})).rejects.toEqual(new ApiError(500));
 
+    });
+
+    test("throws ApiError -1 from axios response broken error", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.delete.mockRejectedValue({
+            response: null,
+        });
+
+        await expect(DeleteAccount({ Confirmation: true})).rejects.toEqual(new ApiError(-1));
+
+    });
+
+    test("uses error.response.status ?? -1 branch", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.delete.mockRejectedValue({
+            response: { status: null },
+        });
+
+        await expect(DeleteAccount({ Confirmation: true })).rejects.toEqual(new ApiError(-1));
     });
 
     test("throws ApiError(-1) for unknown error", async () => {
 
         mockedAxios.delete.mockRejectedValue(1.23);
 
-        await expect(DeleteAccount({ userId, Confirmation: true})).rejects.toEqual(new ApiError(-1));
+        await expect(DeleteAccount({ Confirmation: true})).rejects.toEqual(new ApiError(-1));
 
     });
 
     test("throws ApiError(9999) on no confirmation", async () => {
-        await expect(DeleteAccount({ userId, Confirmation: false})).rejects.toEqual(new ApiError(9999));
+        await expect(DeleteAccount({ Confirmation: false})).rejects.toEqual(new ApiError(9999));
     })
+
+    test("throws ApiError(4010) when axios returns 401", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.delete.mockRejectedValue({
+            isAxiosError: true,
+            response: { status: 401 },
+        });
+
+        await expect(DeleteAccount({ Confirmation: true})).rejects.toEqual(new ApiError(4010));
+    });
 });
