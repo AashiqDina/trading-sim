@@ -8,7 +8,7 @@ type props = {
 export default async function AcceptFriendRequest({friendId}: props){
     try{
         const token = localStorage.getItem("token");
-        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Accept-Request/${friendId}`, {
+        const result = await axios.post(`https://tradingsim-backend.onrender.com/api/User/Accept-Request/${friendId}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

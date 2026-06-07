@@ -33,7 +33,7 @@ describe("AcceptFriendRequest", () => {
         const result = await AcceptFriendRequest({ friendId });
 
         expect(result).toEqual({ success: true });
-        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Accept-Request/${friendId}`, {
+        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Accept-Request/${friendId}`, {},{
                 headers: {
                     Authorization: `Bearer mock-token`
                 }

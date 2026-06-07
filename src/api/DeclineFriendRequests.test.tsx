@@ -34,7 +34,7 @@ describe("Decline Friend Request", () => {
         const result = await DeclineFriendRequest({ friendId });
 
         expect(result).toEqual({ success: true });
-        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${friendId}`, {
+        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/User/Decline-Request/${friendId}`, {}, {
                 headers: {
                     Authorization: `Bearer mock-token`
                 }
