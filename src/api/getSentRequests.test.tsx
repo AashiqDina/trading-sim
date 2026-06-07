@@ -70,6 +70,17 @@ describe("getSentRequests", () => {
         await expect(getSentRequests()).rejects.toEqual(new ApiError(500));
     });
 
+    test("throws ApiError from axios response error -1 when status is broken", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.get.mockRejectedValue({
+            response: { status: null },
+        });
+
+        await expect(getSentRequests()).rejects.toEqual(new ApiError(-1));
+    });
+
     test("throws ApiError(-1) for unknown error", async () => {
 
         mockedAxios.get.mockRejectedValue(getSentRequests);

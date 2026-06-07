@@ -85,10 +85,32 @@ describe("getFriends", () => {
         await expect(getFriends()).rejects.toEqual(new ApiError(500));
     });
 
+    test("throws ApiError from axios response error -1 when broken status", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.get.mockRejectedValue({
+            response: { status: null },
+        });
+
+        await expect(getFriends()).rejects.toEqual(new ApiError(-1));
+    });
+
     test("throws ApiError(-1) for unknown error", async () => {
 
         mockedAxios.get.mockRejectedValue(123);
 
         await expect(getFriends()).rejects.toEqual(new ApiError(-1));
+    });
+
+    test("throws ApiError(4010) when axios returns 401", async () => {
+        mockedAxios.isAxiosError.mockReturnValue(true as any);
+
+        mockedAxios.get.mockRejectedValue({
+            isAxiosError: true,
+            response: { status: 401 },
+        });
+
+        await expect(getFriends()).rejects.toEqual(new ApiError(4010));
     });
 });

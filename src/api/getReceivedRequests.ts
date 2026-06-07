@@ -21,7 +21,7 @@ export default async function getReceivedRequests(): Promise<friendListMember[]>
         
         if (axios.isAxiosError(error)) {
             if(error.response?.status === 401) throw new ApiError(4010)
-            if (error.response) throw new ApiError(error.response.status);
+            if (error.response) throw new ApiError(error.response.status ?? -1);
         }
         throw new ApiError(-1)
     }
