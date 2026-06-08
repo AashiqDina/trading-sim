@@ -59,10 +59,10 @@ This project places a strong emphasis on reliability and defensive programming.
 
 ### Test Coverage
 
-- Statements: 88.14%
-- Branches: 80.19%
+- Statements: 88.25%
+- Branches: 80.56%
 - Functions: 83.38%
-- Lines: 89.25%
+- Lines: 89.29%
 
 ## Architecture & Design Decisions
 

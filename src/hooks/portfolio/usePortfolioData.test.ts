@@ -80,7 +80,7 @@ describe("usePortfolioData tests", () => {
 
     test("no user returns", () => {
 
-        const { result } = renderHook(() => usePortfolioData({userId: undefined}))
+        renderHook(() => usePortfolioData({userId: undefined}))
 
         expect(mockedGetPortfolio).not.toHaveBeenCalled()
         expect(mockedGetHistory).not.toHaveBeenCalled()

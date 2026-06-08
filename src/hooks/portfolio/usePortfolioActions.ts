@@ -10,9 +10,9 @@ export function usePortfolioActions(){
         setErrorCode(null);
     };
 
-    const handleDeleteStock = async (userId: number, stockId: number) => {
+    const handleDeleteStock = async (stockId: number) => {
         try {
-            await deleteStock(userId, stockId);
+            await deleteStock(stockId);
             setErrorCode(null);
             return true;
         } 

@@ -22,10 +22,10 @@ describe("usePortfolioActions tests", () => {
         var response
 
         await act(async () => {
-            response = await result.current.handleDeleteStock(1, 3)
+            response = await result.current.handleDeleteStock(3)
         })
 
-        expect(mockedDeleteStock).toHaveBeenCalledWith(1, 3)
+        expect(mockedDeleteStock).toHaveBeenCalledWith(3)
         expect(response).toBe(true)
         expect(result.current.actionsErrorCode).toBeNull()
 
@@ -40,7 +40,7 @@ describe("usePortfolioActions tests", () => {
         var response
 
         await act(async () => {
-            response = await result.current.handleDeleteStock(1, 10)
+            response = await result.current.handleDeleteStock(10)
         })
 
         expect(result.current.actionsErrorCode).toBe(404)
@@ -54,7 +54,7 @@ describe("usePortfolioActions tests", () => {
         const { result } = renderHook(() => usePortfolioActions())
 
         await act(async () => {
-            await result.current.handleDeleteStock(1, 33)
+            await result.current.handleDeleteStock(33)
         })
 
         expect(result.current.actionsErrorCode).toBe(-1)
@@ -67,7 +67,7 @@ describe("usePortfolioActions tests", () => {
         const { result } = renderHook(() => usePortfolioActions())
 
         await act(async () => {
-            await result.current.handleDeleteStock(1,50)
+            await result.current.handleDeleteStock(50)
         })
 
         expect(result.current.actionsErrorCode).toBe(429)
