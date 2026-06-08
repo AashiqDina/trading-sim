@@ -94,7 +94,6 @@ describe("buyStockService", () => {
         expect(mockedBuyStock).toHaveBeenCalledWith({
             stockSymbol: "AAPL",
             quantity: 5,
-            userId: 1
         });
 
         expect(result).toEqual({

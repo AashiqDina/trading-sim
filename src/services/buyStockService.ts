@@ -33,7 +33,7 @@ export default async function buyStockService({stockPrice, quantity, stockSymbol
         const portfolio = await getPortfolio(userId)
         if(portfolio.stocks.length > maxStocks) throw new ApiError(PurchaseError.TOO_MANY_STOCKS)
 
-        return await buyStock({stockSymbol: stockSymbol, quantity: quantity, userId: userId})
+        return await buyStock({stockSymbol: stockSymbol, quantity: quantity})
     }
     catch(err){
         if(err instanceof ApiError) throw err

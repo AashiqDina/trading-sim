@@ -2,12 +2,11 @@ import axios from "axios";
 import { ApiError } from "../error/ApiError";
 
 type props = {
-  userId: number,
   stockSymbol: string,
   quantity: number,
 }
 
-export default async function buyStock({userId, stockSymbol, quantity}: props){
+export default async function buyStock({stockSymbol, quantity}: props){
 
   const stockPurchaseRequest = {
     symbol: stockSymbol,
@@ -16,9 +15,14 @@ export default async function buyStock({userId, stockSymbol, quantity}: props){
 
   try {
 
+    const token = localStorage.getItem("token");
     const response = await axios.post(
-      `https://tradingsim-backend.onrender.com/api/portfolio/${userId}/stocks`,
-      stockPurchaseRequest
+      `https://tradingsim-backend.onrender.com/api/portfolio/stocks/buy`,
+        stockPurchaseRequest, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      }
     );
 
     return response.data
@@ -28,6 +32,7 @@ export default async function buyStock({userId, stockSymbol, quantity}: props){
     if (error instanceof ApiError) throw error
 
     if(axios.isAxiosError(error)){
+      if(error.response?.status === 401) throw new ApiError(4010)
       if(error.response) throw new ApiError(error.response.status)
     }
 

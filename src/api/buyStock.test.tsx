@@ -7,6 +7,17 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe("BuyStock", () => {
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+
+        Object.defineProperty(window, "localStorage", {
+            value: {
+                getItem: jest.fn(() => "mock-token"),
+            },
+            writable: true,
+        });
+    });
+
     const stockPurchaseRequest = {
         symbol: "stockSymbol",
         quantity: 10,
@@ -31,7 +42,13 @@ describe("BuyStock", () => {
         const result = await buyStock(args);
 
         expect(result.data).toEqual({ success: true });
-        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/portfolio/${args.userId}/stocks`, stockPurchaseRequest);
+        expect(mockedAxios.post).toHaveBeenCalledWith(`https://tradingsim-backend.onrender.com/api/portfolio/stocks/buy`, stockPurchaseRequest,
+            {
+                headers: {
+                    Authorization: `Bearer mock-token`
+                }
+            }
+        );
     });
 
     test("throws ApiError when backend returns hasError", async () => {
@@ -39,6 +56,19 @@ describe("BuyStock", () => {
         mockedAxios.post.mockRejectedValue(new ApiError(400));
 
         await expect(buyStock(args)).rejects.toEqual(new ApiError(400));
+    });
+
+    test("maps 401 responses to ApiError(4010)", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.post.mockRejectedValue({
+            response: { status: 401 }
+        });
+
+        await expect(buyStock(args)).rejects.toEqual(
+            new ApiError(4010)
+        );
     });
 
     test("throws ApiError from axios response error", async () => {
@@ -50,6 +80,19 @@ describe("BuyStock", () => {
         });
 
         await expect(buyStock(args)).rejects.toEqual(new ApiError(500));
+    });
+
+    test("throws ApiError(-1) for axios network errors", async () => {
+
+        (mockedAxios.isAxiosError as unknown as jest.Mock).mockReturnValue(true);
+
+        mockedAxios.post.mockRejectedValue({
+            request: {}
+        });
+
+        await expect(buyStock(args)).rejects.toEqual(
+            new ApiError(-1)
+        );
     });
 
     test("throws ApiError(-1) for unknown error", async () => {
