@@ -50,7 +50,7 @@ const Portfolio = () => {
 
   const handleConfirmDelete = async () => {
     if (!toDelete || !user || !owner) return;
-    const result = await handleDeleteStock(user.id, toDelete.id);
+    const result = await handleDeleteStock(toDelete.id);
     if (!result) return;
 
     refreshPortfolio();
