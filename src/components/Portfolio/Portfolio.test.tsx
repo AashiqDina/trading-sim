@@ -174,7 +174,7 @@ describe("Portfolio Integration Tests", () => {
         expect(await screen.findByText(/Are you sure you want to delete?/i)).toBeInTheDocument()
 
         await userEvent.click(screen.getByRole("button", { name: "Delete Stock?" }));
-        expect(trueDelFn).toHaveBeenCalledWith(mockedUser.id, mockPortfolioStocks[0].id)
+        expect(trueDelFn).toHaveBeenCalledWith(mockPortfolioStocks[0].id)
         expect(screen.queryByText(/Are you sure you want to delete?/i)).not.toBeInTheDocument()
 
     })
